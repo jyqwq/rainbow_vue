@@ -47,6 +47,7 @@
 
 <style scoped>
   .under_nav{
+    border-radius: 5px;
     margin-top: 40px;
     background: lightpink;
   }
