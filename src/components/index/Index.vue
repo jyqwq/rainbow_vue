@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--欢迎巨幕-->
-    <giant-screen></giant-screen>
+    <carousel></carousel>
 
     <!--分割线-->
     <div class="div_line"></div>
@@ -29,13 +29,15 @@
   import HotDiary from './HotDiary'
   import EvaluationInformation from './EvaluationInformation'
   import RecommendedVolume from './RecommendedVolume'
+  import Carousel from './Carousel'
     export default {
         name: "Index",
       components:{
         "giant-screen":GiantScreen,
         "hot-diary":HotDiary,
         "evaluation-information":EvaluationInformation,
-        "recommended-volume":RecommendedVolume
+        "recommended-volume":RecommendedVolume,
+        "carousel":Carousel
       }
     }
 </script>
