@@ -1,6 +1,5 @@
 <template>
   <!--左边个人信息框-->
-
     <div class="qz_per" style="zoom:1;overflow: hidden;">
       <!--头像-->
       <div class="qz_cir hidden-xs col-sm-3 col-md-5 col-lg-4">
@@ -15,9 +14,9 @@
           <div class="col-xs-7 col-sm-9 col-md-7 col-lg-8 qz_nick">
             <div class="qz_nic">
               <!--昵称-->
-              <span class="font_nic">南浅</span><br>
+              <span class="font_nic">还没有昵称哦</span><br>
               <!--个性签名-->
-              <span class="font_gra font_gra1">小仙女都是喝露水的</span><br><br>
+              <span class="font_gra font_gra1">还没有签名哦</span><br><br>
             </div>
           </div>
         </div>
@@ -27,20 +26,20 @@
         <div class="row qz_row">
           <div class="col-xs-8 col-sm-10 col-md-9 col-lg-8">
             <ul class="nav">
-              <li class="nav_infor"><div class="nav_infor1">&nbsp;&nbsp;4</div><div>粉丝</div></li>
-              <li class="nav_infor"><div class="nav_infor2">&nbsp;&nbsp;3</div><div>关注</div></li>
+              <li class="nav_infor"><div class="nav_infor1">&nbsp;&nbsp;0</div><div>粉丝</div></li>
+              <li class="nav_infor"><div class="nav_infor2">&nbsp;&nbsp;0</div><div>关注</div></li>
             </ul>
           </div>
           <div class="col-xs-4 col-sm-2 col-md-3 col-lg-4 qz_percha">
-            <a href="#" class="button button--edit button--continue margin-top margin-bottom">编辑</a>
+              <button-more v-bind:margin_bottom="'编辑'" v-bind:class="[edit_class,button_class]"></button-more>
           </div>
         </div>
         <div class="row qz_row">
           <div class="col-xs-8 col-sm-10 col-md-9 col-lg-12">
             <ul class="nav">
-              <li class="nav_infor nav_infor3"><div>&nbsp;&nbsp;4</div><div>点赞</div></li>
-              <li class="nav_infor nav_infor4"><div>&nbsp;&nbsp;3</div><div>评论</div></li>
-              <li class="nav_infor nav_infor5"><div>&nbsp;&nbsp;3</div><div>日记</div></li>
+              <li class="nav_infor nav_infor3"><div>&nbsp;&nbsp;0</div><div>点赞</div></li>
+              <li class="nav_infor nav_infor4"><div>&nbsp;&nbsp;0</div><div>评论</div></li>
+              <li class="nav_infor nav_infor5"><div>&nbsp;&nbsp;0</div><div>日记</div></li>
             </ul>
           </div>
         </div>
@@ -50,18 +49,16 @@
 </template>
 
 <script>
+  import ButtonMore from './ButtonMore'
   export default {
-    props:[],
+    components:{
+      'button-more':ButtonMore
+    },
     name: "PersonInformation",
     data: function () {
       return {
-        // font_nic:'还没有昵称哦',
-        // font_gra1:'还没有签名哦',
-        // nav_infor1:0,
-        // nav_infor2:0,
-        // nav_infor3:0,
-        // nav_infor4:0,
-        // nav_infor5:0,
+        edit_class:'button_edit',
+        button_class:'button_qz'
       }
     },
     created:function(){},
@@ -99,7 +96,7 @@
     margin-top: 100px;
     border-radius: 20px;
     background: #FFE3E5;
-    /*background-image: ;*/
+    background-image: url("../../assets/my_center/background_person.jpg");
     background-size: cover;
   }
   /*头像*/
@@ -134,4 +131,6 @@
     float: left;
     margin-left: 30px;
   }
+
+
 </style>
