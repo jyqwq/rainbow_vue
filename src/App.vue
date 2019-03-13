@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <header>
+  <div class="bod">
+    <header class="navbar-fixed-top">
       <all-nav></all-nav>
     </header>
     <div class="container">
@@ -33,15 +33,20 @@ export default {
       if (this.conheight+260<this.mheight) {
         this.con.style.height=(this.mheight-303)+'px'
       }
-    }
+    },
+
   },
   mounted:function () {
     this.minHeight();
+
   },
 
 }
 </script>
 
 <style>
-
+.bod{
+  background: -webkit-linear-gradient(top, #f8e2ea 0.00%, #f6d2db 60.00%);
+  background: linear-gradient(top, #f8e2ea 0.00%, #f6d2db 60.00%);
+}
 </style>
