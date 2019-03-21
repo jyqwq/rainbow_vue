@@ -100,7 +100,7 @@
       <div class="history-title">
         <span class="glyphicon glyphicon-time"></span>
         <span class="hs">搜索历史</span>
-        <span class="glyphicon glyphicon-trash"></span>
+        <span class="glyphicon glyphicon-trash" @click="clear"></span>
       </div>
       <div class="history-list">
         <div class="list-1  col-md-12">
@@ -153,14 +153,27 @@
 </template>
 
 <script>
+    import Bus from '../../bus.js'
     export default {
-        name: "Popular"
+        name: "Popular",
+        data:function(){
+          return{
+              flag:''
+          }
+        },
+        methods:{
+          clear:function () {
+              this.flag=true
+              Bus.$emit('val',this.flag)
+          }
+        }
+
+
     }
 </script>
 
 <style scoped>
   .hot{
-
     border-radius: 2px;
     margin-left: 0px;
     margin-right: 0px;
@@ -178,7 +191,7 @@
   }
   .hot-left{
     display: inline-block;
-    width: 66%;
+    width: 64%;
     padding: 0px 10px 0px 0px;
     box-sizing:border-box;
     border: 1px solid rgba(0, 0, 0, 0.25);
@@ -189,7 +202,6 @@
     padding: 15px;
   }
   .glyphicon-fire{
-    /*color: rgba(255, 0, 0, 0.78);*/
     font-size: 1.6em;
   }
   .glyphicon-time{
@@ -199,13 +211,12 @@
     font-size: 1.6em;
   }
   .hot-title .hs{
-    /*color: rgba(255, 0, 0, 0.77);*/
     font-size: 1.6em;
   }
   .hot-right{
     margin-left: 3px;
     display: inline-block;
-    width: 30%;
+    width: 31%;
     padding: 0px;
     border: 1px solid rgba(0, 0, 0, 0.25);
   }
@@ -216,5 +227,11 @@
   .glyphicon-trash:hover{
     cursor: pointer;
     color: rgba(0, 0, 255, 0.62);
+  }
+  button{
+    border: deeppink;
+  }
+  #tab-1 tr :nth-child(2),#tab-2 tr :nth-child(2),#tab-3 tr :nth-child(2):hover{
+    cursor: pointer;
   }
 </style>
