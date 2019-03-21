@@ -10,7 +10,8 @@
 
 <script>
     export default {
-        name: "NavDiary"
+      components:{},
+      name: "NavDiary"
     }
 </script>
 
@@ -37,7 +38,8 @@
   /*日记本*/
   .qz_nimg{
     margin: auto;
-    width: 200px;
+    width: 70px;
+    height: 70px;
   }
   .img_diary{
     height: 100%;

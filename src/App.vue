@@ -46,7 +46,7 @@ export default {
 
 <style>
 .bod{
-  background: -webkit-linear-gradient(top, #f8e2ea 0.00%, #f6d2db 60.00%);
-  background: linear-gradient(top, #f8e2ea 0.00%, #f6d2db 60.00%);
+  /*background: -webkit-linear-gradient(top, #f8e2ea 0.00%, #f6d2db 60.00%);*/
+  /*background: linear-gradient(top, #f8e2ea 0.00%, #f6d2db 60.00%);*/
 }
 </style>

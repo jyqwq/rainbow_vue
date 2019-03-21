@@ -1,44 +1,33 @@
 <template>
-  <div style="zoom:1;overflow: hidden;">
     <!--箭头指向第二页-->
-    <div class="row qz_row">
-      <div class="qz_lead ">
-        <div class="qz_leaimg animal_rin">
-          <a class="anchor_link">
-            <img src="../../assets/my_center/open_mine.png" class="img-responsive lea_img " alt="Responsive image">
-          </a>
+      <div id="mine" class="row qz_row" style="zoom:1;overflow: hidden;">
+        <div class="qz_lead ">
+          <div class="qz_leaimg animal_rin">
+            <div @click="anchor_slip">
+              <img src="../../assets/my_center/open_mine.png" class="img-responsive lea_img " alt="Responsive image">
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    <!--第二页-->
-    <div class="row qz_row">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 qz_open">
-        <span class="font_open">开 启 我 的 梳 妆 盒</span>
-      </div>
-    </div>
-  </div>
-
 </template>
 
 <script>
     export default {
+      components:{
+      },
       name: "OpenMine",
       data: function () {
         return {
-
         }
       },
       created:function(){},
-      methods: {},
-      mounted: function () {
+      methods: {
         //滚动条匀速滑动
-        let anc_lin=document.querySelector('.anchor_link');
-        anc_lin.onclick = function () {
-          startMover(666);
-        }
-        var timer = null;
-        function startMover(itarget) {//目标值
+        anchor_slip:function () {
+          this.$options.methods.startMover(500)
+        },
+        startMover: function (itarget) {//目标值
+          var timer = null;
           clearInterval(timer);//执行当前动画同时清除之前的动画
           timer = setInterval(function () {
             let scroll_distance = document.documentElement.scrollTop||document.body.scrollTop;
@@ -61,6 +50,10 @@
             }
           }, 1);
         }
+
+      },
+      mounted: function () {
+
       },
       computed: {},
       watch: {},
@@ -72,17 +65,6 @@
   /*全局*/
   .qz_row{
     margin: 15px;
-  }
-  /*字体*/
-  /*第二页*/
-  .qz_open{
-    text-align: center;
-  }
-  .font_open{
-    font-size: 2em;
-
-    height: 60px;
-    line-height: 60px;
   }
   /*箭头指向第二页*/
   .qz_lead{
