@@ -10,7 +10,7 @@
       </div>
       <footer class="modal-footer">
         <button id="cancel" @click="close">取消</button>
-        <button id="sure"   @click="close">确定</button>
+        <button id="sure"   @click="sure">确定</button>
       </footer>
     </div>
   </div>
@@ -24,7 +24,8 @@
         name: "Model",
         data:function(){
           return{
-            dd:false
+            dd:false,
+            history:''
           }
         },
          mounted:function(){
@@ -37,6 +38,11 @@
         methods:{
           'close':function () {
               this.dd=false
+          },
+          sure:function () {
+            this.dd=false;
+            window.localStorage.setItem('history','')
+            Bus.$emit('his',this.history)
           }
         }
     }

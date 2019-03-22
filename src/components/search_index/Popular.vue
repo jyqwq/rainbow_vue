@@ -105,45 +105,9 @@
       <div class="history-list">
         <div class="list-1  col-md-12">
           <table class="table table-condensed tab-3" id="tab-3">
-            <tr>
-              <td>1</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>9</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td></td>
+            <tr v-for="index in 10">
+              <td>{{ index}}</td>
+              <td>{{history[index-1]}}</td>
             </tr>
           </table>
         </div>
@@ -154,18 +118,34 @@
 
 <script>
     import Bus from '../../bus.js'
+    import axios from 'axios';
     export default {
         name: "Popular",
         data:function(){
           return{
-              flag:''
+              flag:'',
+              history:''
           }
         },
         methods:{
           clear:function () {
-              this.flag=true
+              this.flag=true;
               Bus.$emit('val',this.flag)
-          }
+          },
+
+        },
+        mounted:function () {
+            if (window.localStorage.getItem('history')) {
+              this.history=JSON.parse(window.localStorage.getItem('history')).reverse()
+              console.log(this.history);
+            }
+            let vm = this;
+            Bus.$on('his', (data)=>{
+              vm.history = data
+            })
+        },
+        updated:function () {
+
         }
 
 
