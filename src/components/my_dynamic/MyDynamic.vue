@@ -4,7 +4,10 @@
 
 <script>
     export default {
-        name: "MyDynamic"
+        name: "MyDynamic",
+      created:function(){
+        this.$emit('flash');
+      },
     }
 </script>
 

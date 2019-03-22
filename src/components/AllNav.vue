@@ -3,66 +3,95 @@
     <div class="container">
       <img src="../assets/logo_.png" alt="" style="display: inline-block;position: relative;top: -30px;">
       <ul style="display: inline;padding: 0">
-        <li class="item"><a href="#">首页</a></li>
+        <li class="item"><router-link to="/">首页</router-link></li>
         <li class="item"><a href="#">热门</a></li>
-        <li class="item"><a href="#">排行榜</a></li>
-        <li class="item"><a href="#">测评资讯</a></li>
+        <li class="item"><router-link to="/rank">排行榜</router-link></li>
+        <li class="item"><router-link to="/evaluation">测评资讯</router-link></li>
       </ul>
-      <ul style="display: none;padding: 0;float: right">
-        <li class="item"><a href="#">登录</a></li>
-        <li class="item"><a href="#">注册</a></li>
+      <ul v-bind:style="{'display':islogin ? 'none':'inline'}" style="padding: 0;float: right">
+        <li class="item"><router-link to="/login">登录</router-link></li>
+        <li class="item"><router-link to="/register">注册</router-link></li>
       </ul>
-      <ul style="display: inline;padding: 0;float: right">
-        <li class="item user-info"><a href="#"><img src="../assets/usericon.png" alt=""></a></li>
-        <li class="item"><a href="#">动态</a></li>
-        <li class="item to-write"><a href="#">写日记</a></li>
+      <ul v-bind:style="{'display':islogin ? 'inline':'none'}" style="padding: 0;float: right">
+        <li class="item user-info"><router-link to="/my_center"><img src="../assets/usericon.png" alt=""></router-link></li>
+        <li class="item"><router-link to="/dynamic">动态</router-link></li>
+        <li class="item to-write"><router-link to="/sharing_index">写日记</router-link></li>
       </ul>
       <ul style="display: none;padding: 0;float: right" class="wel">
-        <li class="item"><a href="#">退出登录</a></li>
-        <li class="item"><a href="#">我的动态</a></li>
-        <li class="item"><a href="#">个人中心</a></li>
+        <li class="item"><a @click="exitlogin">退出登录</a></li>
+        <li class="item"><router-link to="/my_dynamic">我的动态</router-link></li>
+        <li class="item"><router-link to="/my_center">个人中心</router-link></li>
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
+  import axios from 'axios'
     export default {
         name: "AllNav",
       data:function () {
         return{
-
+          islogin:this.GLOBAL.ISLOGIN,
+          token:""
+        }
+      },
+      watch:{
+        islogin:function () {
+          console.log(this.islogin);
         }
       },
       created:function(){
-
+        this.check_login();
+        this.$emit('flash');
       },
       // 在mounted的时候调用属性和方法是最好的时机
       mounted:function(){
         this.exit();
       },
       methods:{
+          check_login:function(){
+            let that=this;
+            this.token = window.localStorage.getItem("token");
+            if (this.token){
+              axios.post(this.GLOBAL.HOST+'user/login/',{
+                'token':this.token
+              }).then(function (response) {
+                let txt = JSON.parse(response.data);
+                if (parseInt(txt['status_code'])===10003){
+                  let info = txt['userInfo'][0];
+                  sessionStorage.setItem('userInfo',JSON.stringify(info));
+                  localStorage.setItem('islogin',true);
+                  that.GLOBAL.ISLOGIN=true;
+                }else if (parseInt(txt['status_code'])===10006){
+                  console.log(txt['status_text']);
+                  localStorage.setItem('token','');
+                  localStorage.setItem('userInfo','');
+                  localStorage.setItem('islogin','')
+                }else {
+                  console.log(txt['status_text']);
+                }
+              }).catch(function (err) {
+                console.log(err);
+              })
+            }else {
+              this.GLOBAL.ISLOGIN=false;
+            }
+          },
         //头像下拉&&退出登录
         exit:function () {
           let userinfo = document.querySelector('.user-info');
           let wel = document.querySelector('.wel');
           userinfo.onmouseover = function () {
             wel.style.display = 'inline';
-            // wel.classList.toggle('welexit');
             if (!wel.classList.contains('welcom')) {
-              console.log(wel.classList.contains('welcom'));
               wel.classList.add('welcom');
             }
 
           };
           userinfo.onmouseout = function () {
             wel.classList.remove('welcom');
-            // wel.classList.toggle('welexit');
             wel.style.display = 'none';
-            // let t1=setTimeout(function () {
-            //     wel.style.display='none';
-            //     // clearTimeout(t1);
-            // },1000);
           };
           wel.onmouseover = function () {
             wel.style.display = 'inline';
@@ -72,11 +101,18 @@
             wel.style.display = 'none';
           };
         },
+        exitlogin:function (){
+          localStorage.setItem('token','');
+          sessionStorage.setItem('userInfo','');
+          localStorage.setItem('islogin','');
+          this.GLOBAL.ISLOGIN=false;
+          this.islogin=false;
+          this.$router.push({path:'/'})
+        },
         //滚动监听
         rollStyle:function () {
 
         }
-
       }
     }
 </script>

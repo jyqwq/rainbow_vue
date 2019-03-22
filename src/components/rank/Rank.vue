@@ -4,7 +4,10 @@
 
 <script>
     export default {
-        name: "Rank"
+        name: "Rank",
+      created:function(){
+
+      },
     }
 </script>
 

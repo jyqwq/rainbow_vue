@@ -38,7 +38,10 @@
         "evaluation-information":EvaluationInformation,
         "recommended-volume":RecommendedVolume,
         "carousel":Carousel
-      }
+      },
+      created:function(){
+        this.$emit('flash')
+      },
     }
 </script>
 
