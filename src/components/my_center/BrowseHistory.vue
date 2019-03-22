@@ -1,5 +1,4 @@
 <template>
-
   <div style="zoom:1;overflow: hidden;">
     <!--右边浏览历史-->
     <!--浏览历史标题-->
@@ -89,7 +88,6 @@
     </div>
     <!--浏览历史——结束-->
   </div>
-
 </template>
 
 <script>
@@ -156,7 +154,7 @@
     text-align: center;
   }
   .news-item:hover .news-box {
-    background-color: rgba(255, 170, 170, 0.6);
+    background-color: #66B3F5;
     color: #fff;
   }
   .news-item:hover .news-box:before {
@@ -164,7 +162,7 @@
     width: 0;
     height: 0;
     border-top: 10px solid transparent;
-    border-right: 10px solid rgba(255, 170, 170, 0.6);
+    border-right: 10px solid #66B3F5;
     border-bottom: 10px solid transparent;
     position: absolute;
     left: -10px;
@@ -173,7 +171,7 @@
     margin: auto;
   }
   .news-item:hover .solid-circle {
-    background: rgba(255, 170, 170, 0.6);
+    background: #66B3F5;
   }
   .news-item .news-title {
     display: block;

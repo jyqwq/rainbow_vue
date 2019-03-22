@@ -4,7 +4,10 @@
 
 <script>
     export default {
-        name: "SharingIndex"
+        name: "SharingIndex",
+      created:function(){
+        this.$emit('flash');
+      },
     }
 </script>
 

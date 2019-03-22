@@ -37,10 +37,11 @@
   /*日记本*/
   .qz_nimg{
     margin: auto;
-    width: 200px;
+    width: 70px;
+    height: 70px;
   }
   .img_diary{
-    height: 100%;
+    /*width: 100%;*/
     margin: auto;
   }
   /*动画*/
