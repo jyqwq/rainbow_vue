@@ -4,7 +4,10 @@
 
 <script>
     export default {
-        name: "Evaluation"
+        name: "Evaluation",
+      created:function(){
+
+      },
     }
 </script>
 

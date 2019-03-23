@@ -19,6 +19,7 @@
 </template>
 
 <script>
+    import Bus from '../../bus.js'
     export default {
         name: "FilterButton",
         data:function () {
@@ -29,6 +30,8 @@
         methods:{
           filter(index) {
             this.activeClass = index;
+            window.sessionStorage.setItem('condition',index)
+            // Bus.$emit('btn', this.activeClass)
           }
         }
     }

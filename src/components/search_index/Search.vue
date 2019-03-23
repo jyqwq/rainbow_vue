@@ -5,7 +5,7 @@
         <search-logo></search-logo>
         <filter-button></filter-button>
         <search-input></search-input>
-        <popular ></popular>
+        <popular></popular>
         <model></model>
       </div>
     </div>
@@ -20,6 +20,7 @@
   import Popular from './Popular'
   import SearchInput from './SearchInput'
   import SearchLogo from './SearchLogo'
+
     export default {
         name: "Search",
       data:function(){
@@ -34,6 +35,7 @@
             'popular':Popular,
             'model':Model
         },
+
         // methods:{
         //   getter(msg) {
         //     this.flag=msg
