@@ -13,14 +13,25 @@
     <div class="row visible-xs sm_commend">量身推荐</div>
     <div class="row infirst">
       <!--ajax请求内容区域-->
+      <goods v-for="(i,index) in goods_data" :key="index"></goods>
     </div>
   </div>
 
 </template>
 
 <script>
-    export default {
-        name: "RecommendedVolume"
+  import Goods from './Goods'
+  export default {
+        name: "RecommendedVolume",
+    data:function (){
+      return{
+        i:null,
+        goods_data:['1','2','3','4']
+      }
+    },
+      components:{
+          "goods":Goods
+      }
     }
 </script>
 

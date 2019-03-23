@@ -205,6 +205,7 @@
             'telephone':this.telephone,
             'password':this.password
           }).then(function (response) {
+            console.log(response);
             let txt = JSON.parse(response.data);
             if (parseInt(txt['status_code'])===10003){
               let info = txt['userInfo'][0];

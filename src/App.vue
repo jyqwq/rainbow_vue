@@ -56,8 +56,8 @@ export default {
 </script>
 
 <style>
-.bod{
-  background: -webkit-linear-gradient(top, #d2e9fb 0.00%, #d2e9fb 60.00%);
-  background: linear-gradient(top, #d2e9fb 0.00%, #d2e9fb 60.00%);
-}
+/*.bod{*/
+  /*background: -webkit-linear-gradient(top, #d2e9fb 0.00%, #d2e9fb 60.00%);*/
+  /*background: linear-gradient(top, #d2e9fb 0.00%, #d2e9fb 60.00%);*/
+/*}*/
 </style>
