@@ -1,6 +1,6 @@
 <template>
   <!--我的信息-->
-  <div class="dairy_row" style="display: none">
+  <div :class="seflag==1?['text_active']:''" class="dairy_row">
     <div class="row row_margin">
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -52,11 +52,14 @@
       </div>
     </div>
   </div>
+
 </template>
+
 
 <script>
     export default {
-        name: "ModifyInformation"
+      name: "ModifyInformation",
+      props:['seflag']
     }
 </script>
 

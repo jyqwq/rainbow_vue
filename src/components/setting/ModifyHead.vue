@@ -1,6 +1,6 @@
 <template>
   <!--我的头像-->
-  <div class="test_row" style="display: none">
+  <div :class="seflag==2?['text_active']:''" class="test_row">
     <div class="row row_margin">
       <div class="col-xs-2 col-sm-4 col-md-5 col-lg-5 guide">
         <img src="" class="img-responsive" alt="Responsive image">
@@ -47,7 +47,8 @@
 
 <script>
     export default {
-        name: "ModifyHead"
+      name: "ModifyHead",
+      props:['seflag']
     }
 </script>
 

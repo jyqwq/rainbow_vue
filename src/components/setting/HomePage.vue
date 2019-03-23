@@ -1,6 +1,6 @@
 <template>
   <!--首页部分-->
-  <div class="dy_row text_active">
+  <div :class="seflag==0?['text_active']:''" class="dy_row text_active">
     <!--头像昵称-->
     <div class="row row_margin">
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1" style="height: 58px">
@@ -110,7 +110,8 @@
 
 <script>
     export default {
-        name: "HomePage"
+      name: "HomePage",
+      props:['seflag']
     }
 </script>
 

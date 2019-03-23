@@ -53,7 +53,7 @@
         'method':'check'
       })
         .then(function (response) {
-          console.log(response.data);
+          // console.log(response);
           that.person=response.data
         })
         .catch(function (error) {
