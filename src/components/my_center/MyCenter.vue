@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container qz_con">
+  <div  style="margin-top: 65px;min-height: 850px">
 
     <!--第一部分-->
     <div class="row qz_row">
@@ -63,7 +63,7 @@
     <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5"></div>
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
-        <button-more v-bind:margin_bottom="'更多 >'" v-bind:class="[primary_class,button_class]"></button-more>
+        <router-link to="/my_dynamic" class="button_primary button_qz" href="../setting/Setting.vue">更多 ></router-link>
       </div>
     </div>
 
@@ -79,7 +79,6 @@
   import NavCollection from './NavCollection'
   import NavAdmission from './NavAdmission'
   import OpenMine from './OpenMine'
-  import ButtonMore from './ButtonMore'
     export default {
       components:{
         'person-information':PersonInformation,
@@ -88,21 +87,29 @@
         'nav-collection':NavCollection,
         'nav-admission':NavAdmission,
         'open-mine':OpenMine,
-        'button-more':ButtonMore,
-      },
-      props:{
-
       },
       name: "MyCenter",
+      props:{},
       data: function () {
         return {
           flag:-1,
           seen:0,
           dynamic:[{"content":"彩虹日记","data":"2010101010","click":123,}],
-          primary_class:'button_primary',
-          button_class:'button_qz',
           currenView:'DynamicDiary',
         }
+      },
+      mounted: function () {
+        let that=this;
+        axios.get('http://192.168.2.66:8000/user/myDynamics/1/1/')
+          .then(function (response) {
+            console.log(response.data);
+            that.dynamic=response.data;
+            that.seen=0;
+            that.flag=-1
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
       },
       methods: {
         // tabChange:function(tabDynamic){
@@ -136,32 +143,14 @@
             })
         }
       },
-      mounted: function () {
-        let that=this;
-        axios.get('http://192.168.2.66:8000/user/myDynamics/1/1/')
-          .then(function (response) {
-            console.log(response.data);
-            that.dynamic=response.data;
-            that.seen=0;
-            that.flag=-1
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-      },
-      computed: {},
       watch: {},
+      computed: {},
       filter: {},
     }
 </script>
 
 <style scoped>
   /*全局*/
-  .qz_con{
-    margin-top: 50px;
-    padding: 0;
-    height: 1500px;
-  }
   .qz_row{
     margin: 15px;
   }
@@ -209,7 +198,35 @@
     cursor: pointer;
   }
   /*单个动态结束*/
+  /*结尾更多按钮—开始*/
+  .button_qz{
+    position: relative;
+    padding-right: 2em;
+    border-radius: .6em;
+    padding: .2em 1em .3em;
+    line-height: 1.618;
+    display: inline-block;
+    text-align: center;
+    text-align-last: center;
+    vertical-align: middle;
+    user-select: none;
+    touch-action: manipulation;
+    cursor: pointer;
+    transition: all .2s ease-out;
+    text-decoration: none;
+
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+  }
+  .button_primary {
+    background: rgba(220, 20, 60, 0.71);
+    color: #fff;
+    border: solid 2px rgba(220, 20, 60, 0.71);
+  }
+  .button_primary:hover{
+    background: whitesmoke;
+    text-decoration: none;
+    color: rgba(220, 20, 60, 0.71);
+  }
+  /*结尾更多按钮—结束*/
 </style>
-
-
-

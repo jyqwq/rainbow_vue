@@ -36,16 +36,12 @@
 <script>
   import axios from 'axios'
   export default {
-    components:{
-    },
     name: "PersonInformation",
     data: function () {
       return {
         person:''
       }
     },
-    created:function(){},
-    methods: {},
     mounted: function () {
       let userInfo=sessionStorage.getItem('userInfo');
       this.person=JSON.parse(userInfo);
@@ -62,9 +58,6 @@
       //     console.log(error);
       //   })
     },
-    computed: {},
-    watch: {},
-    filter: {}
   }
 </script>
 

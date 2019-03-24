@@ -7,7 +7,7 @@
         <img @click="ftwoChange" src="" class="img-responsive head_img" alt="Responsive image">
       </div>
       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-7 qz_nick">
-        <span class="font_nick">昵称</span>
+        <span class="font_nick">{{nick}}</span>
       </div>
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-3">
         <div @click="foneChange" class="button button--primary button--continue margin-top margin-bottom qz_edit">修改资料</div>
@@ -112,6 +112,15 @@
     export default {
       name: "HomePage",
       props:['seflag'],
+      data:function(){
+        return{
+          nick:'昵称'
+        }
+      },
+      mounted:function () {
+        let userInfo=sessionStorage.getItem('userInfo');
+        this.nick=JSON.parse(userInfo)['name']
+      },
       methods:{
         ftwoChange:function () {
           this.$emit('childByflag',2)//子传父（子组件里面写）
