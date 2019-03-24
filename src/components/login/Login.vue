@@ -208,7 +208,7 @@
             console.log(response);
             let txt = JSON.parse(response.data);
             if (parseInt(txt['status_code'])===10003){
-              let info = txt['userInfo'][0];
+              let info = txt['userInfo'];
               localStorage.setItem('token',response.headers.token);
               sessionStorage.setItem('userInfo',JSON.stringify(info));
               that.GLOBAL.ISLOGIN=true;

@@ -59,7 +59,7 @@
               }).then(function (response) {
                 let txt = JSON.parse(response.data);
                 if (parseInt(txt['status_code'])===10003){
-                  let info = txt['userInfo'][0];
+                  let info = txt['userInfo'];
                   sessionStorage.setItem('userInfo',JSON.stringify(info));
                   localStorage.setItem('islogin',true);
                   that.GLOBAL.ISLOGIN=true;
