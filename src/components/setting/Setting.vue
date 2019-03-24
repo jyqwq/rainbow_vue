@@ -15,7 +15,7 @@
       <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 content_sharing">
         <!--首页部分，我的信息，我的头像-->
         <!--':is'动态改变组件-->
-        <div :is="currenView" :seflag="seflag"></div>
+        <div :is="currenView" :seflag="seflag" v-on:childByflag="childByflag" v-on:tabChange="tabChange"></div>
       </div>
     </div>
 
@@ -50,6 +50,10 @@
         // childByTab: function (currenView) {
         //   this.currenView = currenView
         // }
+        // 子传父2.'childByTab'监听方法，父组件随子数据改变
+        childByflag: function (event) {
+          this.seflag = event;
+        }
       },
       watch:{}
     }

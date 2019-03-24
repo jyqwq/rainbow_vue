@@ -41,24 +41,26 @@
     name: "PersonInformation",
     data: function () {
       return {
-        person:{"name":''}
+        person:''
       }
     },
     created:function(){},
     methods: {},
     mounted: function () {
-      let that=this
-      axios.post('http://192.168.2.66:8000/user/personInfo/',{
-        'user_id':1,
-        'method':'check'
-      })
-        .then(function (response) {
-          // console.log(response);
-          that.person=response.data
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+      let userInfo=sessionStorage.getItem('userInfo');
+      this.person=JSON.parse(userInfo);
+      // let that=this;
+      // axios.post('http://192.168.2.66:8000/user/personInfo/',{
+      //   'user_id':1,
+      //   'method':'check'
+      // })
+      //   .then(function (response) {
+      //     // console.log(response);
+      //     that.person=response.data
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   })
     },
     computed: {},
     watch: {},

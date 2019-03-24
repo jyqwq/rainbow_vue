@@ -4,13 +4,13 @@
     <!--头像昵称-->
     <div class="row row_margin">
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1" style="height: 58px">
-        <img src="" class="img-responsive head_img" alt="Responsive image">
+        <img @click="ftwoChange" src="" class="img-responsive head_img" alt="Responsive image">
       </div>
       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-7 qz_nick">
-        <span class="font_nick">南浅</span>
+        <span class="font_nick">昵称</span>
       </div>
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-3">
-        <div class="button button--primary button--continue margin-top margin-bottom qz_edit">修改资料</div>
+        <div @click="foneChange" class="button button--primary button--continue margin-top margin-bottom qz_edit">修改资料</div>
         <a href="" class="button button--primary button--continue margin-top margin-bottom">个人空间 ></a>
       </div>
     </div>
@@ -111,7 +111,19 @@
 <script>
     export default {
       name: "HomePage",
-      props:['seflag']
+      props:['seflag'],
+      methods:{
+        ftwoChange:function () {
+          this.$emit('childByflag',2)//子传父（子组件里面写）
+          this.$emit('tabChange', 'ModifyHead')//子传父（子组件里面写）
+        },
+        foneChange:function () {
+          this.headpage=2;
+          this.infopage=1;
+          this.$emit('childByflag',1)//子传父（子组件里面写）
+          this.$emit('tabChange', 'ModifyInformation')//子传父（子组件里面写）
+        }
+      },
     }
 </script>
 
