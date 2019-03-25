@@ -21,6 +21,9 @@ import HotSearch from '@/components/rank/HotSearch'
 import MoodText from '@/components/sharing_index/MoodText'
 import EvaluationText from '@/components/sharing_index/EvaluationText'
 import DairyText from '@/components/sharing_index/DairyText'
+import DiaryList from '@/components/my_dynamic/DiaryList'
+import CollectionList from '@/components/my_dynamic/CollectionList'
+import AdmissionList from '@/components/my_dynamic/AdmissionList'
 
 import Global from '../components/Global'
 
@@ -106,8 +109,24 @@ const router = new Router({
     },
     {
       path: '/my_dynamic',
-      name: 'MyDynamic',
       component: MyDynamic,
+      children:[
+        {
+          path:'',
+          name: "DiaryList",
+          component:DiaryList
+        },
+        {
+          path:'collectionlist',
+          name:"CollectionList",
+          component:CollectionList
+        },
+        {
+          path:'admissionlist',
+          name: "AdmissionList",
+          component:AdmissionList
+        }
+      ]
     },
     {
       path: '/register',

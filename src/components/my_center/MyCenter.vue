@@ -1,6 +1,6 @@
 <template>
 
-  <div  style="margin-top: 65px;min-height: 850px">
+  <div  style="margin-top: 65px;min-height: 2000px">
 
     <!--第一部分-->
     <div class="row qz_row">

@@ -11,7 +11,7 @@
       </div>
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-3">
         <div @click="foneChange" class="button button--primary button--continue margin-top margin-bottom qz_edit">修改资料</div>
-        <a href="" class="button button--primary button--continue margin-top margin-bottom">个人空间 ></a>
+        <router-link to="/my_center" class="button button--primary button--continue margin-top margin-bottom">个人空间 ></router-link>
       </div>
     </div>
     <div class="qz_line" style="margin-top: 15px"></div>
