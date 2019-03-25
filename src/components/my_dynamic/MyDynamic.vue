@@ -19,23 +19,28 @@
         </div>
       </div>
       <div class="hidden-xs col-sm-1 col-md-1 col-lg-1"></div>
-
     </div>
 
     <!--个人中心导航栏-->
     <div class="flex">
       <ul class="main_ul">
         <li class="main_li">
-          <img src="../../assets/my_dynamic/nav_diary.png" class="img-responsive" alt="Responsive image" style="display: inline">
-          <span class="">日记本</span>
+          <router-link to="/my_dynamic">
+            <img src="../../assets/my_dynamic/nav_diary.png" class="img-responsive" alt="Responsive image" style="display: inline">
+            <span class="">日记本</span>
+          </router-link>
         </li>
         <li class="main_li">
-          <img src="../../assets/my_dynamic/nav_favorites.png" class="img-responsive" alt="Responsive image" style="display: inline">
-          <span class="">收藏夹</span>
+          <router-link to="/my_dynamic/collectionlist">
+            <img src="../../assets/my_dynamic/nav_favorites.png" class="img-responsive" alt="Responsive image" style="display: inline">
+            <span class="">收藏夹</span>
+          </router-link>
         </li>
         <li class="main_li">
-          <img src="../../assets/my_dynamic/nav_package.png" class="img-responsive" alt="Responsive image" style="display: inline">
-          <span class="">收纳盒</span>
+          <router-link to="/my_dynamic/admissionlist">
+            <img src="../../assets/my_dynamic/nav_package.png" class="img-responsive" alt="Responsive image" style="display: inline">
+            <span class="">收纳盒</span>
+          </router-link>
         </li>
         <div class="bar"></div>
       </ul>
@@ -80,7 +85,7 @@
     height: 50px;
     line-height: 50px;
     background-color: white;
-    position: absolute;
+    position: relative;
     /*margin: -25px 0 0 -25px;*/
   }
   .flex .main_ul {
