@@ -12,12 +12,16 @@
       },
       methods:{
         animateButton:function(e) {
+          let that=this;
           e.preventDefault;
+          e.target.disabled=true;
           // reset animation 复位动画
           e.target.classList.remove('animate');
           e.target.classList.add('animate');
           setTimeout(function() {
             e.target.classList.remove('animate');
+            that.$emit('rr');
+            e.target.disabled=false;
           }, 700);
         }
 
@@ -31,11 +35,11 @@
     display:inline-block;
     font-size:1em;
     padding:1em 2em;
-    margin-top:100px;
-    margin-bottom:60px;
+    margin-top:20px;
+    margin-bottom:20px;
     -webkit-appearance:none;
     appearance:none;
-    background-color:#ff3de8;
+    background-color:#f7c5c9;
     color:#fff;
     border-radius:4px;
     border:none;

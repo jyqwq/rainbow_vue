@@ -4,6 +4,9 @@
       <li role="presentation" :class="flag===1? 'shu_active':''" @click="flag=1"><router-link to="/sharing_index"><img src="../../assets/mood.png" alt="">&nbsp;&nbsp;心情</router-link></li>
       <li role="presentation" :class="flag===2? 'shu_active':''" @click="flag=2"><router-link to="/sharing_index/dairytext"><img src="../../assets/diary.png" alt="">&nbsp;&nbsp;日记</router-link></li>
       <li role="presentation" :class="flag===3? 'shu_active':''" @click="flag=3"><router-link to="/sharing_index/evaluationtext"><img src="../../assets/evaluation.png" alt="">&nbsp;&nbsp;测评</router-link></li>
+      <!--<li role="presentation" :class="flag===4? 'shu_active':''" @click="flag=4"><router-link to="/sharing_index/defeat"><img src="../../assets/evaluation.png" alt="">&nbsp;&nbsp;失败</router-link></li>-->
+      <!--<li role="presentation" :class="flag===5? 'shu_active':''" @click="flag=5"><router-link to="/sharing_index/success"><img src="../../assets/evaluation.png" alt="">&nbsp;&nbsp;成功</router-link></li>-->
+
     </ul>
   </div>
 </template>

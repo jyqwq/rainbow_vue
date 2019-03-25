@@ -9,14 +9,15 @@
       <div class="row row_margin pic_show" style="display: none;">
         <!--图片预览区-->
       </div>
-      <write-tags></write-tags>
-      <release-btn></release-btn>
+      <write-tags ref="mytag"></write-tags>
+      <release-btn @rr="release"></release-btn>
     </div>
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
   import WriteTags from './WriteTags'
   import ReleaseBtn from './ReleaseBtn'
   export default {
@@ -28,7 +29,34 @@
       methods:{
           num:function () {
             this.$refs.remind_text.innerText=140-(this.$refs.dy_text.value.length);
+          },
+        release:function () {
+          let that = this;
+          let content = this.$refs.dy_text.value;
+          let myDate = new Date();
+          if (content){
+            let tag = this.$refs.mytag.check();
+            let user_id = JSON.parse(sessionStorage.getItem('userInfo'))['user'];
+            axios.post(this.GLOBAL.HOST+'sharing/releaseSharing/',{
+              "type":"dynamic",
+              "content":content,
+              "tags":tag,
+              "date":myDate.getTime(),
+              "user_id":user_id
+            }).then(function (res) {
+              let txt = res.data;
+              if (parseInt(txt['status_code'])===10008){
+                that.$router.push({path:'/sharing_index/success'})
+              }else {
+                that.$router.push({path:'/sharing_index/defeat/'+txt['status_code']+'/'+txt['status_text']})
+              }
+            }).catch(function (err) {
+              console.log(err);
+            })
+          } else {
+            alert('写点什么吧~~~')
           }
+        }
       }
 
     }

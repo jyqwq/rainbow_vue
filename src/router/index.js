@@ -24,6 +24,8 @@ import DairyText from '@/components/sharing_index/DairyText'
 import DiaryList from '@/components/my_dynamic/DiaryList'
 import CollectionList from '@/components/my_dynamic/CollectionList'
 import AdmissionList from '@/components/my_dynamic/AdmissionList'
+import Success from '@/components/sharing_index/Success'
+import Defeat from '@/components/sharing_index/Defeat'
 
 import Global from '../components/Global'
 
@@ -62,7 +64,9 @@ const router = new Router({
     {
       path: '/evaluation',
       name: 'Evaluation',
-      component: Evaluation
+      components: {
+        login:Evaluation
+      }
     },
     {
       path: '/dynamic_detail',
@@ -86,12 +90,22 @@ const router = new Router({
         {
           path:'evaluationtext',
           name: "EvaluationText",
-          component:EvaluationText
+          component: EvaluationText
         },
         {
           path:'dairytext',
           name: "DairyText",
           component:DairyText
+        },
+        {
+          path:'success',
+          name: "Success",
+          component:Success
+        },
+        {
+          path:'defeat/:status_code/:status_text',
+          name: "Defeat",
+          component:Defeat
         }
       ]
     },
