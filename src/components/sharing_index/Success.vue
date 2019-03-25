@@ -5,8 +5,8 @@
       <br>
       <span class="succss_text"><strong>发布成功</strong></span>
       <br><br>
-      <button type="button" class="btn btn-success again_re">再发布</button>
-      <button type="button" class="btn btn-success back_from">查看动态</button>
+      <router-link to="/sharing_index"><button type="button" class="btn btn-success again_re">再发布</button></router-link>
+      <router-link to="/my_dynamic"><button type="button" class="btn btn-success back_from">查看动态</button></router-link>
     </div>
   </div>
 </template>

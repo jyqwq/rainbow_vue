@@ -5,11 +5,12 @@
       <br>
       <span class="succss_text"><strong>发布失败</strong></span>
       <br>
-      <span>很抱歉,由于一些奇奇怪怪的问题导致发布失败,请重试...</span>
-      <span class="defeat_message"></span>
+      <span style="font-size: 1.2em;font-family: 幼圆;">很抱歉,由于一些奇奇怪怪的问题导致发布失败,请重试...</span>
       <br><br>
-      <button type="button" class="btn btn-success again_re">再发布</button>
-      <button type="button" class="btn btn-success back_from">查看动态</button>
+      <span class="defeat_message">错误码:{{$route.params.status_code}} 错误信息:{{$route.params.status_text}}</span>
+      <br><br>
+      <router-link to="/sharing_index"><button type="button" class="btn btn-success again_re">再发布</button></router-link>
+      <router-link to="/my_dynamic"><button type="button" class="btn btn-success back_from">查看动态</button></router-link>
     </div>
   </div>
 </template>
@@ -30,5 +31,8 @@
     line-height: 48px;
     font-family: 幼圆;
     color: #e2b3b7;
+  }
+  .defeat_message{
+    color: darkgray;
   }
 </style>

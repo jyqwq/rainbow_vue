@@ -2,7 +2,7 @@
   <div class="row row_margin">
     <span class="content_margin">请添加标签</span><span class="remind_text">&nbsp;&nbsp;(添加标签让更多兴趣相仿的小伙伴看到你)</span>
     <div class="row my_label">
-      <ul class="my_label_list" style="margin-top: 10px">
+      <ul class="my_label_list" style="margin-top: 10px" ref="alltags">
         <li class="tag-item" @click="choose" v-for="(i,index) in tags" :key="index">{{i}}</li>
       </ul>
     </div>
@@ -34,6 +34,16 @@
             this.tags.push(event.target.value);
             event.target.value='';
           }
+        },
+        check:function () {
+          let all_tags='';
+          let t = (this.$refs.alltags).children;
+          for (let tag of t){
+            if (tag.classList.contains('tag-item-active')){
+              all_tags+=(tag.innerText+',')
+            }
+          }
+          return all_tags
         }
       }
     }
