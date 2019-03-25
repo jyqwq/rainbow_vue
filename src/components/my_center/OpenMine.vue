@@ -13,14 +13,7 @@
 
 <script>
     export default {
-      components:{
-      },
       name: "OpenMine",
-      data: function () {
-        return {
-        }
-      },
-      created:function(){},
       methods: {
         //滚动条匀速滑动
         anchor_slip:function () {
@@ -50,14 +43,7 @@
             }
           }, 1);
         }
-
       },
-      mounted: function () {
-
-      },
-      computed: {},
-      watch: {},
-      filter: {},
     }
 </script>
 

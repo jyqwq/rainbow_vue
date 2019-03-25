@@ -1,6 +1,6 @@
 <template>
 
-    <div class="row" style="margin-top: 80px">
+    <div class="row" style="margin-top: 80px;min-height: 850px">
       <!--左边导航-->
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 choose_sharing">
         <!--子传父1.'v-on'监听事件，随子组件数据改变-->
@@ -15,7 +15,7 @@
       <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 content_sharing">
         <!--首页部分，我的信息，我的头像-->
         <!--':is'动态改变组件-->
-        <div :is="currenView" :seflag="seflag"></div>
+        <div :is="currenView" :seflag="seflag" v-on:childByflag="childByflag" v-on:tabChange="tabChange"></div>
       </div>
     </div>
 
@@ -50,8 +50,11 @@
         // childByTab: function (currenView) {
         //   this.currenView = currenView
         // }
+        // 子传父2.'childByTab'监听方法，父组件随子数据改变
+        childByflag: function (event) {
+          this.seflag = event;
+        }
       },
-      watch:{}
     }
 </script>
 
