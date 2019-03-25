@@ -20,7 +20,7 @@
       <ul style="display: none;padding: 0;float: right" class="wel">
         <li class="item"><a @click="exitlogin">退出登录</a></li>
         <li class="item"><router-link to="/my_dynamic">我的动态</router-link></li>
-        <li class="item"><router-link to="/my_center">个人中心</router-link></li>
+        <li class="item"><router-link to="/setting">个人中心</router-link></li>
       </ul>
     </div>
   </nav>

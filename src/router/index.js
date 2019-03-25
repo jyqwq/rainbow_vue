@@ -15,6 +15,9 @@ import Detail from '@/components/search_detail/Detail'
 import Search from '@/components/search_index/Search'
 import Result from '@/components/search_result/Result'
 import Setting from '@/components/setting/Setting'
+import HotSearchProduct from '@/components/rank/HotSearchProduct'
+import HotSearchDynamic from '@/components/rank/HotSearchDynamic'
+import HotSearch from '@/components/rank/HotSearch'
 
 import Global from '../components/Global'
 
@@ -30,7 +33,32 @@ const router = new Router({
     {
       path: '/rank',
       name: 'Rank',
-      component: Rank
+      components:{
+        login:Rank
+      },
+      children:[
+        {
+          path:'/hotsearchproduct',
+          name: "HotSearchProduct",
+          components:{
+            rank:HotSearchProduct
+          }
+        },
+        {
+          path:'/hotsearchdynamic',
+          name: "HotSearchDynamic",
+          components:{
+            rank:HotSearchDynamic
+          }
+        },
+        {
+          path:'/hotsearch',
+          name: "HotSearch",
+          components:{
+            rank:HotSearch
+          }
+        }
+      ]
     },
     {
       path: '/evaluation',
