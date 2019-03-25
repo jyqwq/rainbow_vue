@@ -6,13 +6,13 @@
         <div class="hidden-xs col-sm-2 col-md-2 col-lg-2"></div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 xs_padding">
-            <div role="presentation" class="my_active"><router-link to="/hotsearch"><span class="glyphicon glyphicon-fire" aria-hidden="true">&nbsp;</span>实时热门</router-link></div>
+            <div role="presentation" :class="flag===1? 'my_active':''" @click="flag=1"><router-link to="/rank"><span class="glyphicon glyphicon-fire" aria-hidden="true">&nbsp;</span>实时热门</router-link></div>
           </div>
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 xs_padding">
-            <div role="presentation"><router-link to="/hotsearchdynamic"><span class="glyphicon glyphicon-book" aria-hidden="true">&nbsp;</span>热门日记</router-link></div>
+            <div role="presentation" :class="flag===2? 'my_active':''" @click="flag=2"><router-link to="/rank/hotsearchdynamic"><span class="glyphicon glyphicon-book" aria-hidden="true">&nbsp;</span>热门日记</router-link></div>
           </div>
           <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 xs_padding">
-            <div role="presentation"><router-link to="/hotsearchproduct"><span class="glyphicon glyphicon-tint" aria-hidden="true">&nbsp;</span>热门妆品</router-link></div>
+            <div role="presentation" :class="flag===3? 'my_active':''" @click="flag=3"><router-link to="/rank/hotsearchproduct"><span class="glyphicon glyphicon-tint" aria-hidden="true">&nbsp;</span>热门妆品</router-link></div>
           </div>
         </div>
         <div class="hidden-xs col-sm-2 col-md-2 col-lg-2"></div>
@@ -24,7 +24,12 @@
 
 <script>
     export default {
-        name: "RankNav"
+        name: "RankNav",
+      data:function () {
+        return{
+          flag:1
+        }
+      }
     }
 </script>
 
