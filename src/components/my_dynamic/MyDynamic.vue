@@ -24,16 +24,16 @@
 
     <!--个人中心导航栏-->
     <div class="flex">
-      <ul>
-        <li>
+      <ul class="main_ul">
+        <li class="main_li">
           <img src="../../assets/my_dynamic/nav_diary.png" class="img-responsive" alt="Responsive image" style="display: inline">
           <span class="">日记本</span>
         </li>
-        <li>
+        <li class="main_li">
           <img src="../../assets/my_dynamic/nav_favorites.png" class="img-responsive" alt="Responsive image" style="display: inline">
           <span class="">收藏夹</span>
         </li>
-        <li>
+        <li class="main_li">
           <img src="../../assets/my_dynamic/nav_package.png" class="img-responsive" alt="Responsive image" style="display: inline">
           <span class="">收纳盒</span>
         </li>
@@ -41,170 +41,15 @@
       </ul>
     </div>
 
-    <!--日记本页-->
-    <div class="qz_dynamic"></div>
+    <router-view></router-view>
 
-    <!--收藏夹页-->
-    <div class="qz_collect"></div>
-
-    <!--收纳盒页-->
-    <div class="row qz_set">
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1">
-            <ul class="nav nav-tabs nav-stacked shu_nav row_margin">
-              <li role="presentation" class="shu_active"><a href="#"><img src="" alt=""><br>全部</a></li>
-              <li role="presentation"><a href="#"><img src="" alt=""><br>临期</a></li>
-              <li role="presentation"><a href="#"><img src="" alt=""><br>添加</a></li>
-            </ul>
-          </div>
-          <div class="col-xs-10 col-sm-10 col-md-10 col-lg-11 set_siu">
-            <div class="row row_margin dy_row text_active">
-              <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-              <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <!--收纳盒主体-->
-                  <div class="cos_body">
-                    <div class="row qz_row">
-                      <div class="hidden-xs col-sm-1 col-md-1 col-lg-1"></div>
-                      <!--<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">-->
-                        <!--<div class="row">-->
-                          <!--<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">-->
-                            <!--<div class="dedli_pic">-->
-                              <!--<img src="" class="img-responsive anima_pul" alt="Responsive image">-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="col-xs-6 col-sm-8 col-md-9 col-lg-8">-->
-                            <!--<div class="dedli_inf">-->
-                              <!--<a class="qz_a" href="#">-->
-                                <!--<span class="qz_dis">理肤泉舒颜紧致眼霜</span><br>-->
-                                <!--<span class="qz_dip">英文名称：LA ROCHE-POSAY REDERMIC YEUX</span><br>-->
-                                <!--<span class="qz_dia">剩余365天</span>-->
-                              <!--</a>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="col-xs-2 col-sm-2 col-md-1 col-lg-2 animal_swi">-->
-                            <!--<a href="#"><span class="qz_das">编辑</span></a>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                      <div class="hidden-xs col-sm-1 col-md-1 col-lg-1"></div>
-                    </div>
-                    <!--分割线-->
-                    <div class="qz_line"></div>
-                  </div>
-                </div>
-              </div>
-              <!--收纳盒尾部-->
-              <div class="row qz_row">
-                <div class="col-xs-9 col-sm-10 col-md-11 col-lg-11"></div>
-                <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
-                  <a class="qz_a" href="#">更多</a>
-                  <span class="glyphicon glyphicon-menu-right qz_gly" aria-hidden="true"></span>
-                </div>
-              </div>
-            </div>
-            <div class="row row_margin dairy_row" style="display: none">
-              <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-              <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <!--收纳盒主体-->
-                  <div class="cos_body">
-                    <div class="row qz_row">
-                      <div class="hidden-xs col-sm-1 col-md-1 col-lg-1"></div>
-                      <!--<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">-->
-                        <!--<div class="row">-->
-                          <!--<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">-->
-                            <!--<div class="dedli_pic">-->
-                              <!--<img src="" class="img-responsive anima_pul" alt="Responsive image">-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="col-xs-6 col-sm-8 col-md-9 col-lg-8">-->
-                            <!--<div class="dedli_inf">-->
-                              <!--<a class="qz_a" href="#">-->
-                                <!--<span class="qz_dis">理肤泉舒颜紧致眼霜</span><br>-->
-                                <!--<span class="qz_dip">英文名称：LA ROCHE-POSAY REDERMIC YEUX</span><br>-->
-                                <!--<span class="qz_dia">剩余365天</span>-->
-                              <!--</a>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="col-xs-2 col-sm-2 col-md-1 col-lg-2 animal_swi">-->
-                            <!--<a href="#"><span class="qz_das">编辑</span></a>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                      <div class="hidden-xs col-sm-1 col-md-1 col-lg-1"></div>
-                    </div>
-                    <!--分割线-->
-                    <div class="qz_line"></div>
-                  </div>
-                </div>
-              </div>
-              <!--收纳盒尾部-->
-              <div class="row qz_row">
-                <div class="col-xs-9 col-sm-10 col-md-11 col-lg-11"></div>
-                <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
-                  <a class="qz_a" href="#">更多</a>
-                  <span class="glyphicon glyphicon-menu-right qz_gly" aria-hidden="true"></span>
-                </div>
-              </div>
-            </div>
-            <div class="row row_margin test_row" style="display: none">
-              <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
-              <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                  <!--收纳盒主体-->
-                  <div class="cos_body">
-                    <div class="row qz_row">
-                      <div class="hidden-xs col-sm-1 col-md-1 col-lg-1"></div>
-                      <!--<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">-->
-                        <!--<div class="row">-->
-                          <!--<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">-->
-                            <!--<div class="dedli_pic">-->
-                              <!--<img src="" class="img-responsive anima_pul" alt="Responsive image">-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="col-xs-6 col-sm-8 col-md-9 col-lg-8">-->
-                            <!--<div class="dedli_inf">-->
-                              <!--<a class="qz_a" href="#">-->
-                                <!--<span class="qz_dis">理肤泉舒颜紧致眼霜</span><br>-->
-                                <!--<span class="qz_dip">英文名称：LA ROCHE-POSAY REDERMIC YEUX</span><br>-->
-                                <!--<span class="qz_dia">剩余365天</span>-->
-                              <!--</a>-->
-                            <!--</div>-->
-                          <!--</div>-->
-                          <!--<div class="col-xs-2 col-sm-2 col-md-1 col-lg-2 animal_swi">-->
-                            <!--<a href="#"><span class="qz_das">编辑</span></a>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                      <div class="hidden-xs col-sm-1 col-md-1 col-lg-1"></div>
-                    </div>
-                  </div>
-                  分割线
-                  <div class="qz_line"></div>
-                </div>
-              </div>
-              <!--收纳盒尾部-->
-              <div class="row qz_row">
-                <div class="col-xs-9 col-sm-10 col-md-11 col-lg-11"></div>
-                <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
-                  <a class="qz_a" href="#">更多</a>
-                  <span class="glyphicon glyphicon-menu-right qz_gly" aria-hidden="true"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
     export default {
-        name: "MyDynamic",
+      name: "MyDynamic",
       data:function(){
         return{
           name:'',
@@ -238,13 +83,13 @@
     position: absolute;
     /*margin: -25px 0 0 -25px;*/
   }
-  .flex ul {
+  .flex .main_ul {
     display: flex;
     padding: 0;
     margin: 0;
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
   }
-  .flex ul li {
+  .flex .main_ul .main_li {
     flex: 1;
     list-style: none;
     text-align: center;
@@ -254,20 +99,20 @@
     transition: 0.5s ease;
     cursor: pointer;
   }
-  .flex ul li:hover {
+  .flex .main_ul .main_li:hover {
     background-color: rgba(255, 255, 255, 0.25);
     color: #f564a9;
   }
-  .flex ul li:nth-of-type(1):hover + * + * + .bar {
+  .flex .main_ul .main_li:nth-of-type(1):hover + * + * + .bar {
     left: 4%;
   }
-  .flex ul li:nth-of-type(2):hover + * + .bar {
+  .flex .main_ul .main_li:nth-of-type(2):hover + * + .bar {
     left: 40%;
   }
-  .flex ul li:nth-of-type(3):hover + .bar {
+  .flex .main_ul .main_li:nth-of-type(3):hover + .bar {
     left: 70%;
   }
-  .flex ul .bar {
+  .flex .main_ul .bar {
     width: 25%;
     background-color: #f564a9;
     height: 3px;
@@ -280,7 +125,7 @@
 
   /*原本样式开始*/
   .qz_head{
-    margin: 15px 0px;
+    margin: 15px 0;
   }
   .wid_nav{
     background: #FFE3E5;
@@ -291,7 +136,7 @@
 
   /*首页样式*/
   .qz_row{
-    margin: 15px 0px;
+    margin: 15px 0;
   }
   .qz_line{
     height: 1px;
@@ -369,14 +214,12 @@
 
   /*收藏夹页样式*/
   .qz_collect{
-    display: none;
-    margin: 15px 0px;
+    margin: 15px 0;
   }
 
   /*收纳盒页样式*/
   .qz_set{
-    display: none;
-    margin: 15px 0px;
+    margin: 15px 0;
   }
   /*原本样式结束*/
 
