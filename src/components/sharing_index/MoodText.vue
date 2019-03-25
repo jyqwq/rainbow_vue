@@ -1,5 +1,5 @@
 <template>
-
+<div>MoodText</div>
 </template>
 
 <script>

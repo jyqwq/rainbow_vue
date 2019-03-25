@@ -4,7 +4,7 @@
     <div class="row">
       <div class="hidden-xs col-sm-5 col-md-5 col-lg-5"></div>
       <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 search_div">
-        <button type="button" class="btn btn-primary btn-lg btn_search">开启搜索之旅</button>
+        <router-link to="/search_index"><button type="button" class="btn btn-primary btn-lg btn_search">开启搜索之旅</button></router-link>
       </div>
       <div class="hidden-xs col-sm-5 col-md-5 col-lg-5"></div>
     </div>
@@ -12,7 +12,7 @@
 
   <div class="container min_width">
     <ranknav></ranknav>
-    <router-view name="rank"></router-view>
+    <router-view></router-view>
   </div>
 
 

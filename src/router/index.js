@@ -18,6 +18,9 @@ import Setting from '@/components/setting/Setting'
 import HotSearchProduct from '@/components/rank/HotSearchProduct'
 import HotSearchDynamic from '@/components/rank/HotSearchDynamic'
 import HotSearch from '@/components/rank/HotSearch'
+import MoodText from '@/components/sharing_index/MoodText'
+import EvaluationText from '@/components/sharing_index/EvaluationText'
+import DairyText from '@/components/sharing_index/DairyText'
 
 import Global from '../components/Global'
 
@@ -32,31 +35,24 @@ const router = new Router({
     },
     {
       path: '/rank',
-      name: 'Rank',
       components:{
         login:Rank
       },
       children:[
         {
-          path:'/hotsearchproduct',
+          path:'hotsearchproduct',
           name: "HotSearchProduct",
-          components:{
-            rank:HotSearchProduct
-          }
+          component:HotSearchProduct
         },
         {
-          path:'/hotsearchdynamic',
+          path:'hotsearchdynamic',
           name: "HotSearchDynamic",
-          components:{
-            rank:HotSearchDynamic
-          }
+          component:HotSearchDynamic
         },
         {
-          path:'/hotsearch',
+          path:'',
           name: "HotSearch",
-          components:{
-            rank:HotSearch
-          }
+          component:HotSearch
         }
       ]
     },
@@ -77,8 +73,24 @@ const router = new Router({
     },
     {
       path: '/sharing_index',
-      name: 'SharingIndex',
       component: SharingIndex,
+      children:[
+        {
+          path:'',
+          name: "MoodText",
+          component:MoodText
+        },
+        {
+          path:'evaluationtext',
+          name: "EvaluationText",
+          component:EvaluationText
+        },
+        {
+          path:'dairytext',
+          name: "DairyText",
+          component:DairyText
+        }
+      ]
     },
     {
       path: '/login',
