@@ -65,8 +65,9 @@
         }
       },
       mounted:function () {
+        let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
         let that = this;
-        axios.get(this.GLOBAL.HOST+'user/myDynamics/1/1/')
+        axios.get(this.GLOBAL.HOST+'user/myDynamics/'+user_id+'/1/')
           .then(function (response) {
             that.res=response.data;
           })
