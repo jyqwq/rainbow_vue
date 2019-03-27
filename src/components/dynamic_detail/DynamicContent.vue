@@ -39,9 +39,9 @@
           </div>
           <div class="row margin_top">
             <ul class="nav">
-              <li class="dy_c_nav"><a><img :src="colimg" alt="" class="dy_c" @click="tocol">&nbsp;<span>{{i.cols}}</span></a></li>
+              <li class="dy_c_nav"><a><img :src="colimg" alt="" class="dy_c" @click="tocol">&nbsp;<span ref="colnum">{{parseInt(i.cols)}}</span></a></li>
               <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="" class="dy_p">&nbsp;<span>{{i.com}}</span></a></li>
-              <li class="dy_c_nav"><a><img :src="fbsimg" alt="" class="dy_f">&nbsp;<span>{{i.fbs}}</span></a></li>
+              <li class="dy_c_nav"><a><img :src="fbsimg" alt="" class="dy_f" @click="tofbs">&nbsp;<span ref="fbsnum">{{i.fbs}}</span></a></li>
             </ul>
           </div>
         </div>
@@ -86,7 +86,7 @@
             console.log(err);
           })
         },
-        getcol:function () {
+        getfbs:function () {
           let that = this;
           axios.post(this.GLOBAL.HOST+'user/viewCompliment/',{
             "method":"check",
@@ -105,13 +105,12 @@
             console.log(err);
           })
         },
-        getfbs:function () {
+        getcol:function () {
           let that = this;
           axios.post(this.GLOBAL.HOST+'user/viewCollections/',{
             "method":"check",
             "target":[{"type":this.type,"id":this.id,"user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']}]
           }).then(function (res) {
-            console.log(res.data[0]);
             if (res.data[0]['status_code']==='10017'){
               console.log('未收藏');
               that.iscol=false
@@ -133,7 +132,79 @@
               "type":this.type,
               "id":this.id,
               "user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']
-            }).then(fun )
+            }).then(function (res) {
+              console.log(res);
+              if (res.data['status_code']==='10010'){
+                that.$refs.colnum[0].innerHTML--;
+                that.iscol=false;
+                that.colimg='../../../static/dynamic/col.png'
+              }else {
+                alert(res.data['status_text'])
+              }
+            } ).catch(function (err) {
+              console.log(err);
+            })
+          }else {
+            axios.post(this.GLOBAL.HOST+'user/viewCollections/',{
+              "method":"add",
+              "type":this.type,
+              "id":this.id,
+              "user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user'],
+              "date":myDate.getTime()
+            }).then(function (res) {
+              console.log(res);
+              if (res.data['status_code']==='10015'){
+                that.$refs.colnum[0].innerHTML++;
+                that.iscol=true;
+                that.colimg='../../../static/dynamic/iscol.png'
+              }else {
+                alert(res.data['status_text'])
+              }
+            } ).catch(function (err) {
+              console.log(err);
+            })
+          }
+        },
+        tofbs:function () {
+          let myDate = new Date();
+          let that = this;
+          if (this.isfbs){
+            axios.post(this.GLOBAL.HOST+'user/viewCompliment/',{
+              "method":"del",
+              "type":this.type,
+              "id":this.id,
+              "user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']
+            }).then(function (res) {
+              console.log(res);
+              if (res.data['status_code']==='10010'){
+                that.$refs.fbsnum[0].innerHTML--;
+                that.isfbs=false;
+                that.fbsimg='../../../static/dynamic/fbs.png'
+              }else {
+                alert(res.data['status_text'])
+              }
+            } ).catch(function (err) {
+              console.log(err);
+            })
+          }else {
+            axios.post(this.GLOBAL.HOST+'user/viewCompliment/',{
+              "method":"add",
+              "type":this.type,
+              "id":this.id,
+              "user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user'],
+              "date":myDate.getTime()
+            }).then(function (res) {
+              console.log(res);
+              if (res.data['status_code']==='10018'){
+                that.$refs.fbsnum[0].innerHTML++;
+                that.isfbs=true;
+                that.fbsimg='../../../static/dynamic/isfbs.png'
+              }else {
+                alert(res.data['status_text'])
+              }
+            } ).catch(function (err) {
+              console.log(err);
+            })
           }
         }
       }
