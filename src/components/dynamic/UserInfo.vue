@@ -44,7 +44,9 @@
     text-align: center;
     margin-top: 5px;
   }
-
+  .user_fans{
+    margin-left: 8px;
+  }
 
   .dy_user_nav{
     float: left;

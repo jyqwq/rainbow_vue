@@ -1,9 +1,10 @@
 <template>
-  <button class="bubbly-button" @click="animateButton">发  布</button>
+  <button class="bubbly-button" @click="animateButton">{{name}}</button>
 </template>
 
 <script>
     export default {
+      props:['name'],
         name: "ReleaseBtn",
       data:function () {
         return{
@@ -18,10 +19,11 @@
           // reset animation 复位动画
           e.target.classList.remove('animate');
           e.target.classList.add('animate');
-          setTimeout(function() {
+          let a = setTimeout(function() {
             e.target.classList.remove('animate');
             that.$emit('rr');
             e.target.disabled=false;
+            clearTimeout(a)
           }, 700);
         }
 
@@ -47,6 +49,11 @@
     position:relative;
     transition:transform ease-in 0.1s,box-shadow ease-in 0.25s;
     box-shadow:0 2px 15px rgba(255,0,251,0.5);
+  }
+  .bubbly-button:hover{
+    background-color: #fff;
+    color: #f7c5c9;
+    transition: 0.5s
   }
   .bubbly-button:focus {
     outline:0;

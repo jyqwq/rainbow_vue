@@ -1,12 +1,16 @@
 <template>
   <div class="row all_dy dy_margin re_dy">
-    <a href="#"><button type="button" class="btn btn-success to_sharing"><strong>去写日记</strong></button></a>
+    <div style="margin-left: 230px;margin-top: 40px;"><router-link to="/sharing_index"><release-btn :name="'写  日  记'"></release-btn></router-link></div>
   </div>
 </template>
 
 <script>
+  import ReleaseBtn from '../sharing_index/ReleaseBtn'
     export default {
-        name: "ToWrite"
+        name: "ToWrite",
+      components:{
+          'release-btn':ReleaseBtn
+      }
     }
 </script>
 
@@ -24,17 +28,5 @@
     height: 150px;
     background-image: url("../../assets/dytwbg.gif");
     background-repeat: round;
-  }
-  .to_sharing{
-    line-height: 35px;
-    width: 100px;
-    border: lightpink;
-    background: lightpink;
-    margin-left: 230px;
-    margin-top: 60px;
-  }
-  .to_sharing:hover{
-    border: #eea9b2;
-    background: #eea9b2;
   }
 </style>

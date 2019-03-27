@@ -6,8 +6,8 @@
       </div>
       <div class="col-lg-6" style="margin-top: 90px">
         <to-write></to-write>
-        <dynamic-nav></dynamic-nav>
-        <simple-dynamic></simple-dynamic>
+        <dynamic-nav v-bind:flag="flag" v-on:upflag="getNewFlag"></dynamic-nav>
+        <simple-dynamic v-bind:flag="flag"></simple-dynamic>
       </div>
       <div class="col-lg-3" style="margin-top: 90px">
         <bulletin-board></bulletin-board>
@@ -34,6 +34,21 @@
         'simple-dynamic':SimpleDynamic,
         'bulletin-board':BulletinBoard,
         'hot-tags':HotTags
+      },
+      data:function () {
+        return{
+          flag:1
+        }
+      },
+      watch:{
+          flag:function () {
+
+          }
+      },
+      methods:{
+        getNewFlag: function(newFlag){
+          this.flag = newFlag;
+        }
       }
     }
 </script>

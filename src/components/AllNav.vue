@@ -36,11 +36,6 @@
           token:""
         }
       },
-      watch:{
-        islogin:function () {
-          console.log(this.islogin);
-        }
-      },
       created:function(){
         this.check_login();
         this.$emit('flash');

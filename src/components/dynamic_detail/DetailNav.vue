@@ -7,7 +7,7 @@
       <div role="presentation" class="tag-item"><a class="dy_m_nav one_tag follow" @click="tofollow">{{isfollow? '已关注':'关注'}}</a></div>
     </div>
     <div class="col-lg-4 xs_padding">
-      <div role="presentation" class="tag-item"><a class="dy_m_nav one_tag back">返回</a></div>
+      <div role="presentation" class="tag-item"><a class="dy_m_nav one_tag back" @click="back">返回</a></div>
     </div>
   </div>
 </template>
@@ -88,6 +88,9 @@
           }else {
             this.$router.push({path:'/login'})
           }
+        },
+        back:function () {
+          this.$router.go(-1)
         }
       }
     }

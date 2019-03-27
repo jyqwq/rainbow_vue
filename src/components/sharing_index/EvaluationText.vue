@@ -20,7 +20,7 @@
           <!--图片预览区-->
         </div>
         <write-tags ref="mytag"></write-tags>
-        <release-btn @rr="release"></release-btn>
+        <release-btn :name="'发  布'" @rr="release"></release-btn>
       </div>
     </div>
     <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
