@@ -1,24 +1,30 @@
 <template>
   <!--收藏夹页-->
-  <div style="zoom:1;overflow: hidden;margin-top: 50px">
-    <!--动态-->
-    <div class="row all_dy dy_margin">
+  <div class="qz_collect" style="zoom:1;overflow: hidden;margin-top: 50px">
+    <div v-if="res.status_code==='10017'"></div>
+    <div v-else v-for="(dy,index) in res" :key="index" class="row all_dy dy_margin">
       <div class="row">
         <div class="col-lg-1"></div>
         <div class="col-lg-1 dy_c_content dy_c_icon"><img src="" class="img-responsive" alt="Responsive image"></div>
         <div class="col-lg-8 dy_c_content" style="overflow: hidden">
           <div class="row">
-            <span><strong style="font-size: 1.1em">user_nickname</strong></span>
+            <span><strong style="font-size: 1.1em">昵称</strong></span>
             <br>
             <div class="font_time" style="color: darkgrey;font-size: 0.9em">
-              <span class="rel_time">time</span>
+              <span class="rel_time">{{dy.date}}</span>
             </div>
-            <div class="dy_tags"></div>
+            <div class="dy_tags">
+              <div class="one_tag">{{dy.tags}}</div>
+            </div>
           </div>
           <div class="row dy_c_content to_one">
-            <div class="qz_dinf">words</div>
+            <!--动态-->
+            <div v-if="dy.type==='dynamic'" class="qz_dinf">{{dy.content}}</div>
+            <!--日记-->
+            <span v-if="dy.type==='dairy'" style="font-size: 1.1em"><strong>{{dy.title}}</strong><br>{{dy.ceshiceshi}}</span>
+            <!--测评-->
+            <span v-if="dy.type==='test'" style="font-size: 1.1em"><strong>{{dy.content}}</strong><br>{{dy.subtitle[0].title}}<br>{{dy.subtitle[1].title}}</span>
           </div>
-          <span class="font_full">展开全文</span>
           <div class="row">
             <div class="col-lg-5">
               <div class="row dy_c_content">
@@ -28,118 +34,51 @@
           </div>
           <div class="row margin_top">
             <ul class="nav">
-              <li class="dy_c_nav"><a><img src="" alt="${col.alt}" class="dy_c">&nbsp;<span>cols</span></a></li>
-              <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="1" class="dy_p">&nbsp;<span>cots</span></a></li>
-              <li class="dy_c_nav"><a><img src="" alt="${com.alt}" class="dy_f">&nbsp;<span>fbs</span></a></li>
+              <li class="dy_c_nav"><a><img src="" alt="${col.alt}" class="dy_c">&nbsp;<span>{{dy.cols}}</span></a></li>
+              <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="1" class="dy_p">&nbsp;<span>{{dy.com}}</span></a></li>
+              <li class="dy_c_nav"><a><img src="" alt="${com.alt}" class="dy_f">&nbsp;<span>{{dy.fbs}}</span></a></li>
             </ul>
           </div>
         </div>
         <div class="col-lg-2 margin_top">
-          <div class="dy_type" style="display: none">dynamic</div>
-          <div class="dy_id" style="display: none">id</div>
+          <div class="dy_type" style="display: none">{{dy.tags}}</div>
+          <div class="dy_id" style="display: none">{{dy.id}}</div>
           <img src="../../assets/my_dynamic/dy_like.png" alt="">
         </div>
       </div>
+      <!--分割线-->
+      <div class="qz_line"></div>
     </div>
-    <!--分割线-->
-    <div class="qz_line"></div>
-    <!--日记-->
-    <div class="row all_dy dy_margin">
-      <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-1 dy_c_content dy_c_icon"><img src="" class="img-responsive" alt="Responsive image"></div>
-        <div class="col-lg-8 dy_c_content" style="overflow: hidden">
-          <div class="row">
-            <span><strong style="font-size: 1.1em">user_nickname</strong></span>
-            <br>
-            <div class="font_time" style="color: darkgrey;font-size: 0.9em">
-              <span class="rel_time">time</span>
-            </div>
-            <div class="dy_tags"></div>
-          </div>
-          <div class="row dy_c_content to_one">
-            <span style="font-size: 1.1em"><strong>words</strong></span>
-            <br>
-            <span>new_col</span>
-          </div>
-          <div class="row">
-            <div class="col-lg-5">
-              <div class="row dy_c_content">
-                <img src="" class="img-responsive" alt="Responsive image">
-              </div>
-            </div>
-          </div>
-          <div class="row margin_top">
-            <ul class="nav">
-              <li class="dy_c_nav"><a><img src="" alt="${col.alt}" class="dy_c">&nbsp;<span>cols</span></a></li>
-              <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="1" class="dy_p">&nbsp;<span>cots</span></a></li>
-              <li class="dy_c_nav"><a><img src="" alt="${com.alt}" class="dy_f">&nbsp;<span>fbs</span></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-2 margin_top">
-          <div class=" dy_type" style="display: none">journal</div>
-          <div class="dy_id" style="display: none">id</div>
-          <img src="../../assets/my_dynamic/dy_diary.png" alt="">
-        </div>
-      </div>
-    </div>
-    <!--分割线-->
-    <div class="qz_line"></div>
-    <!--测评-->
-    <div class="row all_dy dy_margin">
-      <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-1 dy_c_content dy_c_icon">
-          <img src="" class="img-responsive" alt="Responsive image">
-        </div>
-        <div class="col-lg-8 dy_c_content"  style="overflow: hidden">
-          <div class="row">
-            <span><strong style="font-size: 1.1em">user_nickname</strong></span>
-            <br>
-            <div class="font_time" style="color: darkgrey;font-size: 0.9em">
-              <span class="rel_time">time</span>
-            </div>
-            <div class="dy_tags"></div>
-          </div>
-          <div class="row dy_c_content to_one">
-            <span style="font-size: 1.1em"><strong>words</strong></span>
-            <br>
-            <span>c[0]</span>
-            <br>
-            <span>c[1]</span>
-          </div>
-          <div class="row">
-            <div class="col-lg-5">
-              <div class="row dy_c_content">
-                <img src="" class="img-responsive" alt="Responsive image">
-              </div>
-            </div>
-
-          </div>
-          <div class="row margin_top">
-            <ul class="nav">
-              <li class="dy_c_nav"><a><img src="" alt="${col.alt}" class="dy_c">&nbsp;<span>cols</span></a></li>
-              <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="1" class="dy_p">&nbsp;<span>cots</span></a></li>
-              <li class="dy_c_nav"><a><img src="" alt="${com.alt}" class="dy_f">&nbsp;<span>fbs</span></a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-2 margin_top">
-          <div class="dy_type" style="display: none">test</div>
-          <div class="dy_id" style="display: none">id</div>
-          <img src="../../assets/my_dynamic/dy_note.png" alt="">
-        </div>
-      </div>
-    </div>
-    <!--分割线-->
-    <div class="qz_line"></div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
     export default {
-        name: "CollectionList"
+      name: "CollectionList",
+      data:function(){
+        return{
+          res:''
+        }
+      },
+      mounted:function () {
+        let that = this;
+        axios.post(this.GLOBAL.HOST+'user/viewCollections/',{
+          "method":"check",
+          "target":[
+            {"type":"dynamic","user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']},
+            {"type":"dairy","user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']},
+            {"type":"test","user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']},
+            ]
+        })
+          .then(function (response) {
+            that.res=response.data;
+            console.log(that.res);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+      }
     }
 
 </script>
