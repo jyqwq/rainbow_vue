@@ -1,23 +1,38 @@
 <template>
   <div class="row all_dy user_message">
     <div class="row margin_top"><img src="../../assets/usericon.png" alt="" class="img-circle usericon"></div>
-    <div class="row margin_top"><span class="user_nickname">纸上的彩虹</span></div>
+    <div class="row margin_top"><span class="user_nickname">{{userInfo['name']}}</span></div>
     <div class="row user_fans margin_top">
       <ul class="nav">
-        <li class="dy_user_nav"><a href="#"><strong class="fans">0</strong></a> <span>粉丝</span></li>
-        <li class="dy_user_nav"><a href="#"><strong class="fcs">0</strong></a> <span>关注</span></li>
-        <li class="dy_user_nav"><a href="#"><strong class="num_dy">0</strong></a> <span>动态</span></li>
+        <li class="dy_user_nav"><a href="#"><strong class="fans">{{userInfo['fans']}}</strong></a> <span>粉丝</span></li>
+        <li class="dy_user_nav"><a href="#"><strong class="fcs">{{userInfo['follow']}}</strong></a> <span>关注</span></li>
+        <li class="dy_user_nav"><a href="#"><strong class="num_dy">{{userInfo['cols']}}</strong></a> <span>收藏</span></li>
       </ul>
     </div>
     <div class="row margin_top">
-      <div class="exit"><a href="#" class="exit_col">退出登录</a></div>
+      <div class="exit"><a style="cursor: pointer" class="exit_col" @click="exitlogin">退出登录</a></div>
     </div>
   </div>
 </template>
 
 <script>
     export default {
-        name: "UserInfo"
+        name: "UserInfo",
+      data:function (){
+        return{
+          userInfo:JSON.parse(sessionStorage.getItem('userInfo'))
+        }
+      },
+      methods:{
+        exitlogin:function (){
+          localStorage.setItem('token','');
+          sessionStorage.setItem('userInfo','');
+          localStorage.setItem('islogin','');
+          this.GLOBAL.ISLOGIN=false;
+          this.islogin=false;
+          this.$router.push({path:'/'})
+        },
+      }
     }
 </script>
 

@@ -10,15 +10,18 @@
             <br>
             <span style="color: darkgrey;font-size: 0.9em">{{i.date}}</span>
             <div class="dy_tags">
-              <div class="one_tag" v-for="(j,idx) in i.tags.split(',')" :key="idx">{{j}}</div>
+              <div class="one_tag" v-for="(j,idx) in i.tags.split(',')" :key="idx" v-if="j">{{j}}</div>
             </div>
           </div>
-          <div class="row dy_c_content to_one">
-            <span style="font-size: 1.1em"><strong>{{i.type==='dynamic'? '':((i.title).length>10? (i.title).slice(0,10)+'...':i.title)}}</strong></span>
+          <div class="row dy_c_content">
+            <span class="to_one" style="font-size: 1.1em;font-weight: bold;margin-left: 35%"  @click="tocom">{{i.type==='dynamic'? '':((i.title).length>10? (i.title).slice(0,10)+'...':i.title)}}</span>
+            <span style="display: none">{{index}}</span>
             <br>
-            <span>{{i.type==='test'? i.subtitle[0].title:((i.content).length>50? (i.content).slice(0,50)+'...':i.content)}}</span>
+            <span class="to_one" @click="tocom">{{i.type==='test'? i.subtitle[0].title:((i.content).length>50? (i.content).slice(0,50)+'...':i.content)}}</span>
+            <span style="display: none">{{index}}</span>
             <br>
-            <span>{{i.type==='test'? i.subtitle[1].title:''}}</span>
+            <span class="to_one" @click="tocom">{{i.type==='test'? i.subtitle[1].title:''}}</span>
+            <span style="display: none">{{index}}</span>
           </div>
           <div class="row dy_c_content">
             <img src="" alt="">
@@ -26,7 +29,7 @@
           <div class="row margin_top">
             <ul class="nav">
               <li class="dy_c_nav"><a><img :src="colimg[index]" alt="" class="dy_c" @click="tocol"><span style="display: none">{{index}}</span>&nbsp;<span>{{i.cols}}</span></a></li>
-              <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="" class="dy_p" @click="tocom">&nbsp;<span>{{i.com}}</span></a></li>
+              <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="" class="dy_p" @click="tocom"><span style="display: none">{{index}}</span>&nbsp;<span>{{i.com}}</span></a></li>
               <li class="dy_c_nav"><a><img :src="fbsimg[index]" alt="" class="dy_f" @click="tofbs"><span style="display: none">{{index}}</span>&nbsp;<span>{{i.fbs}}</span></a></li>
             </ul>
           </div>
@@ -56,6 +59,7 @@
       },
       data:function () {
         return{
+          idx:-1,
           res:null,
           colimg:[],
           fbsimg:[],
