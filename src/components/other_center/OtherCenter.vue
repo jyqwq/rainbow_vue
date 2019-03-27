@@ -5,12 +5,67 @@
     <div class="row qz_row">
       <!--左边个人信息框-->
       <div class="col-xs-12 col-sm-11 col-md-7 col-lg-7 animal_sil qz_infor">
-        aaaa
-        <person-information></person-information>
+        <person-information :disflag="0"></person-information>
       </div>
       <!--右边浏览历史-->
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-        <!--<browse-history></browse-history>-->
+        <browse-history></browse-history>
+      </div>
+    </div>
+
+    <!--箭头指向第二页-->
+    <go-to></go-to>
+
+    <!--大导航栏-->
+    <div class="row qz_row" id="qz_nav">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+        <div class="row qz_row">
+          <!--日记本，收藏夹导航-->
+          <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2"></div>
+          <div @click="dyAxios()" class="col-xs-12 col-sm-4 col-md-4 col-lg-4 qz_sep" id="qz_dianav">
+            <div class="qz_nimg anima_jel">
+              <img src="../../assets/my_center/nav_diary.png" class="img-responsive img_diary" alt="Responsive image">
+            </div>
+            <div class="qz_nav"><span class="font_nav">日 记 本</span></div>
+            <div class="qz_ndis"><span class="font_inf">快来写日记吧！</span></div>
+          </div>
+          <div @click="coAxios()" class="col-xs-12 col-sm-4 col-md-4 col-lg-4 qz_sep" id="qz_colnav">
+            <div class="qz_nimg anima_jel">
+              <img src="../../assets/my_center/nav_collection.png" class="img-responsive img_diary" alt="Responsive image">
+            </div>
+            <div class="qz_nav"><span class="font_nav">收 藏 夹</span></div>
+            <div class="qz_ndis"><span class="font_inf">喜欢，我收下啦！</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+    </div>
+
+    <!--中心内容-->
+    <div class="row qz_row qz_data">
+      <!--日记本，收藏夹，收纳盒内容-->
+      <div id="qz_diary" class="animal_sil">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  v-for="(dy, index) in dynamic">
+            <div class="qz_cen">
+              <img @mouseover="flag=index" :class="flag==index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" src="../../assets/my_center/background_dynamic.jpg" alt="Responsive image">
+              <div :class="flag==index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
+                <span v-if="seen==-1" class="font_main"><br><br>{{dy.content}}</span>
+                <span v-else-if="seen==0" class="font_main"><br><br>{{dy.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.click}}</span>
+                <span v-else-if="seen==1" class="font_main"><br><br>{{dy.colInfo.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.colInfo.click}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--更多按钮-->
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5"></div>
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
+        <router-link to="/my_dynamic" class="button_primary button_qz" href="../setting/Setting.vue">更多 ></router-link>
       </div>
     </div>
 
@@ -21,11 +76,73 @@
 
 <script>
   import PersonInformation from '../my_center/PersonInformation'
+  import BrowseHistory from '../my_center/BrowseHistory'
+  import GoTo from '../my_center/GoTo'
     export default {
       components:{
-        'person-information':PersonInformation
+        'person-information':PersonInformation,
+        'browse-history':BrowseHistory,
+        'go-to':GoTo
       },
-      name: "OtherCenter"
+      name: "OtherCenter",
+      data:function () {
+        return{
+          user_id:$route.params.id,
+          flag:-1,
+          seen:0,
+          dynamic:[{"content":"彩虹日记"},{"content":"彩虹日记"},{"content":"彩虹日记"}],
+        }
+      },
+      mounted: function () {
+        let that=this;
+        axios.get('http://192.168.2.66:8000/user/myDynamics/1/1/')
+          .then(function (response) {
+            that.dynamic=response.data.slice(0,3);
+            that.seen=0;
+            that.flag=-1
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+      },
+      methods: {
+        // 切换单个动态
+        dyAxios:function () {
+          let that=this;
+          axios.get('http://192.168.2.66:8000/user/myDynamics/1/1/')
+            .then(function (response) {
+              if (response.data.status_code==='10017') {
+                that.seen=-1;
+                that.dynamic=[{"content":"彩虹日记"}];
+              }else{
+                that.seen=0;
+                that.dynamic=response.data.slice(0,3);
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
+        },
+        coAxios:function () {
+          let that=this;
+          axios.post('http://192.168.2.66:8000/user/viewCollections/',{
+            "method":"check",
+            "target":[{"type":"dynamic","user_id":1},{"type":"dairy","user_id":1},{"type":"test","user_id":1},{"type":"commodity","user_id":1}]
+          })
+            .then(function (response) {
+              if (response.data.status_code==='10017') {
+                that.seen=-1;
+                that.dynamic=[{"content":"彩虹日记"},{"content":"彩虹日记"},{"content":"彩虹日记"}];
+              }else{
+                that.seen=1;
+                that.dynamic=response.data.slice(0,3);
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
+        },
+      },
     }
 </script>
 
@@ -39,18 +156,6 @@
     font-size: 0.9em;
     margin: auto;
     color: whitesmoke;
-  }
-  /*箭头指向第二页*/
-  .qz_lead{
-    height: 70px;
-  }
-  .qz_leaimg{
-    width: 80px;
-    margin: auto;
-  }
-  .lea_img{
-    margin: auto;
-    height: 70px;
   }
   /*大导航栏开始*/
   /*字体*/

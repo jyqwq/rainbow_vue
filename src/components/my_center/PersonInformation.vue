@@ -17,9 +17,9 @@
           <h1>关注：{{person.follow}}<br>粉丝：{{person.fans}}<br>收藏：{{person.cols}}</h1>
           <div class='btn'></div>
         </div>
-        <input type='checkbox'>
-        <a><span class="skin">肤质测试</span></a>
-        <p>我的肤质：{{person.skin}}</p>
+        <input v-if="disflag===1" type='checkbox'>
+        <a v-if="disflag===1"><span class="skin">肤质测试</span></a>
+        <p v-if="disflag===1">我的肤质：{{person.skin}}</p>
         <div class='shapes'></div>
         <div class='photo'>
           <div></div>
@@ -37,6 +37,7 @@
   import axios from 'axios'
   export default {
     name: "PersonInformation",
+    props: ['disflag'],
     data: function () {
       return {
         person:''

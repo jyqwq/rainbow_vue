@@ -6,7 +6,7 @@
     <div class="row qz_row">
       <!--左边个人信息框-->
       <div class="col-xs-12 col-sm-11 col-md-7 col-lg-7 animal_sil qz_infor">
-        <person-information></person-information>
+        <person-information :disflag="1"></person-information>
       </div>
       <!--右边浏览历史-->
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
@@ -15,15 +15,7 @@
     </div>
 
     <!--箭头指向第二页-->
-    <div id="mine" class="row qz_row">
-      <div class="qz_lead ">
-        <div class="qz_leaimg animal_rin">
-          <div @click="anchor_slip">
-            <img src="../../assets/my_center/open_mine.png" class="img-responsive lea_img " alt="Responsive image">
-          </div>
-        </div>
-      </div>
-    </div>
+    <go-to></go-to>
 
     <!--大导航栏-->
     <div class="row qz_row" id="qz_nav">
@@ -100,10 +92,12 @@
   import axios from 'axios'
   import PersonInformation from './PersonInformation'
   import BrowseHistory from './BrowseHistory'
+  import GoTo from './GoTo'
     export default {
       components:{
         'person-information':PersonInformation,
         'browse-history':BrowseHistory,
+        'go-to':GoTo
       },
       name: "MyCenter",
       props:{},
@@ -128,34 +122,6 @@
           })
       },
       methods: {
-        //滚动条匀速滑动
-        anchor_slip:function () {
-          this.$options.methods.startMover(500)
-        },
-        startMover: function (itarget) {//目标值
-          var timer = null;
-          clearInterval(timer);//执行当前动画同时清除之前的动画
-          timer = setInterval(function () {
-            let scroll_distance = document.documentElement.scrollTop||document.body.scrollTop;
-            var speed = 0;
-            if (scroll_distance > itarget) {
-              speed = -5;
-            }
-            else {
-              speed = 5;
-            }
-            if (scroll_distance == itarget) {
-              clearInterval(timer);
-            }
-            else {
-              var a= parseInt(scroll_distance + speed);
-              if ((itarget-scroll_distance)<5) {
-                a= parseInt(itarget);
-              }
-              window.scrollTo(0,a);
-            }
-          }, 1);
-        },
         // 切换单个动态
         // 切换方法1，2 tabChange:function(tabDynamic){
         //   this.currenView=tabDynamic;
@@ -216,18 +182,6 @@
     font-size: 0.9em;
     margin: auto;
     color: whitesmoke;
-  }
-  /*箭头指向第二页*/
-  .qz_lead{
-    height: 70px;
-  }
-  .qz_leaimg{
-    width: 80px;
-    margin: auto;
-  }
-  .lea_img{
-    margin: auto;
-    height: 70px;
   }
   /*大导航栏开始*/
   /*字体*/
