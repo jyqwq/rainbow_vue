@@ -66,7 +66,7 @@
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <span class="font_bind">绑定邮箱</span><br>
         <span class="font_binin">绑定邮箱后即可使用邮箱登录</span><br>
-        <a href="#" class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去绑定 ></a>
+        <div class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去绑定 ></div>
       </div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
@@ -77,7 +77,7 @@
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <span class="font_bind">绑定手机</span><br>
         <span class="font_binin">绑定手机后即可使用手机号登录</span><br>
-        <a href="#" class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去绑定 ></a>
+        <div class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去绑定 ></div>
       </div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
     </div>
@@ -90,7 +90,7 @@
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <span class="font_bind">设置密保</span><br>
         <span class="font_binin">设置密保，账号更安全</span><br>
-        <a href="#" class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去设置 ></a>
+        <div class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去设置 ></div>
       </div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
@@ -101,7 +101,7 @@
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <span class="font_bind">实名认证</span><br>
         <span class="font_binin">实名认证成功后，可享受开通直播间等服务</span><br>
-        <a href="#" class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去认证 ></a>
+        <div class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去认证 ></div>
       </div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
     </div>

@@ -31,11 +31,11 @@
             <td class="text_title">出生日期：</td>
             <td>
               <div class="qz_text">
-                <select></select>
+                <select ref="slyear"></select>
                 <span>年</span>
-                <select></select>
+                <select ref="slmonth"></select>
                 <span>月</span>
-                <select></select>
+                <select ref="sldata"></select>
                 <span>日</span>
               </div>
             </td>
@@ -52,7 +52,6 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -68,7 +67,7 @@
         nicerr:'',
         tele:'',
         telerr:'',
-        autograph:''
+        autograph:'',
       }
     },
     mounted:function(){
@@ -84,6 +83,10 @@
       modifyData:function(){
         if (this.checkName()) {
           this.ransData();
+          let slyear=this.$refs.slyear.value;
+          let slmonth=this.$refs.slmonth.value;
+          let sldata=this.$refs.sldata.value;
+          console.log(slyear+'-'+slmonth+'-'+sldata);
         }
       },
       // 检查昵称
@@ -208,8 +211,9 @@
           }
         }
         return days;
-      }
-    },
+      },
+    }
+
   }
 </script>
 

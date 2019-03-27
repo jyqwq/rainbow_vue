@@ -1,7 +1,8 @@
 <template>
   <!--日记本页-->
-  <div class="qz_dynamic" style="zoom:1;overflow: hidden;margin-top: 50px">
-    <div v-for="(dy,index) in res" :key="index" class="row all_dy dy_margin">
+  <div class="qz_dynamic text_active" style="zoom:1;overflow: hidden;margin-top: 50px">
+    <div v-if="res.status_code==='10017'"></div>
+    <div v-else v-for="(dy,index) in res" :key="index" class="row all_dy dy_margin">
       <div class="row">
         <div class="col-lg-1"></div>
         <div class="col-lg-1 dy_c_content dy_c_icon"><img src="" class="img-responsive" alt="Responsive image"></div>
@@ -9,7 +10,7 @@
           <div class="row">
             <span><strong style="font-size: 1.1em">昵称</strong>
               <div style="margin-top: -18px;margin-left: 38px;">
-                <img src="../../assets/my_dynamic/delete.png" class="img-responsive" alt="Responsive image">
+                <img @click="" src="../../assets/my_dynamic/delete.png" class="img-responsive" alt="Responsive image">
               </div>
             </span>
             <br>
@@ -51,9 +52,7 @@
       <!--分割线-->
       <div class="qz_line"></div>
     </div>
-
   </div>
-
 </template>
 
 <script>
@@ -76,24 +75,17 @@
           })
       }
     }
-
 </script>
 
 <style scoped>
+  /*全局*/
   /*分割线*/
   .qz_line{
     height: 1px;
     margin: 5px;
     background: #EEEEEE;
   }
-
-  /*收藏夹页样式*/
-  .qz_collect{
-    margin: 15px 0;
-  }
-
-
-  /*日记本，收藏夹页开始*/
+  /*日记本页开始*/
   .all_dy{
     border-radius: 5px;
   }
@@ -143,10 +135,9 @@
   .to_one{
     cursor: pointer;
   }
-  /*日记本，收藏夹页结束*/
+  /*日记本页结束*/
+  /*动画*/
   .text_active{
     animation: fadeInUp 1s;
   }
-  /*收纳盒页结束*/
-
 </style>

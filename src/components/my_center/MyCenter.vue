@@ -15,8 +15,15 @@
     </div>
 
     <!--箭头指向第二页-->
-    <!--第二页-->
-    <open-mine></open-mine>
+    <div id="mine" class="row qz_row">
+      <div class="qz_lead ">
+        <div class="qz_leaimg animal_rin">
+          <div @click="anchor_slip">
+            <img src="../../assets/my_center/open_mine.png" class="img-responsive lea_img " alt="Responsive image">
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!--大导航栏-->
     <div class="row qz_row" id="qz_nav">
@@ -24,34 +31,52 @@
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
         <div class="row qz_row">
           <!--日记本，收藏夹，收纳盒导航-->
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 qz_sep" id="qz_dianav">
-            <!--<div v-for="(nav,index) in tabNav" @click="cur=index">{{nav}}</div>-->
-            <!--<nav-diary @click.native="tabChange(diary)"></nav-diary>-->
-            <nav-diary @click.native="dyAxios()"></nav-diary>
+          <div @click="dyAxios()" class="col-xs-12 col-sm-4 col-md-4 col-lg-4 qz_sep" id="qz_dianav">
+            <!--切换方法1 <div v-for="(nav,index) in tabNav" @click="cur=index">{{nav}}</div>-->
+            <!--切换方法2 <nav-diary @click.native="tabChange(diary)"></nav-diary>-->
+            <!--切换方法3 <nav-diary @click.native="dyAxios()"></nav-diary>-->
+            <div class="qz_nimg anima_jel">
+              <img src="../../assets/my_center/nav_diary.png" class="img-responsive img_diary" alt="Responsive image">
+            </div>
+            <div class="qz_nav"><span class="font_nav">日 记 本</span></div>
+            <div class="qz_ndis"><span class="font_inf">快来写日记吧！</span></div>
           </div>
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 qz_sep" id="qz_colnav">
-            <!--<nav-collection @click.native="tabChange(collect)"></nav-collection>-->
-            <nav-collection @click.native="coAxios()"></nav-collection>
+          <div @click="coAxios()" class="col-xs-12 col-sm-4 col-md-4 col-lg-4 qz_sep" id="qz_colnav">
+            <!--2 <nav-collection @click.native="tabChange(collect)"></nav-collection>-->
+            <!--3 <nav-collection @click.native="coAxios()"></nav-collection>-->
+            <div class="qz_nimg anima_jel">
+              <img src="../../assets/my_center/nav_collection.png" class="img-responsive img_diary" alt="Responsive image">
+            </div>
+            <div class="qz_nav"><span class="font_nav">收 藏 夹</span></div>
+            <div class="qz_ndis"><span class="font_inf">喜欢，我收下啦！</span></div>
           </div>
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 qz_sep" id="qz_admnav">
-            <!--<nav-admission @click.native="tabChange(admis)"></nav-admission>-->
-            <nav-admission @click=""></nav-admission>
+          <div @click="adFicti()" class="col-xs-12 col-sm-4 col-md-4 col-lg-4 qz_sep" id="qz_admnav">
+            <!--2 <nav-admission @click.native="tabChange(admis)"></nav-admission>-->
+            <!--3 <nav-admission @click=""></nav-admission>-->
+            <div class="qz_nimg anima_jel">
+              <img src="../../assets/my_center/nav_admission.png" class="img-responsive img_diary" alt="Responsive image">
+            </div>
+            <div class="qz_nav"><span class="font_nav">收 纳 盒</span></div>
+            <div class="qz_ndis"><span class="font_inf">记录妆品，防止过期哦！</span></div>
           </div>
         </div>
       </div>
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
     </div>
+
     <!--中心内容-->
     <div class="row qz_row qz_data">
       <!--日记本，收藏夹，收纳盒内容-->
       <div id="qz_diary" class="animal_sil">
         <div class="row">
-          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  v-for="(dy, index) in dynamic.slice(0,3)">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  v-for="(dy, index) in dynamic">
             <div class="qz_cen">
               <img @mouseover="flag=index" :class="flag==index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" src="../../assets/my_center/background_dynamic.jpg" alt="Responsive image">
               <div :class="flag==index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
-                <span v-if="seen==0" class="font_main"><br><br>{{dy.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.click}}</span>
-                <span v-else class="font_main"><br><br>{{dy.colInfo.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.colInfo.click}}</span>
+                <span v-if="seen==-1" class="font_main"><br><br>{{dy.content}}</span>
+                <span v-else-if="seen==0" class="font_main"><br><br>{{dy.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.click}}</span>
+                <span v-else-if="seen==1" class="font_main"><br><br>{{dy.colInfo.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.colInfo.click}}</span>
+                <span v-else-if="seen==2" class="font_main"><br><br>{{dy.content}}<br><br>剩余时间：{{dy.date}}<br></span>
               </div>
             </div>
           </div>
@@ -75,18 +100,10 @@
   import axios from 'axios'
   import PersonInformation from './PersonInformation'
   import BrowseHistory from './BrowseHistory'
-  import NavDiary from './NavDiary'
-  import NavCollection from './NavCollection'
-  import NavAdmission from './NavAdmission'
-  import OpenMine from './OpenMine'
     export default {
       components:{
         'person-information':PersonInformation,
         'browse-history':BrowseHistory,
-        'nav-diary':NavDiary,
-        'nav-collection':NavCollection,
-        'nav-admission':NavAdmission,
-        'open-mine':OpenMine,
       },
       name: "MyCenter",
       props:{},
@@ -94,16 +111,15 @@
         return {
           flag:-1,
           seen:0,
-          dynamic:[{"content":"彩虹日记","data":"2010101010","click":123,}],
-          currenView:'DynamicDiary',
+          dynamic:[{"content":"彩虹日记"},{"content":"彩虹日记"},{"content":"彩虹日记"}],
+          // 切换方法1，2 currenView:'DynamicDiary',
         }
       },
       mounted: function () {
         let that=this;
         axios.get('http://192.168.2.66:8000/user/myDynamics/1/1/')
           .then(function (response) {
-            console.log(response.data);
-            that.dynamic=response.data;
+            that.dynamic=response.data.slice(0,3);
             that.seen=0;
             that.flag=-1
           })
@@ -112,16 +128,49 @@
           })
       },
       methods: {
-        // tabChange:function(tabDynamic){
+        //滚动条匀速滑动
+        anchor_slip:function () {
+          this.$options.methods.startMover(500)
+        },
+        startMover: function (itarget) {//目标值
+          var timer = null;
+          clearInterval(timer);//执行当前动画同时清除之前的动画
+          timer = setInterval(function () {
+            let scroll_distance = document.documentElement.scrollTop||document.body.scrollTop;
+            var speed = 0;
+            if (scroll_distance > itarget) {
+              speed = -5;
+            }
+            else {
+              speed = 5;
+            }
+            if (scroll_distance == itarget) {
+              clearInterval(timer);
+            }
+            else {
+              var a= parseInt(scroll_distance + speed);
+              if ((itarget-scroll_distance)<5) {
+                a= parseInt(itarget);
+              }
+              window.scrollTo(0,a);
+            }
+          }, 1);
+        },
+        // 切换单个动态
+        // 切换方法1，2 tabChange:function(tabDynamic){
         //   this.currenView=tabDynamic;
         // }
         dyAxios:function () {
           let that=this;
           axios.get('http://192.168.2.66:8000/user/myDynamics/1/1/')
             .then(function (response) {
-              console.log(response.data);
-              that.dynamic=response.data;
-              that.seen=0
+              if (response.data.status_code==='10017') {
+                that.seen=-1;
+                that.dynamic=[{"content":"彩虹日记"}];
+              }else{
+                that.seen=0;
+                that.dynamic=response.data.slice(0,3);
+              }
             })
             .catch(function (error) {
               console.log(error);
@@ -134,13 +183,21 @@
             "target":[{"type":"dynamic","user_id":1},{"type":"dairy","user_id":1},{"type":"test","user_id":1},{"type":"commodity","user_id":1}]
           })
             .then(function (response) {
-              console.log(response.data);
-              that.dynamic=response.data;
-              that.seen=1
+              if (response.data.status_code==='10017') {
+                that.seen=-1;
+                that.dynamic=[{"content":"彩虹日记"},{"content":"彩虹日记"},{"content":"彩虹日记"}];
+              }else{
+                that.seen=1;
+                that.dynamic=response.data.slice(0,3);
+              }
             })
             .catch(function (error) {
               console.log(error);
             })
+        },
+        adFicti:function () {
+          this.seen=2;
+          this.dynamic=[{"content":"兰蔻精华肌底液","date":"365天"},{"content":"兰蔻精华肌底液","date":"365天"},{"content":"兰蔻精华肌底液","date":"365天"}]
         }
       },
       watch: {},
@@ -160,6 +217,54 @@
     margin: auto;
     color: whitesmoke;
   }
+  /*箭头指向第二页*/
+  .qz_lead{
+    height: 70px;
+  }
+  .qz_leaimg{
+    width: 80px;
+    margin: auto;
+  }
+  .lea_img{
+    margin: auto;
+    height: 70px;
+  }
+  /*大导航栏开始*/
+  /*字体*/
+  .qz_nav{
+    text-align: center;
+  }
+  .font_nav{
+    font-family: 幼圆;
+    font-size: 1.5em;
+
+    height: 30px;
+    line-height: 30px;
+  }
+  .qz_ndis{
+    text-align: center;
+  }
+  .font_inf{
+    font-family: 幼圆;
+    height: 20px;
+    line-height: 20px;
+  }
+  /*日记本*/
+  .qz_nimg{
+    margin: auto;
+    width: 70px;
+    height: 70px;
+  }
+  .img_diary{
+    height: 100%;
+    margin: auto;
+  }
+  /*动画*/
+  /*摇晃颤抖*/
+  .anima_jel:hover{
+    animation: jello 1s;
+  }
+  /*大导航栏结束*/
   /*单个动态开始*/
   .qz_cen{
     margin: 10px;

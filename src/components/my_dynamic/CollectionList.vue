@@ -1,6 +1,6 @@
 <template>
   <!--收藏夹页-->
-  <div class="qz_collect" style="zoom:1;overflow: hidden;margin-top: 50px">
+  <div class="qz_collect text_active" style="zoom:1;overflow: hidden;margin-top: 50px">
     <div v-if="res.status_code==='10017'"></div>
     <div v-else v-for="(dy,index) in res" :key="index" class="row all_dy dy_margin">
       <div class="row">
@@ -8,13 +8,18 @@
         <div class="col-lg-1 dy_c_content dy_c_icon"><img src="" class="img-responsive" alt="Responsive image"></div>
         <div class="col-lg-8 dy_c_content" style="overflow: hidden">
           <div class="row">
-            <span><strong style="font-size: 1.1em">昵称</strong></span>
+            <span>
+              <strong style="font-size: 1.1em">昵称</strong>
+              <div style="margin-top: -18px;margin-left: 38px;">
+                <img @click="delete_dy" src="../../assets/my_dynamic/delete.png" class="img-responsive" alt="Responsive image">
+              </div>
+            </span>
             <br>
             <div class="font_time" style="color: darkgrey;font-size: 0.9em">
               <span class="rel_time">{{dy.date}}</span>
             </div>
             <div class="dy_tags">
-              <div class="one_tag">{{dy.tags}}</div>
+              <div v-for="tag in dy.colInfo.tags.split(',')" class="one_tag">{{tag}}</div>
             </div>
           </div>
           <div class="row dy_c_content to_one">
@@ -41,7 +46,7 @@
           </div>
         </div>
         <div class="col-lg-2 margin_top">
-          <div class="dy_type" style="display: none">{{dy.tags}}</div>
+          <div class="dy_type" style="display: none">{{dy.colInfo.type}}</div>
           <div class="dy_id" style="display: none">{{dy.id}}</div>
           <img src="../../assets/my_dynamic/dy_like.png" alt="">
         </div>
@@ -58,7 +63,7 @@
       name: "CollectionList",
       data:function(){
         return{
-          res:''
+          res:'',
         }
       },
       mounted:function () {
@@ -78,26 +83,42 @@
           .catch(function (error) {
             console.log(error);
           })
+      },
+      methods:{
+        // 删除单个收藏
+        delete_dy:function (event) {
+          let that=this
+          let node = event.target;
+          axios.post(this.GLOBAL.HOST+'user/viewCollections/',{
+            "method":"del",
+            "type":node.parentElement.parentElement.parentElement.parentElement.nextElementSibling.children[0].innerHTML,
+            "id":node.parentElement.parentElement.parentElement.parentElement.nextElementSibling.children[1].innerHTML,
+            "user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']
+          }
+            ).then(function (response) {
+            node.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.style.display='none'
+          })
+            .catch(function (error) {
+              console.log(error);
+            })
+        }
       }
     }
 
 </script>
 
 <style scoped>
+  /*全局*/
   /*分割线*/
   .qz_line{
     height: 1px;
     margin: 5px;
     background: #EEEEEE;
   }
-
-  /*收藏夹页样式*/
+  /*收藏夹页开始*/
   .qz_collect{
     margin: 15px 0;
   }
-
-
-  /*日记本，收藏夹页开始*/
   .all_dy{
     border-radius: 5px;
   }
@@ -147,10 +168,8 @@
   .to_one{
     cursor: pointer;
   }
-  /*日记本，收藏夹页结束*/
+  /*动画*/
   .text_active{
     animation: fadeInUp 1s;
   }
-  /*收纳盒页结束*/
-
 </style>

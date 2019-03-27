@@ -78,8 +78,12 @@
 </script>
 
 <style scoped>
-
+  /*头像个签*/
+  .qz_head{
+    margin: 15px 0;
+  }
   /*个人中心导航栏开始*/
+  /*原生开始*/
   .flex {
     width: 350px;
     height: 50px;
@@ -126,28 +130,8 @@
     bottom: 0;
     transition: 0.5s ease;
   }
-  /*个人中心导航栏结束*/
-
-  /*原本样式开始*/
-  .qz_head{
-    margin: 15px 0;
-  }
-  .wid_nav{
-    background: #FFE3E5;
-  }
-  .cen_inf{
-    margin:10px;
-  }
-
-  /*首页样式*/
-  .qz_row{
-    margin: 15px 0;
-  }
-  .qz_line{
-    height: 1px;
-    margin: 5px;
-    background: #EEEEEE;
-  }
+  /*原生结束*/
+  /*附加开始*/
   .portrait{
     height: 80px;
   }
@@ -167,186 +151,6 @@
   .num_f{
     margin-top: 15px;
   }
-  .qz_group{
-    width: 200px;
-    float: right;
-    margin-top: 10px;
-  }
-  .qz_a{
-    color: purple;
-  }
-  .qz_gly{
-    color: purple;
-  }
-  .dedli_pic{
-    height: 100px;
-    margin-right: -15px;
-    /*background: #FFAAAA;*/
-  }
-  .dedli_pic img{
-    height: 100%;
-    border-radius: 5px;
-  }
-  .dedli_inf{
-    height: 100px;
-    margin-left: -15px;
-    /*background: #9783b9;*/
-  }
-  .qz_a{
-    text-decoration: none;
-  }
-  .qz_dis{
-    font-size: 1.2em;
-    color: #0f0f0f;
-  }
-  .qz_dip{
-    font-size: 0.8em;
-    color: #0f0f0f;
-  }
-  .qz_das{
-    font-size: 1.2em;
-  }
-
-  /*动态主体开始*/
-  /*日记本，收藏夹*/
-
-  /*分割线*/
-  .qz_line{
-    height: 1px;
-    margin: 5px;
-    background: #EEEEEE;
-  }
-
-  /*收藏夹页样式*/
-  .qz_collect{
-    margin: 15px 0;
-  }
-
-  /*收纳盒页样式*/
-  .qz_set{
-    margin: 15px 0;
-  }
-  /*原本样式结束*/
-
-
-
-  /*日记本，收藏夹页开始*/
-  a:link{
-    text-decoration: none;
-  }
-  a:visited{
-    text-decoration: none;
-  }
-  a:hover{
-    text-decoration: none;
-  }
-  .all_dy{
-    border-radius: 5px;
-  }
-  .margin_top{
-    text-align: center;
-    margin-top: 5px;
-  }
-  .dy_margin{
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-  .dy_c_content{
-    margin-top: 5px;
-  }
-  .dy_c_icon{
-    text-align: right;
-  }
-  .dy_c_icon img{
-    border-radius: 5px;
-  }
-  .dy_tags{
-    float: right;
-  }
-  .font_full{
-    display: none;
-  }
-  .font_full:hover{
-    cursor: pointer;
-  }
-  .one_tag{
-    float: left;
-    color: #FFFFFF;
-    background: #efd9da;
-    border: none;
-    border-radius: 16px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    padding: 0 15px;
-    margin-right: 12px;
-    position: relative;
-  }
-  .dy_c_nav{
-    float: left;
-  }
-  .to_one{
-    cursor: pointer;
-  }
-  /*日记本，收藏夹页结束*/
-
-  /*收纳盒页开始*/
-  .shu_nav{
-    width: 120px;
-    border-bottom: none;
-    border-right: solid 2px #f7c5c9;
-    padding-right: -1px;
-    box-sizing: border-box;
-  }
-  .shu_nav li{
-    /*border: 2px solid rgba(255, 255, 255, 0.0);*/
-  }
-  .shu_active{
-    margin-right: -2px !important;
-    border: solid 2px #f7c5c9 !important;
-    border-radius: 50%;
-  }
-  .shu_active:hover{
-    border-radius: 50%;
-  }
-  .shu_nav li a{
-    text-align: center;
-    line-height: 40px;
-  }
-  .shu_active a{
-    font-size: 1.2em;
-  }
-  .shu_nav li a:hover{
-    background: pink;
-    border-radius: 50%;
-  }
-  /*--------------输入部分--------------*/
-  .text_active{
-    animation: fadeInUp 1s;
-  }
-  /*心情部分*/
-  .row_margin{
-    margin-top: 30px;
-  }
-  /*收纳盒页结束*/
-
-
-  /*动画*/
-  /*由左滑入*/
-  /*.animal_sil{*/
-  /*animation: slideInLeft 1s;*/
-  /*}*/
-  /*由下滑入*/
-  .animal_siu{
-    animation: slideInUp 1s;
-  }
-  /*放大*/
-  .anima_pul:hover{
-    animation: pulse 1s;
-  }
-  /*挂着摇晃*/
-  .animal_swi:hover{
-    animation: swing 1s;
-  }
+  /*附加结束*/
+  /*个人中心导航栏结束*/
 </style>
