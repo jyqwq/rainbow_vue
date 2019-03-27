@@ -10,7 +10,7 @@
             <br>
             <span style="color: darkgrey;font-size: 0.9em">{{i.date}}</span>
             <div class="dy_tags">
-              <div class="one_tag" v-for="(j,idx) in i.tags.split(',')" :key="idx">{{j}}</div>
+              <div class="one_tag" v-for="(j,idx) in i.tags.split(',')" :key="idx" v-if="j">{{j}}</div>
             </div>
           </div>
           <div class="row dy_c_content" v-if="i.type==='dynamic'">
@@ -92,12 +92,9 @@
             "method":"check",
             "target":[{"type":this.type,"id":this.id,"user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']}]
           }).then(function (res) {
-            console.log(res.data[0]['status_code']);
               if (res.data[0]['status_code']==='10020'){
-                console.log('未赞');
                 that.isfbs=false;
             }else if (res.data[0]['status_code']==='10019') {
-                console.log('已赞');
                 that.isfbs=true;
                 that.fbsimg='../../../static/dynamic/isfbs.png'
               }
@@ -112,10 +109,8 @@
             "target":[{"type":this.type,"id":this.id,"user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user']}]
           }).then(function (res) {
             if (res.data[0]['status_code']==='10017'){
-              console.log('未收藏');
               that.iscol=false
             }else if (res.data[0]['status_code']==='10016') {
-              console.log('已收藏');
               that.iscol=true;
               that.colimg='../../../static/dynamic/iscol.png'
             }
