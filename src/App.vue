@@ -10,7 +10,7 @@
     </div>
     <div>
       <section>
-        <router-view name="login"></router-view>
+        <router-view name="login"  v-if="isRouterAlive"></router-view>
       </section>
     </div>
     <footer>
@@ -22,15 +22,27 @@
 <script>
 export default {
   name: 'App',
+  provide (){
+    return{
+      reload:this.reload
+    }
+  },
   data:function(){
     return{
       show:true,
       con:null,
       conheight:null,
       mheight:null,
+      isRouterAlive:true
     }
   },
   methods:{
+    reload() {
+      this.isRouterAlive=false;
+      this.$nextTick(function () {
+        this.isRouterAlive=true
+      })
+    },
     //网页最小高度
     minHeight:function () {
       this.con=document.querySelector('.min-height');
