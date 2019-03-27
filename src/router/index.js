@@ -26,6 +26,7 @@ import CollectionList from '@/components/my_dynamic/CollectionList'
 import AdmissionList from '@/components/my_dynamic/AdmissionList'
 import Success from '@/components/sharing_index/Success'
 import Defeat from '@/components/sharing_index/Defeat'
+import OtherCenter from '@/components/other_center/OtherCenter'
 
 import Global from '../components/Global'
 
@@ -69,14 +70,18 @@ const router = new Router({
       }
     },
     {
-      path: '/dynamic_detail',
+      path: '/dynamic_detail/:user_id/:type/:id',
       name: 'DynamicDetail',
-      component: DynamicDetail
+      components: {
+        login:DynamicDetail
+      }
     },
     {
       path: '/dynamic',
       name: 'Dynamic',
-      component: Dynamic,
+      components: {
+        login:Dynamic
+      },
     },
     {
       path: '/sharing_index',
@@ -174,7 +179,12 @@ const router = new Router({
       path: '/setting',
       name: 'Setting',
       component: Setting,
-    }
+    },
+    {
+      path:'/other_center',
+      name:'OtherCenter',
+      component:OtherCenter,
+    },
   ]
 });
 

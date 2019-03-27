@@ -224,6 +224,7 @@
           })
         },
         c:function(){
+          alert('登录超时');
           this.$options.methods.removeClass.bind(this)(document.querySelector(".login"), "active");
           this.$options.methods.removeClass.bind(this)(document.querySelector(".sk-rotating-plane"), "active");
         }
