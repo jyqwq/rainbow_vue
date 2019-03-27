@@ -49,11 +49,12 @@
         <div class="row">
           <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  v-for="(dy, index) in dynamic">
             <div class="qz_cen">
-              <img @mouseover="flag=index" :class="flag==index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" src="../../assets/my_center/background_dynamic.jpg" alt="Responsive image">
-              <div :class="flag==index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
-                <span v-if="seen==-1" class="font_main"><br><br>{{dy.content}}</span>
-                <span v-else-if="seen==0" class="font_main"><br><br>{{dy.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.click}}</span>
-                <span v-else-if="seen==1" class="font_main"><br><br>{{dy.colInfo.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.colInfo.click}}</span>
+              <img @mouseover="flag=index" :class="flag===index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" src="../../assets/my_center/background_dynamic.jpg" alt="Responsive image">
+              <div :class="flag===index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
+                <span v-if="seen===-2" class="font_main"><br><br>{{dy.content}}</span>
+                <span v-if="seen===-1" class="font_main"><br><br>{{dy.content}}</span>
+                <span v-else-if="seen===0" class="font_main"><br><br>{{dy.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.click}}</span>
+                <span v-else-if="seen===1" class="font_main"><br><br>{{dy.colInfo.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.colInfo.click}}</span>
               </div>
             </div>
           </div>
@@ -69,12 +70,12 @@
       </div>
     </div>
 
-
   </div>
 
 </template>
 
 <script>
+  import axios from 'axios'
   import PersonInformation from '../my_center/PersonInformation'
   import BrowseHistory from '../my_center/BrowseHistory'
   import GoTo from '../my_center/GoTo'
@@ -87,19 +88,23 @@
       name: "OtherCenter",
       data:function () {
         return{
-          user_id:$route.params.id,
+          user_id:this.$route.params.id,
           flag:-1,
           seen:0,
-          dynamic:[{"content":"彩虹日记"},{"content":"彩虹日记"},{"content":"彩虹日记"}],
+          dynamic:[{"content":"彩虹日记"}],
         }
       },
       mounted: function () {
         let that=this;
-        axios.get('http://192.168.2.66:8000/user/myDynamics/1/1/')
+        axios.get(this.GLOBAL.HOST+'user/myDynamics/'+this.user_id+'/1/')
           .then(function (response) {
-            that.dynamic=response.data.slice(0,3);
-            that.seen=0;
-            that.flag=-1
+            if (response.data.length===0) {
+              that.seen=-1;
+              that.dynamic=[{"content":"写日记 >"}];
+            }else{
+              that.seen=0;
+              that.dynamic=response.data.slice(0,3);
+            }
           })
           .catch(function (error) {
             console.log(error);
@@ -107,42 +112,53 @@
       },
       methods: {
         // 切换单个动态
-        dyAxios:function () {
-          let that=this;
-          axios.get('http://192.168.2.66:8000/user/myDynamics/1/1/')
+        dyAxios: function () {
+          let that = this;
+          axios.get(this.GLOBAL.HOST + 'user/myDynamics/' + this.user_id + '/1/')
             .then(function (response) {
-              if (response.data.status_code==='10017') {
-                that.seen=-1;
-                that.dynamic=[{"content":"彩虹日记"}];
-              }else{
-                that.seen=0;
-                that.dynamic=response.data.slice(0,3);
+              if (response.data.length === 0) {
+                that.seen = -1;
+                that.dynamic = [{"content": "写日记 >"}];
+              } else {
+                that.seen = 0;
+                that.dynamic = response.data.slice(0, 3);
               }
             })
             .catch(function (error) {
               console.log(error);
             })
         },
-        coAxios:function () {
-          let that=this;
-          axios.post('http://192.168.2.66:8000/user/viewCollections/',{
-            "method":"check",
-            "target":[{"type":"dynamic","user_id":1},{"type":"dairy","user_id":1},{"type":"test","user_id":1},{"type":"commodity","user_id":1}]
+        coAxios: function () {
+          let that = this;
+          axios.post(this.GLOBAL.HOST + 'user/viewCollections/', {
+            "method": "check",
+            "target": [
+              {"type": "dynamic", "user_id": this.user_id},
+              {"type": "dairy", "user_id": this.user_id},
+              {"type": "test", "user_id": this.user_id}]
           })
             .then(function (response) {
-              if (response.data.status_code==='10017') {
-                that.seen=-1;
-                that.dynamic=[{"content":"彩虹日记"},{"content":"彩虹日记"},{"content":"彩虹日记"}];
+              let res=response.data;
+              if (res[0].status_code==='10017' && res[1].status_code==='10017' &&  res[2].status_code==='10017') {
+                that.seen=-2;
+                that.dynamic=[{"content":"去收藏 >"}];
               }else{
+                let dyna=[];
+                for(let i=0;i<res.length;i++){
+                  if(res[i].status_code!=='10017'){
+                    dyna.push(res[i])
+                  }
+                }
+                dyna.sort((x,y)=>(y.date - x.date));
+                that.dynamic=dyna.slice(0,3);
                 that.seen=1;
-                that.dynamic=response.data.slice(0,3);
               }
             })
             .catch(function (error) {
               console.log(error);
             })
         },
-      },
+      }
     }
 </script>
 
