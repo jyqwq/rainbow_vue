@@ -4,7 +4,7 @@
       <div role="presentation" class="tag-item"><a class="dy_m_nav one_tag theindex">他的主页</a></div>
     </div>
     <div class="col-lg-4 xs_padding">
-      <div role="presentation" class="tag-item"><a class="dy_m_nav one_tag follow" @click="tofollow">{{isfollow? '已关注':'关注'}}</a></div>
+      <div role="presentation" class="tag-item" v-if="parseInt(user_id)!==myid"><a class="dy_m_nav one_tag follow" @click="tofollow">{{isfollow? '已关注':'关注'}}</a></div>
     </div>
     <div class="col-lg-4 xs_padding">
       <div role="presentation" class="tag-item"><a class="dy_m_nav one_tag back" @click="back">返回</a></div>
@@ -19,7 +19,8 @@
         name: "DetailNav",
       data:function () {
         return{
-          isfollow:false
+          isfollow:false,
+          myid:parseInt(JSON.parse(sessionStorage.getItem('userInfo'))['user'])
         }
       },
       mounted:function () {
@@ -38,7 +39,7 @@
                 that.isfollow=true
               }else if (res.data[0]['status_code']==='10012') {
                 that.isfollow=false
-              }else {
+              }else  {
                 that.isfollow=false;
                 console.log(res.data[0]['status_text']);
               }
@@ -78,7 +79,10 @@
               }).then(function (res) {
                 if (res.data['status_code']==='10009'){
                   that.isfollow=true
-                }else {
+                }else if (res.data[0]['status_code']==='10022'){
+                  that.isfollow=false;
+                  alert(res.data[0]['status_text'])
+                }else{
                   alert(res.data['status_text'])
                 }
               }).catch(function (err) {
