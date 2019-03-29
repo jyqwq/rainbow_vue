@@ -38,9 +38,9 @@
           </div>
           <div class="row margin_top">
             <ul class="nav">
-              <li class="dy_c_nav"><a><img src="" alt="${col.alt}" class="dy_c">&nbsp;<span>{{dy.cols}}</span></a></li>
+              <li class="dy_c_nav"><a><img @click="click_col" :src="colspic[index]" alt="" class="dy_c"><span style="display: none">{{index}}</span>&nbsp;<span>{{dy.cols}}</span></a></li>
               <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="1" class="dy_p">&nbsp;<span>{{dy.com}}</span></a></li>
-              <li class="dy_c_nav"><a><img src="" alt="${com.alt}" class="dy_f">&nbsp;<span>{{dy.fbs}}</span></a></li>
+              <li class="dy_c_nav"><a><img @click="click_fab" :src="fbspic[index]" alt="" class="dy_f"><span style="display: none">{{index}}</span>&nbsp;<span>{{dy.fbs}}</span></a></li>
             </ul>
           </div>
         </div>
@@ -57,11 +57,18 @@
 
 <script>
   import axios from 'axios'
+  import Vue from 'vue'
     export default {
       name: "DiaryList",
       data:function(){
         return{
-          res:''
+          res:'',
+          colspic:[],
+          fbspic:[],
+          colsflag:[],
+          fbsflag:[],
+          dyid:[],
+          alltype:[]
         }
       },
       mounted:function () {
@@ -70,10 +77,161 @@
         axios.get(this.GLOBAL.HOST+'user/myDynamics/'+user_id+'/1/')
           .then(function (response) {
             that.res=response.data;
+            let targets=[];
+            for (let i=0;i<that.res.length;i++){
+              let id=that.res[i].id;
+              let type=that.res[i].type;
+              let target={"type":type, "id":id, "user_id":user_id};
+              that.dyid.push(id);
+              that.alltype.push(type);
+              targets.push(target);
+              that.colspic.push('../../../static/dynamic/col.png');
+              that.fbspic.push('../../../static/dynamic/fbs.png');
+              that.colsflag.push(false);
+              that.fbsflag.push(false);
+            }
+            // 查-当前用户是否点赞
+            axios.post(that.GLOBAL.HOST+'user/viewCompliment/',{
+              "method":"check",
+              "target":targets})
+              .then(function (response) {
+                for (let j=0;j<response.data.length;j++){
+                  if (response.data[j].status_code==='10020') {
+                    Vue.set(that.colspic, index, '../../../static/dynamic/col.png');
+                    that.colsflag.push(false)
+                  }else if (response.data[j].status_code==='10019') {
+                    Vue.set(that.colspic, index, '../../../static/dynamic/iscol.png');
+                    that.colsflag.push(true)
+                  }
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+            // 查-当前用户是否收藏
+            axios.post(that.GLOBAL.HOST+'user/viewCollections/',{
+              "method":"check",
+              "target":targets})
+              .then(function (response) {
+                for (let j=0;j<response.data.length;j++){
+                  if (response.data[j].status_code==='10017') {
+                    Vue.set(that.fbspic, index, '../../../static/dynamic/fbs.png');
+                    that.fbsflag.push(false)
+                  }else if (response.data[j].status_code==='10016') {
+                    Vue.set(that.fbspic, index, '../../../static/dynamic/isfbs.png');
+                    that.fbsflag.push(true)
+                  }
+                }
+
+              })
+              .catch(function (error) {
+                console.log(error);
+              })
           })
           .catch(function (error) {
             console.log(error);
           })
+      },
+      methods:{
+        // 收藏，取消收藏
+        click_col:function (event) {
+          let node=event.target;
+          let myDate = new Date();
+          let that=this;
+          let index=node.nextElementSibling.innerHTML;
+          let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
+          if(this.colsflag[index]){
+            // 删-收藏
+            axios.post(this.GLOBAL.HOST+'user/viewCollections/',
+              {"method":"del",
+                "type":this.alltype[index],
+                "id":this.dyid[index],
+                "user_id":user_id})
+              .then(function (response) {
+                if (response.data.status_code==='10010') {
+                  console.log('删除成功');
+                  Vue.set(that.colspic, index, '../../../static/dynamic/col.png');
+                  Vue.set(that.colsflag, index, false);
+                  node.nextElementSibling.nextElementSibling.innerHTML--;
+                }else {
+                  console.log(response.data.status_code);
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              })} else {
+            // 增-收藏
+            axios.post(this.GLOBAL.HOST+'user/viewCollections/',
+              {"method":"add",
+                "type":this.alltype[index],
+                "id":this.dyid[index],
+                "user_id":user_id,
+                "date":myDate.getTime()})
+              .then(function (response) {
+                if (response.data.status_code==='10015') {
+                  console.log('收藏成功');
+                  Vue.set(that.colspic, index, '../../../static/dynamic/iscol.png');
+                  Vue.set(that.colsflag, index, true);
+                  node.nextElementSibling.nextElementSibling.innerHTML++;
+                }else {
+                  console.log(response.data.status_code);
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              })
+          }
+        },
+        // 点赞，取消赞
+        click_fab:function (event) {
+          let node=event.target;
+          let myDate = new Date();
+          let that=this;
+          let index=node.nextElementSibling.innerHTML;
+          let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
+          if(this.fbsflag[index]){
+            // 删-点赞
+            axios.post(this.GLOBAL.HOST+'user/viewCompliment/',
+              {"method":"del",
+                "type":this.alltype[index],
+                "id":this.dyid[index],
+                "user_id":user_id})
+              .then(function (response) {
+                if (response.data.status_code==='10010') {
+                  console.log('删除成功');
+                  Vue.set(that.fbspic, index, '../../../static/dynamic/fbs.png');
+                  Vue.set(that.fbsflag, index, false);
+                  node.nextElementSibling.nextElementSibling.innerHTML--;
+                }else {
+                  console.log(response.data.status_code);
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              })} else {
+            // 增-点赞
+            axios.post(this.GLOBAL.HOST+'user/viewCompliment/',
+              {"method":"add",
+                "type":this.alltype[index],
+                "id":this.dyid[index],
+                "user_id":user_id,
+                "date":myDate.getTime()})
+              .then(function (response) {
+                if (response.data.status_code==='10018') {
+                  console.log('赞成功');
+                  Vue.set(that.fbspic, index, '../../../static/dynamic/isfbs.png');
+                  Vue.set(that.fbsflag, index, true);
+                  node.nextElementSibling.nextElementSibling.innerHTML++;
+                }else {
+                  console.log(response.data.status_code);
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              })
+          }
+        }
+
       }
     }
 </script>
