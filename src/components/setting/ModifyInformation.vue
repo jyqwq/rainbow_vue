@@ -70,6 +70,9 @@
         autograph:'',
       }
     },
+    created:function(){
+      that.$emit('flash');
+    },
     mounted:function(){
       let userInfo=sessionStorage.getItem('userInfo');
       this.person=JSON.parse(userInfo);
@@ -115,6 +118,7 @@
       // },
       // 传数据到后台
       ransData:function(){
+        let that = this;
         axios.post(this.GLOBAL.HOST+'user/personInfo/',{
           "user_id":JSON.parse(sessionStorage.getItem('userInfo'))['user'],
           "method":"update",
@@ -125,6 +129,7 @@
             let txt = response.data;
             if (parseInt(txt['status_code'])===10014){
               alert('更改成功！');
+              that.$router.go(0);
             }else if(parseInt(txt['status_code'])===10000){
               this.nicerr='*该昵称已被占用*';
             }else {

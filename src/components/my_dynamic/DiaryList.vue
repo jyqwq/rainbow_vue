@@ -23,9 +23,9 @@
           </div>
           <div class="row dy_c_content to_one">
             <!--动态-->
-            <div v-if="dy.type==='dynamic'" class="qz_dinf">{{(dy.content).length>50? (dy.content).slice(0,50)+'...':dy.content }}</div>
+            <div v-if="dy.type==='dynamic'" class="qz_dinf">{{dy.content}}</div>
             <!--日记-->
-            <span v-if="dy.type==='dairy'" style="font-size: 1.1em"><strong>{{(dy.title).length>10? (dy.title).slice(0,10)+'...':dy.title}}</strong><br>{{dy.ceshiceshi}}</span>
+            <span v-if="dy.type==='dairy'" style="font-size: 1.1em"><strong>{{dy.title}}</strong><br>{{dy.ceshiceshi}}</span>
             <!--测评-->
             <span v-if="dy.type==='test'" style="font-size: 1.1em"><strong>{{dy.content}}</strong><br>{{dy.subtitle[0].title}}<br>{{dy.subtitle[1].title}}</span>
           </div>

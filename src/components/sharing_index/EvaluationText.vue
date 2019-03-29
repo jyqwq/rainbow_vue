@@ -16,8 +16,8 @@
         <h4 class="row_margin">内容</h4>
         <textarea class="form-control dairy_text row_margin" cols="30" rows="5" placeholder="具体点呢~~" ref="t_content2"></textarea>
 
-        <div class="row row_margin pic_show" style="display: none;">
-          <!--图片预览区-->
+        <div class="row row_margin pic_show">
+          <upload-image ref="getimg"></upload-image>
         </div>
         <write-tags ref="mytag"></write-tags>
         <release-btn :name="'发  布'" @rr="release"></release-btn>
@@ -31,11 +31,13 @@
   import axios from 'axios'
   import WriteTags from './WriteTags'
   import ReleaseBtn from './ReleaseBtn'
+  import UploadImage from './UploadImage'
   export default {
         name: "EvaluationText",
     components:{
       'write-tags':WriteTags,
-      'release-btn':ReleaseBtn
+      'release-btn':ReleaseBtn,
+      'upload-image':UploadImage
     },
     methods:{
       release:function () {
@@ -47,9 +49,16 @@
         let content1 = this.$refs.t_content1.value;
         let content2 = this.$refs.t_content2.value;
         let myDate = new Date();
-        if (content && title){
+        if (content && title && title1 && title2 && content1 && content2){
+          let qiniu = require('qiniu-js');
           let tag = this.$refs.mytag.check();
           let user_id = JSON.parse(sessionStorage.getItem('userInfo'))['user'];
+          let imgform = this.$refs.getimg.submit(); //获取图片form
+          let imgs = imgform.getAll('multipartFiles');
+          let imgname = [];
+          for (let i in imgs) {
+            imgname.push(imgs[i].name)
+          }
           axios.post(this.GLOBAL.HOST+'sharing/releaseSharing/',{
             "type":"test",
             "title":title,
@@ -61,6 +70,50 @@
           }).then(function (res) {
             let txt = res.data;
             if (parseInt(txt['status_code'])===10008){
+              // 图片上传
+              axios.post(that.GLOBAL.HOST+'user/qiniuToken/',{"method":"sharing","name":imgname}).then(function (res) {
+                console.log(res);
+                if(res.data['status_code']==='20000'){
+                  // let file=$('#upload_file').get(0).files[0];
+                  let allfile=res.data.file; //返回的新文件名和token
+                  let domain=res.data.domain;
+                  let config = {
+                    useCdnDomain: false,
+                    disableStatisticsReport: true,
+                    retryCount: 6,
+                    region: qiniu.region.z0   //此处表示服务器所在的区域
+                  };
+                  let putExtra = {
+                    fname: "",
+                    params: {},
+                    mimeType: ["image/png", "image/jpeg", "image/gif", "image/jpg"]
+                  };
+                  for (let o=0;o<allfile.length;o++) {
+                    // 添加上传dom面板
+                    putExtra.params["x:name"] = allfile[o]['filename'].split(".")[0];
+                    let subscription;
+                    // 调用sdk上传接口获得相应的observable，控制上传和暂停
+                    let observable = qiniu.upload(imgs[o], allfile[o]['filename'], allfile[o]['token'], putExtra);
+                    subscription = observable.subscribe({
+                      next(res){
+                        // ...
+                      },
+                      error(err){
+                        alert('第'+o+'张图片上传失败,错误信息:'+err)
+                      },
+                      complete(res){
+                        axios.post(that.GLOBAL.HOST+'user/imgSave/',{"type":"test","id":txt['id'],"url":res.key}).then(function (res) {
+                          console.log(res);
+                        }).catch(function (err) {
+                          console.log(err);
+                        })
+                      }
+                    });
+                  }
+                }
+              }).catch(function (err) {
+                console.log(err);
+              });
               that.$router.push({path:'/sharing_index/success'})
             }else {
               that.$router.push({path:'/sharing_index/defeat/'+txt['status_code']+'/'+txt['status_text']})

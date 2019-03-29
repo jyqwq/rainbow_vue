@@ -8,7 +8,7 @@
           <div class="row">
             <span><strong style="font-size: 1.1em">{{i.userInfo.name}}</strong></span>
             <br>
-            <span style="color: darkgrey;font-size: 0.9em">{{i.date}}</span>
+            <span style="color: darkgrey;font-size: 0.9em">{{GLOBAL.TIME(now-i.date)}}</span>
             <div class="dy_tags">
               <div class="one_tag" v-for="(j,idx) in i.tags.split(',')" :key="idx" v-if="j">{{j}}</div>
             </div>
@@ -23,8 +23,8 @@
             <span class="to_one" @click="tocom">{{i.type==='test'? i.subtitle[1].title:''}}</span>
             <span style="display: none">{{index}}</span>
           </div>
-          <div class="row dy_c_content">
-            <img src="" alt="">
+          <div class="row dy_c_content" style="text-align: center" ref="allimg">
+            <img  class="img-responsive img-rounded" v-for="(img,idx) in i.imgs" :key="idx" :src="imgurl+img.url" alt="" style="height: 200px;margin: 10px 10px;display: inline;cursor: pointer" @click="tobig">
           </div>
           <div class="row margin_top">
             <ul class="nav">
@@ -44,11 +44,15 @@
         </div>
       </div>
     </div>
+    <div class="motai" id="mo" ref="motai">
+      <span class="close" id="close" ref="close" @click="toclose">×</span>
+      <img class="motaiimg" id="moimg" ref="moimg">
+      <div id="caption" ref="caption"></div>
+    </div>
   </div>
 </template>
 
 <script>
-  import vm from 'vue'
   import Vue from 'vue'
   import axios from 'axios'
     export default {
@@ -59,6 +63,8 @@
       },
       data:function () {
         return{
+          now:(new Date()).getTime(),
+          imgurl:this.GLOBAL.IMG,
           idx:-1,
           res:null,
           colimg:[],
@@ -256,6 +262,15 @@
           let eve = e.target;
           let no = parseInt(eve.nextElementSibling.innerHTML);
           this.$router.push({path:'/dynamic_detail/'+JSON.parse(sessionStorage.getItem('userInfo'))['user']+'/'+this.alltype[no]+'/'+this.allid[no]})
+        },
+        tobig:function(e) {
+          let th = e.target;
+          this.$refs.motai.style.display = "block";
+          this.$refs.moimg.src = th.src;
+          this.$refs.caption.innerHTML = th.alt
+        },
+        toclose:function() {
+          this.$refs.motai.style.display = "none";
         }
       }
     }
@@ -312,5 +327,64 @@
   }
   .dy_c,.dy_f,.dy_p{
     cursor: pointer;
+  }
+
+
+
+  #mo {
+    display:none;
+    /*隐藏*/
+    width:100%;
+    height:100%;
+    position:fixed;
+    overflow:auto;
+    background-color:rgba(0,0,0,0.7);
+    top:0;
+    left:0;
+    z-index:1;
+  }
+  #moimg {
+    display:inline-block;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width:60%;
+    max-width:750px;
+  }
+  #caption {
+    text-align:center;
+    margin:15px auto;
+    width:60%;
+    max-height:750px;
+    font-size:20px;
+    color:#ccc;
+  }
+  #moimg,#caption {
+    -webkit-animation:first 1s;
+    -o-animation:first 1s;
+    animation:first 1s;
+  }
+  @keyframes first {
+    from {
+      transform:scale(0.1);
+    }
+    to {
+      transform:scale(1);
+    }
+  }
+  .close {
+    font-size:40px;
+    font-weight:bold;
+    position:absolute;
+    top:100px;
+    right:14%;
+    color:#f1f1f1;
+  }
+  .close:hover,.close:focus {
+    color:#bbb;
+    cursor:pointer;
   }
 </style>
