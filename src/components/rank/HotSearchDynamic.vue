@@ -4,11 +4,11 @@
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 rank_num"><strong class="num_rank">{{index+1}}</strong></div>
       <div class="col-xs-10 col-sm-8 col-md-8 col-lg-8">
         <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3 rank_img">
-          <img src="../../assets/rank_img.jpg" class="img-responsive img-rounded img_rank" alt="Responsive image">
+          <img :src="GLOBAL.IMG+(i.imgs.length>0? i.imgs[0]['url']:'rank_img.jpg')" class="img-responsive img-rounded img_rank" alt="Responsive image" :data-type="i.type" :data-id="i.id" :data-other="i.userInfo.user" @click="toone">
         </div>
         <div class="col-xs-7 col-sm-9 col-md-9 col-lg-9 rank_content">
           <div class="row first_row">
-            <a class="content_name to_two_dy"><h5><strong class="title_rank">{{(i.title).length>10? (i.title).slice(0,10)+'...':i.title}}</strong></h5></a>
+            <a class="content_name to_two_dy"><h5><strong class="title_rank" :data-type="i.type" :data-id="i.id" :data-other="i.userInfo.user" @click="toone">{{(i.title).length>10? (i.title).slice(0,10)+'...':i.title}}</strong></h5></a>
             <div class="dy_type" style="display: none">{{i.type}}</div>
             <div class="dy_id" style="display: none">{{i.id}}</div>
           </div>
@@ -61,6 +61,12 @@
               console.log(err);
             }
           )
+        },
+        toone:function (e) {
+          let id = e.target.dataset.id;
+          let type = e.target.dataset.type;
+          let other = e.target.dataset.other;
+          this.$router.push({path:'/dynamic_detail/'+other+'/'+type+'/'+id})
         }
       }
     }

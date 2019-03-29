@@ -2,9 +2,7 @@
 <div>
   <div class="row content_margin" v-for="(t,index) in res" :key="index">
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-      <a class="to_one_img"><img src="../../assets/ad.jpg" class="img-responsive img-rounded" alt="Responsive image"></a>
-      <div class="dy_type" style="display: none">{{t.type}}</div>
-      <div class="dy_id" style="display: none">{{t.id}}</div>
+      <a class="to_one_img"><img :src="GLOBAL.IMG+(t.imgs.length>0? t.imgs[0]['url']:'ad.jpg')" class="img-responsive img-rounded" alt="Responsive image" :data-type="t.type" :data-id="t.id" :data-other="t.userInfo.user" @click="toone"></a>
     </div>
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 content_detail">
       <br>
@@ -20,21 +18,15 @@
       </div>
       <br>
       <div class="row">
-        <a class="a_style to_one_t1"><span class="style_title1">{{(t.title).length>10? (t.title).slice(0,10)+'...':t.title}}</span></a>
-        <div class="dy_type" style="display: none">{{t.type}}</div>
-        <div class="dy_id" style="display: none">{{t.id}}</div>
+        <a class="a_style to_one_t1"><span class="style_title1" :data-type="t.type" :data-id="t.id" :data-other="t.userInfo.user" @click="toone">{{(t.title).length>10? (t.title).slice(0,10)+'...':t.title}}</span></a>
       </div>
       <br><br>
       <div class="row">
-        <a class="a_style  to_one_t2"><span class="style_title2">{{(t.subtitle[0].title).length>10? (t.subtitle[0].title).slice(0,10)+'...':t.subtitle[0].title}}&nbsp;<span class="glyphicon glyphicon-play" aria-hidden="true"></span></span></a>
-        <div class="dy_type" style="display: none">{{t.type}}</div>
-        <div class="dy_id" style="display: none">{{t.id}}</div>
+        <a class="a_style  to_one_t2"><span class="style_title2" :data-type="t.type" :data-id="t.id" :data-other="t.userInfo.user" @click="toone">{{(t.subtitle[0].title).length>10? (t.subtitle[0].title).slice(0,10)+'...':t.subtitle[0].title}}&nbsp;<span class="glyphicon glyphicon-play" aria-hidden="true"></span></span></a>
       </div>
 
       <div class="row">
-        <a class="a_style  to_one_t3"><span class="style_title2">{{(t.subtitle[1].title).length>10? (t.subtitle[1].title).slice(0,10)+'...':t.subtitle[1].title}}&nbsp;<span class="glyphicon glyphicon-play" aria-hidden="true"></span></span></a>
-        <div class="dy_type" style="display: none">{{t.type}}</div>
-        <div class="dy_id" style="display: none">{{t.id}}</div>
+        <a class="a_style  to_one_t3"><span class="style_title2" :data-type="t.type" :data-id="t.id" :data-other="t.userInfo.user" @click="toone">{{(t.subtitle[1].title).length>10? (t.subtitle[1].title).slice(0,10)+'...':t.subtitle[1].title}}&nbsp;<span class="glyphicon glyphicon-play" aria-hidden="true"></span></span></a>
       </div>
     </div>
   </div>
@@ -62,7 +54,13 @@
            }).catch(function (err) {
              console.log(err);
            })
-         }
+         },
+        toone:function (e) {
+          let id = e.target.dataset.id;
+          let type = e.target.dataset.type;
+          let other = e.target.dataset.other;
+          this.$router.push({path:'/dynamic_detail/'+other+'/'+type+'/'+id})
+        }
       }
     }
 </script>
