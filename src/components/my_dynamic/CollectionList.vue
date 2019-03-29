@@ -65,77 +65,77 @@
       data:function(){
         return{
           res:'',
-          colspic:[],
-          fbspic:[],
-          colsflag:[],
-          fbsflag:[],
-          dyid:[],
-          alltype:[]
+          // colspic:[],
+          // fbspic:[],
+          // colsflag:[],
+          // fbsflag:[],
+          // dyid:[],
+          // alltype:[]
         }
       },
-      mounted:function () {
-        let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
-        let that = this;
-        axios.post(this.GLOBAL.HOST+'user/viewCollections/',{
-          "method":"check",
-          "target":[
-            {"type":"dynamic","user_id":user_id},
-            {"type":"dairy","user_id":user_id},
-            {"type":"test","user_id":user_id},
-            ]
-        })
-          .then(function (response) {
-            that.res=response.data;
-            let targets=[];
-            for (let i=0;i<that.res.length;i++){
-              let id=that.res[i].colInfo.id;
-              let type=that.res[i].colInfo.type;
-              let target={"type":type, "id":id, "user_id":user_id};
-              that.dyid.push(id);
-              that.alltype.push(type);
-              targets.push(target)
-            }
-            // 查-当前用户是否点赞
-            axios.post(that.GLOBAL.HOST+'user/viewCompliment/',{
-              "method":"check",
-              "target":targets})
-              .then(function (response) {
-                for (let j=0;j<response.data.length;j++){
-                  if (response.data[j].status_code==='10020') {
-                    that.colspic.push('../../../static/dynamic/col.png');
-                    that.colsflag.push(false)
-                  }else if (response.data[j].status_code==='10019') {
-                    that.colspic.push('../../../static/dynamic/iscol.png');
-                    that.colsflag.push(true)
-                  }
-                }
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-            // 查-当前用户是否收藏
-            axios.post(that.GLOBAL.HOST+'user/viewCollections/',{
-              "method":"check",
-              "target":targets})
-              .then(function (response) {
-                for (let j=0;j<response.data.length;j++){
-                  if (response.data[j].status_code==='10017') {
-                    that.fbspic.push('../../../static/dynamic/fbs.png');
-                    that.fbsflag.push(false)
-                  }else if (response.data[j].status_code==='10016') {
-                    that.fbspic.push('../../../static/dynamic/isfbs.png');
-                    that.fbsflag.push(true)
-                  }
-                }
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-      },
+      // mounted:function () {
+      //   let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
+      //   let that = this;
+      //   axios.post(this.GLOBAL.HOST+'user/viewCollections/',{
+      //     "method":"check",
+      //     "target":[
+      //       {"type":"dynamic","user_id":user_id},
+      //       {"type":"dairy","user_id":user_id},
+      //       {"type":"test","user_id":user_id},
+      //       ]
+      //   })
+      //     .then(function (response) {
+      //       that.res=response.data;
+      //       let targets=[];
+      //       for (let i=0;i<that.res.length;i++){
+      //         let id=that.res[i].colInfo.id;
+      //         let type=that.res[i].colInfo.type;
+      //         let target={"type":type, "id":id, "user_id":user_id};
+      //         that.dyid.push(id);
+      //         that.alltype.push(type);
+      //         targets.push(target)
+      //       }
+      //       // 查-当前用户是否点赞
+      //       axios.post(that.GLOBAL.HOST+'user/viewCompliment/',{
+      //         "method":"check",
+      //         "target":targets})
+      //         .then(function (response) {
+      //           for (let j=0;j<response.data.length;j++){
+      //             if (response.data[j].status_code==='10020') {
+      //               that.colspic.push('../../../static/dynamic/col.png');
+      //               that.colsflag.push(false)
+      //             }else if (response.data[j].status_code==='10019') {
+      //               that.colspic.push('../../../static/dynamic/iscol.png');
+      //               that.colsflag.push(true)
+      //             }
+      //           }
+      //         })
+      //         .catch(function (error) {
+      //           console.log(error);
+      //         });
+      //       // 查-当前用户是否收藏
+      //       axios.post(that.GLOBAL.HOST+'user/viewCollections/',{
+      //         "method":"check",
+      //         "target":targets})
+      //         .then(function (response) {
+      //           for (let j=0;j<response.data.length;j++){
+      //             if (response.data[j].status_code==='10017') {
+      //               that.fbspic.push('../../../static/dynamic/fbs.png');
+      //               that.fbsflag.push(false)
+      //             }else if (response.data[j].status_code==='10016') {
+      //               that.fbspic.push('../../../static/dynamic/isfbs.png');
+      //               that.fbsflag.push(true)
+      //             }
+      //           }
+      //         })
+      //         .catch(function (error) {
+      //           console.log(error);
+      //         })
+      //     })
+      //     .catch(function (error) {
+      //       console.log(error);
+      //     })
+      // },
       methods:{
         // 删除单个收藏
         delete_dy:function () {

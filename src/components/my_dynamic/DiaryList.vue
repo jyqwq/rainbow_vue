@@ -72,75 +72,95 @@
         }
       },
       mounted:function () {
-        let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
-        let that = this;
-        axios.get(this.GLOBAL.HOST+'user/myDynamics/'+user_id+'/1/')
-          .then(function (response) {
-            that.res=response.data;
-            let targets=[];
-            for (let i=0;i<that.res.length;i++){
-              let id=that.res[i].id;
-              let type=that.res[i].type;
-              let target={"type":type, "id":id, "user_id":user_id};
-              that.dyid.push(id);
-              that.alltype.push(type);
-              targets.push(target);
-              that.colspic.push('../../../static/dynamic/col.png');
-              that.fbspic.push('../../../static/dynamic/fbs.png');
-              that.colsflag.push(false);
-              that.fbsflag.push(false);
-            }
-            // 查-当前用户是否点赞
-            axios.post(that.GLOBAL.HOST+'user/viewCompliment/',{
-              "method":"check",
-              "target":targets})
-              .then(function (response) {
-                for (let j=0;j<response.data.length;j++){
-                  if (response.data[j].status_code==='10020') {
-                    Vue.set(that.colspic, index, '../../../static/dynamic/col.png');
-                    that.colsflag.push(false)
-                  }else if (response.data[j].status_code==='10019') {
-                    Vue.set(that.colspic, index, '../../../static/dynamic/iscol.png');
-                    that.colsflag.push(true)
-                  }
-                }
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
-            // 查-当前用户是否收藏
-            axios.post(that.GLOBAL.HOST+'user/viewCollections/',{
-              "method":"check",
-              "target":targets})
-              .then(function (response) {
-                for (let j=0;j<response.data.length;j++){
-                  if (response.data[j].status_code==='10017') {
-                    Vue.set(that.fbspic, index, '../../../static/dynamic/fbs.png');
-                    that.fbsflag.push(false)
-                  }else if (response.data[j].status_code==='10016') {
-                    Vue.set(that.fbspic, index, '../../../static/dynamic/isfbs.png');
-                    that.fbsflag.push(true)
-                  }
-                }
-
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
+        // 加载日记本页
+        this.dy_axio();
       },
       methods:{
+        // 加载日记本页
+        dy_axio:function(){
+          let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
+          let that = this;
+          axios.get(this.GLOBAL.HOST+'user/myDynamics/'+user_id+'/1/')
+            .then(function (response) {
+              that.res=response.data;
+              let targets=[];
+              for (let i=0;i<that.res.length;i++){
+                let id=that.res[i].id;
+                let type=that.res[i].type;
+                let target={"type":type, "id":id, "user_id":user_id};
+                that.dyid.push(id);
+                that.alltype.push(type);
+                targets.push(target);
+                that.colspic.push('../../../static/dynamic/col.png');
+                that.fbspic.push('../../../static/dynamic/fbs.png');
+                that.colsflag.push(false);
+                that.fbsflag.push(false);
+              }
+              // 查-当前用户是否点赞
+              axios.post(that.GLOBAL.HOST+'user/viewCompliment/',
+                { "method":"check",
+                  "target":targets })
+                .then(function (response) {
+                  for (let j=0;j<response.data.length;j++){
+                    if (response.data[j].status_code==='10019') {
+                      Vue.set(that.colspic, j, '../../../static/dynamic/iscol.png');
+                      that.colsflag[j]=true;
+                    }else if (response.data[j].status_code==='10020') {
+
+                    }
+                    else {
+                      console.log(response.data[j]['status_code']);
+                    }
+                  }
+                  console.log(that.colspic);
+                  // console.log(that.fbspic);
+                  console.log(that.colsflag);
+                  // console.log(that.fbsflag);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+              // 查-当前用户是否收藏
+              axios.post(that.GLOBAL.HOST+'user/viewCollections/',{
+                "method":"check",
+                "target":targets})
+                .then(function (response) {
+                  for (let j=0;j<response.data.length;j++){
+                    if (response.data[j].status_code==='10016') {
+                      Vue.set(that.fbspic, j, '../../../static/dynamic/isfbs.png');
+                      that.colsflag[j]=true;
+                    }else if (response.data[j].status_code==='10017') {
+
+                    }
+                    else {
+                      console.log(response.data[j]['status_code']);
+                    }
+                  }
+                  // console.log(that.colspic);
+                  console.log(that.fbspic);
+                  // console.log(that.colsflag);
+                  console.log(that.fbsflag);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                })
+              // console.log(that.colspic);
+              // console.log(that.fbspic);
+              // console.log(that.colsflag);
+              // console.log(that.fbsflag);
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
+        },
         // 收藏，取消收藏
         click_col:function (event) {
           let node=event.target;
           let myDate = new Date();
           let that=this;
-          let index=node.nextElementSibling.innerHTML;
+          let index=parseInt(node.nextElementSibling.innerHTML);
           let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
-          if(this.colsflag[index]){
+          if(that.colsflag[index]){
             // 删-收藏
             axios.post(this.GLOBAL.HOST+'user/viewCollections/',
               {"method":"del",
@@ -151,10 +171,10 @@
                 if (response.data.status_code==='10010') {
                   console.log('删除成功');
                   Vue.set(that.colspic, index, '../../../static/dynamic/col.png');
-                  Vue.set(that.colsflag, index, false);
+                  that.colsflag[index]=false;
                   node.nextElementSibling.nextElementSibling.innerHTML--;
                 }else {
-                  console.log(response.data.status_code);
+                  console.log(response.data);
                 }
               })
               .catch(function (error) {
@@ -174,7 +194,7 @@
                   Vue.set(that.colsflag, index, true);
                   node.nextElementSibling.nextElementSibling.innerHTML++;
                 }else {
-                  console.log(response.data.status_code);
+                  console.log(response.data);
                 }
               })
               .catch(function (error) {
