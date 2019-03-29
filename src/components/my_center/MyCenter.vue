@@ -109,23 +109,7 @@
         }
       },
       mounted: function () {
-        let user_id=JSON.parse(sessionStorage.getItem('userInfo'))['user'];
-        let that=this;
-        axios.get(this.GLOBAL.HOST+'user/myDynamics/'+user_id+'/1/')
-          .then(function (response) {
-            console.log(response);
-            if (response.data.length===0) {
-              that.seen=-1;
-              that.dynamic=[{"content":"写日记 >"}];
-            }else{
-              that.seen=0;
-              that.dynamic=response.data.slice(0,3);
-              console.log(dynamic);
-            }
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
+        this.dyAxios();
       },
       methods: {
         // 切换单个动态
