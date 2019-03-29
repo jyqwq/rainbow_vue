@@ -1,12 +1,13 @@
 <template>
   <div class="row r-2" id="r-2">
     <div class="col-md-6">
+      <!--待修改-->
       <div class="row r-2-1">
         <span class="r-2-1-span">好评</span>
       </div>
       <div class="row r-2-2">
         <div class="col-md-6 col-md-offset-3">
-          <img src="../../assets/search_img/mygood.jpg" class="r-2-img" alt="">
+          <img :src="nowimg" class="r-2-img" alt="">
         </div>
       </div>
       <div class="row r-2-3">
@@ -14,31 +15,21 @@
         <img src="../../assets/search_img/gg.png" alt=""><span>好评中</span>
       </div>
       <div class="row r-2-4">
-        <div class="div-img">
-          <img src="../../assets/search_img/good-1.jpg" alt="">
-        </div>
-        <div class="div-img">
-          <img src="../../assets/search_img/good-2.jpg" alt="">
-        </div>
-        <div class="div-img">
-          <img src="../../assets/search_img/good-3.jpg" alt="">
-        </div>
-        <div class="div-img">
-          <img src="../../assets/search_img/good-4.jpg" alt="">
-        </div>
-
+        <div :class="{check:index==isshow}" class="div-img" v-for="(img,index) in imgs.length<4?imgs:4" @click="checked(index)">
+        <img :src="imgs[index]" alt="">
+      </div>
       </div>
     </div>
     <div class="col-md-6">
       <div class="row r-2-5">
         <span class="glyphicon glyphicon-shopping-cart"></span>
-        <span>SNP 金丝燕窝深层保湿面膜含有高浓缩燕窝原液，集中供给皮肤水分锁水能力突出，在皮肤水分子表面形成保护膜防止水分快速流失。</span>
+        <span>{{JSON.parse(gooddetail)['name']}}{{JSON.parse(gooddetail)['Effect']}}</span>
       </div>
       <div class="row r-2-6">
-        <span>保湿</span>
+        <span v-for="adapt in JSON.parse(gooddetail).adaptability">{{adapt}}</span>
       </div>
       <div class="row r-2-7">
-        <span>市场价60.0元</span>
+        <span>市场价{{JSON.parse(gooddetail)['price']}}</span>
       </div>
       <div class="row r-2-8">
         <p>
@@ -72,43 +63,124 @@
 
       </div>
       <div class="row r-2-13">
-        <span>评分</span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star-empty"></span>
+        <span>产品热度评级</span>
+        <span class="glyphicon glyphicon-star" v-if="star>10"></span>
+        <span class="glyphicon glyphicon-star" v-if="star>100"></span>
+        <span class="glyphicon glyphicon-star" v-if="star>1000"></span>
+        <span class="glyphicon glyphicon-star" v-if="star>10000"></span>
+        <span class="glyphicon glyphicon-star" v-if="star>50000"></span>
       </div>
       <div class="row r-2-14">
-        <img src="../../assets/search_img/cot.png" alt="">
-        <span>收藏</span>
+        <img src="../../assets/search_img/已收藏.png" alt="" v-if="iscollect">
+        <img src="../../assets/search_img/收藏.png" alt="" v-else>
+        <span @click="collect" v-if="!iscollect">收藏</span>
+        <span @click="drop" v-else>取消收藏</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
+  import Bus from '../../bus'
     export default {
-        name: "GoodDetail"
+        name: "GoodDetail",
+        data:function () {
+          return{
+            imgs:[ 'static/search_img/good-1.jpg',
+                  'static/search_img/good-2.jpg',
+                  'static/search_img/good-1.jpg',
+                  'static/search_img/good-2.jpg'],
+            isshow:0,
+            nowimg:'',
+            info:'',
+            star:JSON.parse(this.gooddetail).fbs*10+JSON.parse(this.gooddetail).click*5+JSON.parse(this.gooddetail).cols*20,
+            goodid:'',
+            iscollect:false
+          }
+        },
+        props:['gooddetail'],
+        methods:{
+          checked:function (index) {
+            this.isshow=index
+            this.nowimg=this.imgs[index]
+          },
+          collect:function () {
+              if (sessionStorage.getItem('userInfo')) {
+                let time=(new Date()).getTime();
+                let userid=JSON.parse(sessionStorage.getItem('userInfo'))['user']
+                axios.post(this.GLOBAL.HOST+'user/viewCollections/',
+                {"method":"add","type":"commodity","id":JSON.parse(this.gooddetail).id,"user_id":userid,"date":time}
+                ).then((res)=>{
+                  if (res) {
+                    console.log(res);
+                    if (res.data.status_code==10015) {
+                      this.iscollect=true
+                    }
+                  }
+                }).catch((err)=>{
+                  console.log(err);
+                })
+              }else {
+                this.$router.push({name:'Login'})
+              }
+          },
+          drop:function () {
+            let userid=JSON.parse(sessionStorage.getItem('userInfo'))['user']
+            axios.post(this.GLOBAL.HOST+'user/viewCollections/',
+              {"method":"del","type":"commodity","id":JSON.parse(this.gooddetail).id,"user_id":userid}
+            ).then((res)=>{
+              if (res){
+                console.log(res);
+                if (res.data.status_code==10010) {
+                  this.iscollect=false
+                }else {
+                  alert('删除失败')
+                }
+              }
+            }).catch((err)=>{
+              console.log(err);
+            })
+          }
+        },
+        mounted:function () {
+          //自定义用户id用于测试
+          let userInfo={user:1}
+          window.sessionStorage.setItem('userInfo',JSON.stringify(userInfo))
+          this.nowimg=this.imgs[0];
+
+          axios.post(this.GLOBAL.HOST+'user/viewCollections/',
+            {"method":"check","target":[{"type":"commodity","id":JSON.parse(this.gooddetail).id,"user_id":1}]}
+          ).then((res)=>{
+              if (res){
+                console.log(res);
+                if (res.data[0].status_code==10017) {
+                  this.iscollect=false
+                }else {
+                  this.iscollect=true
+                }
+              }
+          }).catch((err)=>{
+            console.log(err);
+          });
+          let vm=this;
+          Bus.$on('transfercollect', (data)=>{
+            vm.iscollect = data
+            console.log(vm.iscollect);
+          })
+        }
+
     }
 </script>
 
 <style scoped>
+  .check{
+    outline: 3px solid rgba(153, 43, 245, 0.65);
+  }
   .r-2{
     background: white;
   }
-  #content{
-    /*width: 400px;*/
-    /*height: 60px;*/
-    color: white;
-    /*font-size: 1.5em;*/
-    border: none;
-    outline: none;
-  }
-  #r-2{
-    /*margin-left: 0px;*/
-    /*margin-right: 0px;*/
-  }
+
   .r-2-1{
     padding-top: 15px;
     padding-left: 35px;
@@ -117,16 +189,11 @@
     display: inline-block;
     width: 110px;
     height: 110px;
-    /*background:url("../../../static/search_img/color.png");*/
     background-size: cover;
     border-radius: 50%;
     text-align: center;
     font-size: 1.7em;
-    /*color: white;*/
     line-height: 110px;
-  }
-  .r-2-img{
-    /*height: 300px;*/
   }
   .r-2-3{
     padding-left: 50px;
@@ -222,55 +289,6 @@
   }
   .r-2-10{
     margin-top: 20px;
-  }
-  /*.r-2-10 p{*/
-  /*margin-bottom: 15px;*/
-  /*}*/
-  /*.r-2-10 p :nth-child(1){*/
-  /*color: grey;*/
-  /*letter-spacing: 5px;*/
-  /*margin-right: 15px;*/
-  /*}*/
-  /*.r-2-10 :nth-child(4) :nth-child(3),.r-2-10 :nth-child(4) :nth-child(4){*/
-  /*margin-left: 25px;*/
-  /*}*/
-  .r-2-11 input[type='text']{
-    width: 30px;
-    height: 20px;
-    outline: none;
-    border: none;
-    text-align: center;
-  }
-  .r-2-11 input[type='button']{
-    width: 23px;
-    height: 23px;
-    background: rgba(128, 128, 128, 0.25);
-    outline: none;
-    border: none;
-  }
-  .r-2-11 input[type='button']:hover{
-    background: rgba(128, 128, 128, 0.65);
-  }
-
-  .r-2-11 input[type='button']:disabled{
-    background: grey;
-  }
-  .r-2-11 :nth-child(2){
-    margin-right: 10px;
-  }
-  .r-2-12 span{
-    display: inline-block;
-    width: 220px;
-    height: 50px;
-    text-align: center;
-    line-height: 50px;
-    background: #EC3E7D;
-    color: white;
-    margin-top: 23px;
-    font-size: 1.2em;
-  }
-  .r-2-12 span:hover{
-    cursor: pointer;
   }
   .r-2-13{
     margin-top: 30px;

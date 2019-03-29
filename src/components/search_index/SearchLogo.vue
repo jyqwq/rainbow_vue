@@ -1,7 +1,7 @@
 <template>
     <div class="row">
     <div class="col-md-12 top-img">
-      <img src="../../assets/search_img/search.png" class="center-block">
+      <img src="../../assets/search_img/search_index_logo_v2.4.png" class="center-block">
     </div>
   </div>
 </template>

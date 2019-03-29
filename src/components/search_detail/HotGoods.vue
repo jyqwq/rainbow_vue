@@ -3,14 +3,16 @@
     <div class="row r-3-1" id="r-3-1">
       <span>热门产品</span>
     </div>
-    <div class="row r-3-2"  >
+    <div class="row r-3-2 h-1" v-for="(hot,index) in hotinfo"  @click='detailhot(hot.id)'>
       <div class="col-md-4 r-3-2-1">
-        <a href="#"><img src="../../assets/search_img/good-1.jpg" alt=""></a>
+        <img src="../../../static/search_img/good-1.jpg" alt="">
+        <span>{{hot.id}}</span>
       </div>
       <div class="col-md-8 r-3-2-2">
-        <span>大宝护手霜</span>
-        <p><span class="glyphicon glyphicon-heart">100</span>
-          <span class="glyphicon glyphicon-star">200</span>
+        <span>{{hot.brand}}</span>
+        <span>{{hot.name.slice(0,15)+'...'}}</span>
+        <p><img src="../../../static/search_img/fbs.png" alt="">{{hot.fbs}}
+          <img src="../../../static/search_img/collection.png" alt="">{{hot.cols}}
         </p>
       </div>
     </div>
@@ -18,8 +20,65 @@
 </template>
 
 <script>
+    import axios from 'axios'
+    import Bus from '../../bus'
     export default {
-        name: "HotGoods"
+        name: "HotGoods",
+        data:function () {
+          return{
+              hotinfo:'',
+              oneinfo:'',
+
+          }
+        },
+        methods:{
+            detailhot:function (id) {
+              axios.get(this.GLOBAL.HOST+'search/oneProduct/'+'?id='+id)
+                .then((res) =>{
+                  if (res){
+                    this.oneinfo=res.data
+                    this.oneinfo=JSON.stringify(this.oneinfo)
+                    this.$emit('transferProduct',this.oneinfo)
+                    axios.post(this.GLOBAL.HOST+'user/viewCollections/',
+                      {"method":"check","target":[{"type":"commodity","id":id,"user_id":1}]}
+                    ).then((res)=>{
+                      if (res){
+                        if (res.data[0].status_code==10017) {
+                          let iscollect=false
+                          console.log('ok>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+                          Bus.$emit('transfercollect',iscollect)
+                          this.recact()
+                        }else {
+                          let iscollect=true
+                          console.log('no>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+                          Bus.$emit('transfercollect',iscollect)
+                        }
+
+                      }
+                    }).catch((err)=>{
+                      console.log(err);
+                    })
+                  }
+                }).catch((err)=>{
+                console.log(err);
+              })
+            },
+            recact:function () {
+
+            }
+        },
+        mounted:function () {
+            axios.get(this.GLOBAL.HOST+'search/hotCosmetics/'+'?page=1').then((response)=>{
+              this.hotinfo=response.data;
+              console.log(this.hotinfo[0].name);
+            }).catch(function (err) {
+              console.log(err);
+            })
+            var vm=this
+            Bus.$on('reset',(data)=>{
+              this.recact=data
+            })
+        },
     }
 </script>
 

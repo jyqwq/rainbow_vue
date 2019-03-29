@@ -15,22 +15,22 @@
           </div>
           <div class="row dy_c_content">
             <span class="to_one" style="font-size: 1.1em;font-weight: bold;margin-left: 35%"  @click="tocom">{{i.type==='dynamic'? '':((i.title).length>10? (i.title).slice(0,10)+'...':i.title)}}</span>
-            <span style="display: none">{{index}}</span>
+            <span style="display: none">{{index}}</span><span style="display: none">{{i.user_id}}</span>
             <br>
             <span class="to_one" @click="tocom">{{i.type==='test'? i.subtitle[0].title:((i.content).length>50? (i.content).slice(0,50)+'...':i.content)}}</span>
-            <span style="display: none">{{index}}</span>
+            <span style="display: none">{{index}}</span><span style="display: none">{{i.user_id}}</span>
             <br>
             <span class="to_one" @click="tocom">{{i.type==='test'? i.subtitle[1].title:''}}</span>
-            <span style="display: none">{{index}}</span>
+            <span style="display: none">{{index}}</span><span style="display: none">{{i.user_id}}</span>
           </div>
           <div class="row dy_c_content" style="text-align: center" ref="allimg">
             <img  class="img-responsive img-rounded" v-for="(img,idx) in i.imgs" :key="idx" :src="imgurl+img.url" alt="" style="height: 200px;margin: 10px 10px;display: inline;cursor: pointer" @click="tobig">
           </div>
           <div class="row margin_top">
             <ul class="nav">
-              <li class="dy_c_nav"><a><img :src="colimg[index]" alt="" class="dy_c" @click="tocol"><span style="display: none">{{index}}</span>&nbsp;<span>{{i.cols}}</span></a></li>
+              <li class="dy_c_nav"><a><img :src="colimg[index]" alt="" class="dy_c" @click="tocol"><span style="display: none">{{index}}</span><span style="display: none">{{i.user_id}}</span>&nbsp;<span>{{i.cols}}</span></a></li>
               <li class="dy_c_nav"><a><img src="../../assets/my_dynamic/dy_comment.png" alt="" class="dy_p" @click="tocom"><span style="display: none">{{index}}</span>&nbsp;<span>{{i.com}}</span></a></li>
-              <li class="dy_c_nav"><a><img :src="fbsimg[index]" alt="" class="dy_f" @click="tofbs"><span style="display: none">{{index}}</span>&nbsp;<span>{{i.fbs}}</span></a></li>
+              <li class="dy_c_nav"><a><img :src="fbsimg[index]" alt="" class="dy_f" @click="tofbs"><span style="display: none">{{index}}</span><span style="display: none">{{i.user_id}}</span>&nbsp;<span>{{i.fbs}}</span></a></li>
             </ul>
           </div>
         </div>
@@ -261,7 +261,8 @@
         tocom:function (e) {
           let eve = e.target;
           let no = parseInt(eve.nextElementSibling.innerHTML);
-          this.$router.push({path:'/dynamic_detail/'+JSON.parse(sessionStorage.getItem('userInfo'))['user']+'/'+this.alltype[no]+'/'+this.allid[no]})
+          let this_userid = parseInt(eve.nextElementSibling.nextElementSibling.innerHTML);
+          this.$router.push({path:'/dynamic_detail/'+this_userid+'/'+this.alltype[no]+'/'+this.allid[no]})
         },
         tobig:function(e) {
           let th = e.target;
