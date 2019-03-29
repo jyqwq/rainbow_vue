@@ -46,6 +46,7 @@
       </ul>
     </div>
 
+    <!--中心内容-->
     <router-view></router-view>
 
   </div>
