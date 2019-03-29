@@ -7,19 +7,19 @@
     <div class="col-md-4 top-mid">
       <div class="row mid-1">
         <div class="input-group icy_sch">
-          <input type="text" name="website" id="input-sch" list="list_web" class="form-control" v-model="keywords" @blur="message"  placeholder="搜索你想要的内容...">
+          <input type="text" name="website" id="input-sch" list="list_web" class="form-control" v-model="keywords"  placeholder="搜索你想要的内容...">
           <datalist id="list_web">
             <option v-for="his in history" :value="his"></option>
           </datalist>
           <span class="input-group-btn">
-           <button class="btn  search" id="sch_btn" type="button" @click="searchbasic(keywords)">搜索</button>
+           <button class="btn  search" id="sch_btn" type="button" @click="searchinfo(keywords,router.searchAll)">搜索</button>
             </span>
         </div>
       </div>
       <div class="row mid-2">
         <nav class="navbar navbar-default mid-2-nav">
           <ul class="nav navbar-nav mid-2-ul">
-            <li v-for="li in varieties" @click="searchnav(li,router.searchVarieties)">{{li}}</li>
+            <li v-for="li in varieties" @click="searchinfo(li,router.searchVarieties)">{{li}}</li>
           </ul>
         </nav>
       </div>
@@ -32,7 +32,7 @@
 <script>
     import axios from 'axios';
     export default {
-        name: "SearchNav",
+        name: "SearchNav2",
         data:function () {
             return{
               page:1,
@@ -42,36 +42,48 @@
               goodsinfo:{},
             }
         },
-        props:['router','kinds'],
+        props:['router'],
         methods:{
-          searchnav:function (li,router) {
-            window.sessionStorage.setItem('keywords',this.keywords)
-            this.$emit('search', li,router)
+          searchinfo:function (li,router) {
+            console.log(this.GLOBAL.HOST + router + '?key=' + li + '&page=' + this.page);
+            axios.get(this.GLOBAL.HOST+router+'?key='+li+'&page='+this.page)
+              .then((response) => {
+                if (response.data.length>1) {
+                  this.goodsinfo=response.data
+                  let goods=JSON.stringify(this.goodsinfo)
+                  window.sessionStorage.setItem('counts',this.goodsinfo[this.goodsinfo.length-1].count)
+                  this.memory()
+                  console.log(this.goodsinfo);
+
+                }else {
+                  this.goodsinfo=[1]
+                  console.log(this.goodsinfo);
+                }
+                this.$router.push({ name: 'Result', params: { info: JSON.stringify(this.goodsinfo) }});
+              }).catch(function (error) {
+              console.log(error);
+            })
+
+
           },
-          searchbasic:function (li) {
-            var routered
-            if (this.kinds=='产品') {
-              routered=this.router.searchAll
-            }else if (this.kinds=='心情'){
-              routered=this.router.searchDynamic
-            } else if (this.kinds=='日记') {
-              routered=this.router.searchJournal
-            }else if (this.kinds=='测评') {
-              routered=this.router.searchTest
+          memory:function () {
+            if (localStorage.getItem('history')) {
+              this.list=JSON.parse(window.localStorage.getItem('history'))
             }
-            this.$emit('search', li,routered)
+            if (this.list.length>=10) {
+              this.list.splice(0,1)
+              this.list.push(this.keywords)
+            }else {
+              this.list.push(this.keywords)
+            }
+            window.localStorage.setItem('history',JSON.stringify(this.list))
           },
-          message:function () {
-            this.$emit('message',this.keywords)
-          }
         },
         mounted:function () {
             if (window.localStorage.getItem('history')) {
             this.history=JSON.parse(window.localStorage.getItem('history')).reverse()
           }
-            if (window.sessionStorage.getItem('skey')) {
-              this.keywords=window.sessionStorage.getItem('skey')
-            }
+
         }
     }
 </script>

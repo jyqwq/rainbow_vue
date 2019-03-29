@@ -15,27 +15,27 @@
         <table class="tab-1">
           <tr>
             <td>商品编号 <strong>:</strong></td>
-            <td>104716804005</td>
+            <td>{{JSON.parse(this.gooddetail).id}}</td>
           </tr>
           <tr>
-            <td>商品品牌 <strong>:</strong></td>
-            <td>莎娜 Sana</td>
+            <td>产品品牌 <strong>:</strong></td>
+            <td>{{JSON.parse(this.gooddetail).brand}}</td>
           </tr>
           <tr>
             <td>商品名称 <strong>:</strong></td>
-            <td>豆乳Q10弹力美肌洗面膏</td>
+            <td>{{JSON.parse(this.gooddetail).name}}</td>
           </tr>
           <tr>
             <td>商品功效 <strong>:</strong></td>
-            <td>深层清洁，保湿，美白，提亮肤色，抗氧化，去角质，去黑头，提拉紧致</td>
+            <td>{{JSON.parse(this.gooddetail).Effect.slice(0,30)}}</td>
           </tr>
           <tr>
             <td>商品规格 <strong>:</strong></td>
-            <td>150克</td>
+            <td>{{JSON.parse(this.gooddetail).capacity}}</td>
           </tr>
           <tr>
             <td>保质期限 <strong>:</strong></td>
-            <td>3年，具体日期以收到的实物为准，开封后跟产品包装指示为准</td>
+            <td>{{JSON.parse(this.gooddetail).overdue}}，具体日期以收到的实物为准，开封后跟产品包装指示为准</td>
           </tr>
         </table>
       </div>
@@ -46,31 +46,52 @@
         <span>商品详情</span>&nbsp;&nbsp;
         <span class="s-2">Detail</span>
         <p><strong>产品介绍</strong></p>
-        <p>莎娜(SANA) 豆乳Q10弹力美肌洗面膏：</p>
+        <p>{{JSON.parse(this.gooddetail).name}}：</p>
         <ul>
           <li>能形成浓密泡沫，吸附污垢、多余油脂、彩妆。</li>
           <li>质地滋润，能彻底洗净肌肤，用后不会感到崩紧。</li>
           <li>添加胶囊化的辅酶Q10 ，使肌肤充满水润，光泽有弹性。</li>
         </ul>
         <p><strong>使用方法</strong></p>
+        <img src="../../assets/search_img/1077982_01.jpg" alt="">
+        <img src="../../assets/search_img/1077982_02.jpg" alt="">
+        <img src="../../assets/search_img/1077982_03.jpg" alt="">
         <img src="../../assets/search_img/usefunction.jpg" alt="">
         <p><strong>成分</strong></p>
-        <p>豆乳发酵提取物、Q10辅酶</p>
+        <p>{{JSON.parse(this.gooddetail).component}}</p>
       </div>
     </div>
     <a name="reviews"></a>
-    <comments></comments>
-
+    <comments :id="JSON.parse(this.gooddetail).id"  v-if="hackReset"></comments>
   </div>
 </template>
 
 <script>
   import Comments from './Comments'
+  import Bus from '../../bus'
 
   export default {
     name: "Parameter",
+    data:function(){
+      return{
+        hackReset:true,
+        infoid:!!this.gooddetail?JSON.parse(this.gooddetail).id:false
+      }
+    },
+    props:['gooddetail'],
     components: {
       'comments': Comments
+    },
+    methods:{
+      recast:function () {
+          this.hackReset = false
+          this.$nextTick(() => {
+          this.hackReset = true
+        })
+      }
+    },
+    mounted:function () {
+      Bus.$emit('reset',this.recast)
     }
   }
 </script>
@@ -84,7 +105,7 @@
 
   #r-3-3 {
     margin-right: 0px;
-    /*margin-left:32px;*/
+
     height: 50px;
 
     line-height: 50px;

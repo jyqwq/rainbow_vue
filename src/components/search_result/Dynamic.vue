@@ -1,25 +1,66 @@
 <template>
   <div class="row r-7">
-
+    <div class="row row_margin rank_one" v-for="(i,index) in goodinfo.length-1">
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 rank_num"><strong>22</strong><span>33</span></div>
+      <div class="col-xs-10 col-sm-8 col-md-8 col-lg-8">
+        <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3 rank_img">
+          <img src="../../assets/search_img/good-1.jpg" class="img-responsive img-rounded" alt="Responsive image">
+        </div>
+        <div class="col-xs-7 col-sm-9 col-md-9 col-lg-9 rank_content">
+          <div class="row first_row">
+            <a  class="content_name"><h5><strong>TT</strong></h5></a>
+          </div>
+          <div class="row second_row">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true">123</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="glyphicon glyphicon-edit" aria-hidden="true">456</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">789</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<a href="#">ICYTAIL</a></span>
+          </div>
+        </div>
+      </div>
+      <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 rank_detail">
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <span style="color: darkgrey"><strong>热度</strong></span><br>
+          <span style="color: #ffadbc; font-size: 1.2em"><strong>1234</strong></span>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+          <span style="color: darkgrey"><strong>分类</strong></span> <br>
+          <span style="color: #ffadbc; font-size: 1.2em"><strong>日记</strong></span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
     export default {
-        name: "Dynamic"
+        name: "Dynamic",
+        data:function () {
+          return{
+
+          }
+        },
+        props:['goodinfo'],
+
+        mounted:function () {
+
+        }
     }
 </script>
 
 <style scoped>
   .r-7 {
-    display: none;
+    /*display: none;*/
     text-align: center;
-    min-height: 300px;
+    /*min-height: 300px;*/
   }
-  .r-7 #no_data{
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
+  /*.r-7 #no_data{*/
+    /*margin-top: 50px;*/
+    /*margin-bottom: 50px;*/
+  /*}*/
   .rank_num span{
     display: none;
   }

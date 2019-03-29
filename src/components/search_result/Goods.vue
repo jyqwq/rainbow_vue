@@ -2,7 +2,17 @@
   <div class="row r-4" >
     <div class="col-md-12">
       <div class="row r-4-1 "id="r-4-1" >
-
+        <router-link :to="{name:'Detail'}">
+          <div class="goods  col-md-3"  v-for="(i,index) in goodinfo.length-1" :class="sequence[index%4-1]" >
+          <div class="goods-content" @click="infodetail(goodinfo[index].id)">
+            <a ><img src="../../assets/search_img/good-1.jpg" class="img-responsive"></a>
+            <div class="goods-d-1">
+              <p class="goods-p-1"> <strong>{{goodinfo[index].price}}</strong> <span class="rect">市场价</span></p>
+              <p class="goods-p-2"><a>{{goodinfo[index].name}}</a></p><p class="goods-p-3"><a ><span class="glyphicon glyphicon-menu-hamburger"></span><span>{{goodinfo[index].brand}}</span><span>产品编号:</span><span>{{goodinfo[index].id}}</span></a></p>
+            </div>
+          </div>
+        </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -10,7 +20,21 @@
 
 <script>
     export default {
-        name: "Goods"
+        name: "Goods",
+        data:function () {
+          return{
+            sequence:['goods-1','goods-2','goods-3','goods-4'],
+          }
+        },
+        props:['goodinfo'],
+        methods:{
+          infodetail:function (id) {
+              this.$router.push({name:'Detail',params:{com_id:id}})
+          }
+        },
+        mounted:function () {
+          console.log(this.goodinfo);
+        }
     }
 </script>
 
@@ -94,4 +118,5 @@
     padding-left: 5px;
     padding-right:10px;
   }
+
 </style>

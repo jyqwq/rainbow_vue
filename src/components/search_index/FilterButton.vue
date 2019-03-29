@@ -1,5 +1,5 @@
 <template>
-    <div class="row fbtn" id="fbtn">
+    <div class="row fbtn " id="fbtn">
     <div class="col-md-2 col-md-offset-1">
       <button type="button" :key="0" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 0 ? 'active':''" @click="filter(0)">综合</button>
     </div>
@@ -30,8 +30,7 @@
         methods:{
           filter(index) {
             this.activeClass = index;
-            window.sessionStorage.setItem('condition',index)
-            // Bus.$emit('btn', this.activeClass)
+            Bus.$emit('btn', this.activeClass)
           }
         }
     }
@@ -48,5 +47,18 @@
   .active{
     border: 1px;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </style>

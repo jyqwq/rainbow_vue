@@ -1,28 +1,87 @@
 <template>
   <div class="row r-5">
     <div class="col-md-6 col-md-offset-3 r-5-1" id="div-fenye">
-      <a href="#top">
         <ul id='ul-fenye'>
-          <!--<li>首页</li>-->
-          <!--<li>上一页</li>-->
-          <!--<li></li>-->
-          <!--<li></li>-->
-          <!--<li></li>-->
-          <!--<li>下一页</li>-->
-          <!--<li>尾页</li>-->
+          <li @click="headward" >首页</li>
+          <li @click="upward">上一页</li>
+          <li v-for="index in count<4?count:3" :class="page==show[index-1]?'background':''"
+           @click="ward(show[index-1])">{{show[index-1]}}</li>
+          <li @click="downward">下一页</li>
+          <li @click="footward">尾页</li>
         </ul>
-      </a>
     </div>
   </div>
 </template>
 
 <script>
     export default {
-        name: "Paging"
+        name: "Paging",
+        data:function () {
+          return{
+            //当前页码
+            page:1,
+            //总共页数
+            count:1,
+            //显示页码
+            show:[1,2,3]
+          }
+        },
+        methods:{
+          ward:function (index) {
+            this.page=index
+            console.log(this.page);
+            this.$emit('page',this.page)
+          },
+          upward:function () {
+            if (this.page>1) {
+              this.page-=1
+              this.$emit('page',this.page)
+            }
+            if (this.show.indexOf(this.page+1)==0) {
+                this.show=this.show.map(function (i) {
+                  return i-1
+                })
+            }
+            console.log(this.page);
+          },
+          downward:function () {
+            if (this.page<this.count) {
+              this.page+=1
+              this.$emit('page',this.page)
+              if (this.show.indexOf(this.page-1)==this.show.length-1) {
+                    this.show=this.show.map(function (i) {
+                        return i+1
+                    })
+              }
+            }
+            console.log(this.page);
+          },
+          headward:function () {
+            this.page=1
+            this.show=[1,2,3]
+            this.$emit('page',this.page)
+          },
+          footward:function () {
+            this.page=this.count
+            this.show=[this.count-2,this.count-1,this.count]
+            this.$emit('page',this.page)
+          }
+        },
+        mounted:function () {
+          if (window.sessionStorage.getItem('counts')){
+            this.count=Math.ceil(window.sessionStorage.getItem('counts')/16)
+            this.count=5
+          }
+        }
+
     }
 </script>
 
 <style scoped>
+  .background{background:#39C6F4;
+    color:white;
+    border:1px solid #39C6F4;
+  }
   #ul-fenye{font-size:0;font-family:Microsoft YaHei;display:inline-block;}
   #ul-fenye li{
     -moz-user-select:none;/*火狐*/
@@ -34,8 +93,5 @@
   #div-fenye{
     text-align: center;
   }
-  #ul-fenye .background{background:#39C6F4;
-    color:white;
-    border:1px solid #39C6F4;
-  }
+
 </style>
