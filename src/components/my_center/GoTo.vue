@@ -1,27 +1,19 @@
 <template>
-    <!--箭头指向第二页-->
-      <div id="mine" class="row qz_row" style="zoom:1;overflow: hidden;">
-        <div class="qz_lead ">
-          <div class="qz_leaimg animal_rin">
-            <div @click="anchor_slip">
-              <img src="../../assets/my_center/open_mine.png" class="img-responsive lea_img " alt="Responsive image">
-            </div>
-          </div>
+  <div id="mine" class="row qz_row" style="zoom:1;overflow: hidden;">
+    <div class="qz_lead ">
+      <div class="qz_leaimg animal_rin">
+        <div @click="anchor_slip">
+          <img src="../../assets/my_center/open_mine.png" class="img-responsive lea_img " alt="Responsive image">
         </div>
       </div>
+    </div>
+  </div>
 </template>
 
 <script>
     export default {
-      components:{
-      },
-      name: "OpenMine",
-      data: function () {
-        return {
-        }
-      },
-      created:function(){},
-      methods: {
+      name: "GoTo",
+      methods:{
         //滚动条匀速滑动
         anchor_slip:function () {
           this.$options.methods.startMover(500)
@@ -49,23 +41,12 @@
               window.scrollTo(0,a);
             }
           }, 1);
-        }
-
-      },
-      mounted: function () {
-
-      },
-      computed: {},
-      watch: {},
-      filter: {},
+        },
+      }
     }
 </script>
 
 <style scoped>
-  /*全局*/
-  .qz_row{
-    margin: 15px;
-  }
   /*箭头指向第二页*/
   .qz_lead{
     height: 70px;

@@ -18,9 +18,9 @@
         <li class="item to-write"><router-link to="/sharing_index">写日记</router-link></li>
       </ul>
       <ul style="display: none;padding: 0;float: right" class="wel">
-        <li class="item"><a @click="exitlogin">退出登录</a></li>
+        <li class="item"><a style="cursor: pointer" @click="exitlogin">退出登录</a></li>
         <li class="item"><router-link to="/my_dynamic">我的动态</router-link></li>
-        <li class="item"><router-link to="/my_center">个人中心</router-link></li>
+        <li class="item"><router-link to="/setting">个人中心</router-link></li>
       </ul>
     </div>
   </nav>
@@ -34,11 +34,6 @@
         return{
           islogin:this.GLOBAL.ISLOGIN,
           token:""
-        }
-      },
-      watch:{
-        islogin:function () {
-          console.log(this.islogin);
         }
       },
       created:function(){
@@ -59,7 +54,7 @@
               }).then(function (response) {
                 let txt = JSON.parse(response.data);
                 if (parseInt(txt['status_code'])===10003){
-                  let info = txt['userInfo'][0];
+                  let info = txt['userInfo'];
                   sessionStorage.setItem('userInfo',JSON.stringify(info));
                   localStorage.setItem('islogin',true);
                   that.GLOBAL.ISLOGIN=true;

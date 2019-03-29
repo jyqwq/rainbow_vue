@@ -3,32 +3,32 @@
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide swiper-slide-center none-effect">
-          <a href="#">
-            <img src="../../assets/CarouselImg/b1.png">
+          <a href="#" :data-url="'/dynamic_detail/1/test/12'" @click="imgclick">
+            <img src="../../assets/CarouselImg/c1.jpg">
           </a>
           <div class="layer-mask"></div>
         </div>
         <div class="swiper-slide">
-          <a href="#">
-            <img src="../../assets/CarouselImg/b2.png">
+          <a href="#" :data-url="'/dynamic_detail/1/test/11'" @click="imgclick">
+            <img src="../../assets/CarouselImg/c2.jpg">
           </a>
           <div class="layer-mask"></div>
         </div>
         <div class="swiper-slide">
-          <a href="#">
-            <img src="../../assets/CarouselImg/b3.png">
+          <a href="#" :data-url="'/dynamic_detail/1/test/10'" @click="imgclick">
+            <img src="../../assets/CarouselImg/c3.jpg">
           </a>
           <div class="layer-mask"></div>
         </div>
         <div class="swiper-slide">
-          <a href="#">
-            <img src="../../assets/CarouselImg/b4.png">
+          <a href="#" :data-url="'/dynamic_detail/1/test/9'" @click="imgclick">
+            <img src="../../assets/CarouselImg/c4.jpg">
           </a>
           <div class="layer-mask"></div>
         </div>
         <div class="swiper-slide">
-          <a href="#">
-            <img src="../../assets/CarouselImg/b5.png">
+          <a href="#" :data-url="'/dynamic_detail/1/test/8'" @click="imgclick">
+            <img src="../../assets/CarouselImg/c5.jpg">
           </a>
           <div class="layer-mask"></div>
         </div>
@@ -65,7 +65,12 @@
               }
             });
 
-          }
+          },
+        imgclick:function (e) {
+          let eve = e.target;
+          let u = eve.dataset.url;
+          this.$router.push({path:u})
+        }
       }
     }
 </script>

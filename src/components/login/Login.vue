@@ -191,8 +191,7 @@
         oncli:function(){
           if((/^1(3|4|5|7|8)\d{9}$/.test(this.telephone))){
             this.$options.methods.addClass.bind(this)(document.querySelector(".login"), "active");
-            setTimeout(this.b,800);
-            setTimeout(this.c,10000)
+            setTimeout(this.b,800)
           }else {
             alert('手机号码有误')
           }
@@ -207,7 +206,7 @@
           }).then(function (response) {
             let txt = JSON.parse(response.data);
             if (parseInt(txt['status_code'])===10003){
-              let info = txt['userInfo'][0];
+              let info = txt['userInfo'];
               localStorage.setItem('token',response.headers.token);
               sessionStorage.setItem('userInfo',JSON.stringify(info));
               that.GLOBAL.ISLOGIN=true;
@@ -221,10 +220,6 @@
           }).catch(function (err) {
             console.log(err);
           })
-        },
-        c:function(){
-          this.$options.methods.removeClass.bind(this)(document.querySelector(".login"), "active");
-          this.$options.methods.removeClass.bind(this)(document.querySelector(".sk-rotating-plane"), "active");
         }
       }
     }

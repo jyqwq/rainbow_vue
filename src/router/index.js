@@ -15,11 +15,24 @@ import Detail from '@/components/search_detail/Detail'
 import Search from '@/components/search_index/Search'
 import Result from '@/components/search_result/Result'
 import Setting from '@/components/setting/Setting'
+import HotSearchProduct from '@/components/rank/HotSearchProduct'
+import HotSearchDynamic from '@/components/rank/HotSearchDynamic'
+import HotSearch from '@/components/rank/HotSearch'
+import MoodText from '@/components/sharing_index/MoodText'
+import EvaluationText from '@/components/sharing_index/EvaluationText'
+import DairyText from '@/components/sharing_index/DairyText'
+import DiaryList from '@/components/my_dynamic/DiaryList'
+import CollectionList from '@/components/my_dynamic/CollectionList'
+import AdmissionList from '@/components/my_dynamic/AdmissionList'
+import Success from '@/components/sharing_index/Success'
+import Defeat from '@/components/sharing_index/Defeat'
+import OtherCenter from '@/components/other_center/OtherCenter'
 
+import Global from '../components/Global'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -28,34 +41,78 @@ export default new Router({
     },
     {
       path: '/rank',
-      name: 'Rank',
-      component: Rank
+      components:{
+        login:Rank
+      },
+      children:[
+        {
+          path:'hotsearchproduct',
+          name: "HotSearchProduct",
+          component:HotSearchProduct
+        },
+        {
+          path:'hotsearchdynamic',
+          name: "HotSearchDynamic",
+          component:HotSearchDynamic
+        },
+        {
+          path:'',
+          name: "HotSearch",
+          component:HotSearch
+        }
+      ]
     },
     {
       path: '/evaluation',
       name: 'Evaluation',
-      component: Evaluation
+      components: {
+        login:Evaluation
+      }
     },
     {
-      path: '/dynamic_detail',
+      path: '/dynamic_detail/:user_id/:type/:id',
       name: 'DynamicDetail',
-      component: DynamicDetail
+      components: {
+        login:DynamicDetail
+      }
     },
     {
       path: '/dynamic',
       name: 'Dynamic',
-      component: Dynamic,
-      meta:{
-        ISLOGIN:true
-      }
+      components: {
+        login:Dynamic
+      },
     },
     {
       path: '/sharing_index',
-      name: 'SharingIndex',
       component: SharingIndex,
-      meta:{
-        ISLOGIN:true
-      }
+      children:[
+        {
+          path:'',
+          name: "MoodText",
+          component:MoodText
+        },
+        {
+          path:'evaluationtext',
+          name: "EvaluationText",
+          component: EvaluationText
+        },
+        {
+          path:'dairytext',
+          name: "DairyText",
+          component:DairyText
+        },
+        {
+          path:'success',
+          name: "Success",
+          component:Success
+        },
+        {
+          path:'defeat/:status_code/:status_text',
+          name: "Defeat",
+          component:Defeat
+        }
+      ]
     },
     {
       path: '/login',
@@ -63,25 +120,32 @@ export default new Router({
       components: {
         login:Login
       },
-      meta:{
-        ISLOGIN:false
-      }
     },
     {
       path: '/my_center',
       name: 'MyCenter',
       component: MyCenter,
-      meta:{
-        ISLOGIN:true
-      }
     },
     {
       path: '/my_dynamic',
-      name: 'MyDynamic',
       component: MyDynamic,
-      meta:{
-        ISLOGIN:true
-      }
+      children:[
+        {
+          path:'',
+          name: "DiaryList",
+          component:DiaryList
+        },
+        {
+          path:'collectionlist',
+          name:"CollectionList",
+          component:CollectionList
+        },
+        {
+          path:'admissionlist',
+          name: "AdmissionList",
+          component:AdmissionList
+        }
+      ]
     },
     {
       path: '/register',
@@ -89,9 +153,6 @@ export default new Router({
       components: {
         login:Register
       },
-      meta:{
-        ISLOGIN:false
-      }
     },
     {
       path: '/search_detail',
@@ -118,32 +179,39 @@ export default new Router({
       path: '/setting',
       name: 'Setting',
       component: Setting,
-      meta:{
-        ISLOGIN:true
-      }
-    }
+    },
+    {
+      path:'/other_center/:id',
+      name:'OtherCenter',
+      component:OtherCenter,
+    },
   ]
-})
+});
 
-// const router = new Router({
-//   routes
-// });
-//
-// /**
-//  * to:表示目标路由
-//  * from:表示来源路由
-//  * next:表示执行下一步操作
-//  */
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/login') { // 当路由为login时就直接下一步操作
-//     next();
-//   } else { // 否则就需要判断
-//     if(sessionStorage.username){  // 如果有用户名就进行下一步操作
-//       next()
-//     }else{
-//       next({path: '/login'})  // 没有用户名就跳转到login页面
-//     }
-//   }
-// });
-//
-// export default router
+// 全局路由守卫
+router.beforeEach((to, from, next) => {
+  // to: Route: 即将要进入的目标 路由对象
+  // from: Route: 当前导航正要离开的路由
+  // next: Function: 一定要调用该方法来 resolve 这个钩子。执行效果依赖 next 方法的调用参数。
+  const nextRoute = ['Setting', 'MyDynamic', 'MyCenter', 'SharingIndex', 'Dynamic','DynamicDetail'];
+  let isLogin = Global.ISLOGIN;  // 是否登录
+  // 未登录状态；当路由到nextRoute指定页时，跳转至login
+  if (nextRoute.indexOf(to.name) >= 0) {
+    if (!isLogin) {
+      console.log('不要耍小聪明~~~~');
+      next('/login');
+      router.go(0);
+    }
+  }
+  // 已登录状态；当路由到login时，跳转至home
+  if (to.name === 'Login' || to.name === 'Register') {
+    if (isLogin) {
+      console.log('不要耍小聪明~~~~');
+      next('/');
+      router.go(0)
+    }
+  }
+  next();
+});
+
+export default router

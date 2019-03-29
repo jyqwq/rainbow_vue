@@ -214,7 +214,6 @@
         if((/^1(3|4|5|7|8)\d{9}$/.test(this.telephone)) && this.pwd===this.password){
           this.$options.methods.addClass.bind(this)(document.querySelector(".login"), "active");
           setTimeout(this.b,800);
-          setTimeout(this.c,10000)
         }else {
           alert('手机号码有误或两次密码不一致')
         }
@@ -230,7 +229,7 @@
           'name':this.name,
           'register_time':myDate.getTime()
         }).then(function (response) {
-          let txt = JSON.parse(response.data);
+          let txt = response.data;
           if (parseInt(txt['status_code'])===10001){
             alert('注册成功');
             that.$router.push({path:'/login'})
@@ -243,10 +242,6 @@
         }).catch(function (err) {
           console.log(err);
         })
-      },
-      c:function(){
-        this.$options.methods.removeClass.bind(this)(document.querySelector(".login"), "active");
-        this.$options.methods.removeClass.bind(this)(document.querySelector(".sk-rotating-plane"), "active");
       }
     }
   }

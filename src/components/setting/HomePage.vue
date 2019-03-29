@@ -1,17 +1,17 @@
 <template>
   <!--首页部分-->
-  <div class="dy_row text_active">
+  <div :class="seflag==0?['text_active']:''" class="dy_row text_active">
     <!--头像昵称-->
     <div class="row row_margin">
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1" style="height: 58px">
-        <img src="" class="img-responsive head_img" alt="Responsive image">
+        <img @click="ftwoChange" src="" class="img-responsive head_img" alt="Responsive image">
       </div>
       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-7 qz_nick">
-        <span class="font_nick">南浅</span>
+        <span class="font_nick">{{nick}}</span>
       </div>
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-3">
-        <div class="button button--primary button--continue margin-top margin-bottom qz_edit">修改资料</div>
-        <a href="" class="button button--primary button--continue margin-top margin-bottom">个人空间 ></a>
+        <div @click="foneChange" class="button button--primary button--continue margin-top margin-bottom qz_edit">修改资料</div>
+        <router-link to="/my_center" class="button button--primary button--continue margin-top margin-bottom">个人空间 ></router-link>
       </div>
     </div>
     <div class="qz_line" style="margin-top: 15px"></div>
@@ -66,7 +66,7 @@
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <span class="font_bind">绑定邮箱</span><br>
         <span class="font_binin">绑定邮箱后即可使用邮箱登录</span><br>
-        <a href="#" class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去绑定 ></a>
+        <div class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去绑定 ></div>
       </div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
@@ -77,7 +77,7 @@
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <span class="font_bind">绑定手机</span><br>
         <span class="font_binin">绑定手机后即可使用手机号登录</span><br>
-        <a href="#" class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去绑定 ></a>
+        <div class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去绑定 ></div>
       </div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
     </div>
@@ -90,7 +90,7 @@
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <span class="font_bind">设置密保</span><br>
         <span class="font_binin">设置密保，账号更安全</span><br>
-        <a href="#" class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去设置 ></a>
+        <div class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去设置 ></div>
       </div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
@@ -101,7 +101,7 @@
       <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <span class="font_bind">实名认证</span><br>
         <span class="font_binin">实名认证成功后，可享受开通直播间等服务</span><br>
-        <a href="#" class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去认证 ></a>
+        <div class="button button--primary button--continue margin-top margin-bottom" style="margin-top: 5px">去认证 ></div>
       </div>
       <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
     </div>
@@ -110,7 +110,29 @@
 
 <script>
     export default {
-        name: "HomePage"
+      name: "HomePage",
+      props:['seflag'],
+      data:function(){
+        return{
+          nick:'昵称'
+        }
+      },
+      mounted:function () {
+        let userInfo=sessionStorage.getItem('userInfo');
+        this.nick=JSON.parse(userInfo)['name']
+      },
+      methods:{
+        ftwoChange:function () {
+          this.$emit('childByflag',2)//子传父（子组件里面写）
+          this.$emit('tabChange', 'ModifyHead')//子传父（子组件里面写）
+        },
+        foneChange:function () {
+          this.headpage=2;
+          this.infopage=1;
+          this.$emit('childByflag',1)//子传父（子组件里面写）
+          this.$emit('tabChange', 'ModifyInformation')//子传父（子组件里面写）
+        }
+      },
     }
 </script>
 

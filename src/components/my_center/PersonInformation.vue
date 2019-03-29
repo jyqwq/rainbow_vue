@@ -17,9 +17,9 @@
           <h1>关注：{{person.follow}}<br>粉丝：{{person.fans}}<br>收藏：{{person.cols}}</h1>
           <div class='btn'></div>
         </div>
-        <input type='checkbox'>
-        <a><span class="skin">肤质测试</span></a>
-        <p>我的肤质：{{person.skin}}</p>
+        <input v-if="disflag===1" type='checkbox'>
+        <a v-if="disflag===1"><span class="skin">肤质测试</span></a>
+        <p v-if="disflag===1">我的肤质：{{person.skin}}</p>
         <div class='shapes'></div>
         <div class='photo'>
           <div></div>
@@ -36,33 +36,17 @@
 <script>
   import axios from 'axios'
   export default {
-    components:{
-    },
     name: "PersonInformation",
+    props: ['disflag'],
     data: function () {
       return {
-        person:{"name":''}
+        person:''
       }
     },
-    created:function(){},
-    methods: {},
     mounted: function () {
-      let that=this
-      axios.post('http://192.168.2.66:8000/user/personInfo/',{
-        'user_id':1,
-        'method':'check'
-      })
-        .then(function (response) {
-          console.log(response.data);
-          that.person=response.data
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+      let userInfo=sessionStorage.getItem('userInfo');
+      this.person=JSON.parse(userInfo);
     },
-    computed: {},
-    watch: {},
-    filter: {}
   }
 </script>
 
