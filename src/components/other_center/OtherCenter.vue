@@ -51,10 +51,10 @@
             <div class="qz_cen">
               <img @mouseover="flag=index" :class="flag===index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" :src="GLOBAL.IMG+dy_bg[index]" alt="Responsive image">
               <div :class="flag===index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
-                <span v-if="seen===-2" class="font_main"><br><br>{{dy.content}}</span>
-                <span v-else-if="seen===-1" class="font_main"><br><br>{{dy.content}}</span>
+                <span v-if="seen===-2" class="font_main"><br><br>{{dy_tits[index]}}</span>
+                <span v-else-if="seen===-1" class="font_main"><br><br>{{dy_tits[index]}}</span>
                 <span v-else-if="seen===0" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.click}}</span>
-                <span v-else-if="seen===1" class="font_main"><br><br>{{dy_tits[index+di_len]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.colInfo.click}}</span>
+                <span v-else-if="seen===1" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.colInfo.click}}</span>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
           seen:0,
           dynamic:[{"content":"彩虹日记"}],
           dy_tits:[],
-          dy_bg:[''],
+          dy_bg:[],
           di_len:'',
           isfollow:false,
           flash:true
@@ -183,7 +183,8 @@
             .then(function (response) {
               if (response.data.length === 0) {
                 that.seen = -1;
-                that.dynamic = [{"content": "写日记 >"}];
+                Vue.set(that.dy_bg,0,'background_dynamic.jpg');
+                Vue.set(that.dy_tits,0,'写日记 >');
               } else {
                 that.seen = 0;
                 that.dynamic = response.data.slice(0, 3);
@@ -196,11 +197,11 @@
                   }
                   // 内容
                   if (that.dynamic[i].type==='dynamic') {
-                    that.dy_tits.push(that.dynamic[i].content.length>11?that.dynamic[i].content.slice(0,11):that.dynamic[i].content);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].content.length>11?that.dynamic[i].content.slice(0,11):that.dynamic[i].content);
                   }else if (that.dynamic[i].type==='dairy') {
-                    that.dy_tits.push(that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
                   }else if (that.dynamic[i].type==='test'){
-                    that.dy_tits.push(that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
                   }
                 }
                 that.di_len=that.dynamic.length;
@@ -223,7 +224,8 @@
               let res=response.data;
               if (res[0].status_code==='10017' && res[1].status_code==='10017' &&  res[2].status_code==='10017') {
                 that.seen=-2;
-                that.dynamic=[{"content":"去收藏 >"}];
+                Vue.set(that.dy_bg,0,'background_dynamic.jpg');
+                Vue.set(that.dy_tits,0,'去收藏 >');
               }else{
                 let dyna=[];
                 for(let i=0;i<res.length;i++){
@@ -241,11 +243,11 @@
                   // 内容
                   let type=that.dynamic[i].colInfo.type;
                   if (type==='dynamic') {
-                    that.dy_tits.push(that.dynamic[i].colInfo.content.length>11?that.dynamic[i].colInfo.content.slice(0, 11):that.dynamic[i].colInfo.content);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].colInfo.content.length>11?that.dynamic[i].colInfo.content.slice(0, 11):that.dynamic[i].colInfo.content);
                   }else if (type==='dairy') {
-                    that.dy_tits.push(that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
                   }else if (type==='test'){
-                    that.dy_tits.push(that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
                   }
                 }
               }

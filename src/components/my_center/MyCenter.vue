@@ -61,13 +61,13 @@
       <div id="qz_diary" class="animal_sil">
         <div class="row">
           <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  v-for="(dy, index) in dynamic">
-            <div class="qz_cen">
+            <div @click="toone" class="qz_cen">
               <img @mouseover="flag=index" :class="flag===index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" :src="GLOBAL.IMG+dy_bg[index]" alt="Responsive image">
-              <div :class="flag===index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
-                <span v-if="seen===-2" class="font_main"><br><br>{{dy.content}}</span>
-                <span v-else-if="seen===-1" class="font_main"><br><br>{{dy.content}}</span>
-                <span v-else-if="seen===0" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.click}}</span>
-                <span v-else-if="seen===1" class="font_main"><br><br>{{dy_tits[index+di_len]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.colInfo.click}}</span>
+              <div :data-autho="dy.user_id" :data-type="seen===0 ? dy.type : dy.type" :data-id="seen===0 ? dy.id : dy.id" :class="flag===index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
+                <span v-if="seen===-2" class="font_main"><br><br>{{dy_tits[index]}}</span>
+                <span v-else-if="seen===-1" class="font_main"><br><br>{{dy_tits[index]}}</span>
+                <span v-else-if="seen===0" :data-autho="dy.user_id" :data-type="dy.type" :data-id="dy.id" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.click}}</span>
+                <span v-else-if="seen===1" :data-autho="dy.user_id" :data-type="dy.colInfo.type" :data-id="dy.colInfo.id" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.colInfo.click}}</span>
                 <span v-else-if="seen===2" class="font_main"><br><br>{{dy.content}}<br><br>剩余时间：{{dy.date}}<br></span>
               </div>
             </div>
@@ -108,8 +108,7 @@
           seen:-1,
           dynamic:[{"content":"彩虹日记"}],
           dy_tits:[],
-          dy_bg:[''],
-          di_len:''
+          dy_bg:[],
           // 切换方法1，2 currenView:'DynamicDiary',
         }
       },
@@ -128,7 +127,8 @@
             .then(function (response) {
               if (response.data.length===0) {
                 that.seen=-1;
-                that.dynamic=[{"content":"写日记 >"}];
+                Vue.set(that.dy_bg,0,'background_dynamic.jpg');
+                Vue.set(that.dy_tits,0,'写日记 >');
               }else{
                 that.seen=0;
                 that.dynamic=response.data.slice(0,3);
@@ -141,14 +141,13 @@
                   }
                   // 内容
                   if (that.dynamic[i].type==='dynamic') {
-                    that.dy_tits.push(that.dynamic[i].content.length>11?that.dynamic[i].content.slice(0,11):that.dynamic[i].content);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].content.length>11?that.dynamic[i].content.slice(0,11):that.dynamic[i].content);
                   }else if (that.dynamic[i].type==='dairy') {
-                    that.dy_tits.push(that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
                   }else if (that.dynamic[i].type==='test'){
-                    that.dy_tits.push(that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
                   }
                 }
-                that.di_len=that.dynamic.length;
               }
             })
             .catch(function (error) {
@@ -164,9 +163,11 @@
           })
             .then(function (response) {
               let res=response.data;
+              console.log(res);
               if (res[0].status_code==='10017' && res[1].status_code==='10017' &&  res[2].status_code==='10017') {
                 that.seen=-2;
-                that.dynamic=[{"content":"去收藏 >"}];
+                Vue.set(that.dy_bg,0,'background_dynamic.jpg');
+                Vue.set(that.dy_tits,0,'去收藏 >');
               }else{
                 let dyna=[];
                 for(let i=0;i<res.length;i++){
@@ -189,11 +190,11 @@
                   // 内容
                   let type=that.dynamic[i].colInfo.type;
                   if (type==='dynamic') {
-                    that.dy_tits.push(that.dynamic[i].colInfo.content.length>11?that.dynamic[i].colInfo.content.slice(0, 11):that.dynamic[i].colInfo.content);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].colInfo.content.length>11?that.dynamic[i].colInfo.content.slice(0, 11):that.dynamic[i].colInfo.content);
                   }else if (type==='dairy') {
-                    that.dy_tits.push(that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
                   }else if (type==='test'){
-                    that.dy_tits.push(that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
+                    Vue.set(that.dy_tits,i,that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
                   }
                 }
               }
@@ -204,7 +205,29 @@
         },
         adFicti:function () {
           this.seen=2;
+          for (let i=0;i<3;i++){
+            Vue.set(this.dy_bg,i,'background_dynamic.jpg');
+          }
           this.dynamic=[{"content":"兰蔻精华肌底液","date":"365天"},{"content":"兰蔻精华肌底液","date":"365天"},{"content":"兰蔻精华肌底液","date":"365天"}]
+
+        },
+        toone:function (event) {
+          let node=event.target;
+          console.log(node);
+          let autho = node.dataset.autho;
+          let type = node.dataset.type;
+          let id = node.dataset.id;
+          if (this.seen===-2){
+            this.$router.push({path:'/rank/'})
+          } else if (this.seen===-1){
+            this.$router.push({path:'/sharing_index/'})
+          } else if (this.seen===0){
+            this.$router.push({path:'/dynamic_detail/'+autho+'/'+type+'/'+id})
+          } else if (this.seen===1) {
+            this.$router.push({path:'/dynamic_detail/'+autho+'/'+type+'/'+id})
+          }else if (this.seen===2) {
+            this.$router.push({path:'/my_dynamic/admissionlist/'})
+          }
         }
       },
       watch: {},
