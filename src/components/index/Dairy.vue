@@ -1,39 +1,39 @@
 <template>
   <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 hot_thing">
     <div class="to_one_two">
-      <img src="../../assets/rank_img.jpg" class="img-responsive img-rounded hot_img" alt="Responsive image">
+      <img :src="GLOBAL.IMG+info['imgs'][0]['url']" class="img-responsive img-rounded hot_img" alt="Responsive image" :data-other="info['userInfo']['user']" :data-type="'dairy'" :data-id="info['id']" @mouseover="mouseover" @mouseout="mouseout" @click="toone">
     </div>
-    <div class="dy_type" style="display: none">journal</div>
-    <div class="dy_id" style="display: none">1</div>
-    <div class="row hot_thing_title"><span><strong>未闻花名</strong></span></div>
+    <div class="row hot_thing_title"><span><strong>{{info['title']}}</strong></span></div>
   </div>
 </template>
 
 <script>
     export default {
+      props:['info'],
         name: "Diary",
       data:function () {
         return{
-
         }
       },
       mounted:function (){
-        this.hot_dy()
+
       },
       methods:{
-        hot_dy:function () {
-          let hot_thing = document.querySelectorAll('.hot_thing');
-          for (let i = 0; i < 4; i++) {
-            hot_thing[i].onmouseover = function () {
-              this.children[3].style.marginTop = '-40px';
-              this.children[3].classList.add('hot_thing_title_act');
-            };
-            hot_thing[i].onmouseout = function () {
-              this.children[3].style.marginTop = '0';
-              this.children[3].classList.remove('hot_thing_title_act');
-            }
-      }
-    }
+        mouseover:function (e) {
+          let t = e.target.parentElement.nextElementSibling;
+          t.style.marginTop = '-40px';
+          t.classList.add('hot_thing_title_act');
+        },
+        mouseout:function (e) {
+          let t = e.target.parentElement.nextElementSibling;
+          t.style.marginTop = '0';
+          t.classList.remove('hot_thing_title_act');
+        },
+        toone:function (e) {
+          let id = e.target.dataset.id;
+          let other = e.target.dataset.other;
+          this.$router.push({path:'/dynamic_detail/'+other+'/dairy/'+id})
+        }
       }
     }
 </script>

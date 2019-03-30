@@ -4,7 +4,7 @@
       <img src="../assets/logo_.png" alt="" style="display: inline-block;position: relative;top: -30px;">
       <ul style="display: inline;padding: 0">
         <li class="item"><router-link to="/">首页</router-link></li>
-        <li class="item"><a href="#">热门</a></li>
+        <li class="item"><router-link to="/search_index">搜索本站</router-link></li>
         <li class="item"><router-link to="/rank">排行榜</router-link></li>
         <li class="item"><router-link to="/evaluation">测评资讯</router-link></li>
       </ul>

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="min-height: 800px;">
   <div class="container-fluid bg_img min_width">
     <div class="row">
       <div class="hidden-xs col-sm-5 col-md-5 col-lg-5"></div>
