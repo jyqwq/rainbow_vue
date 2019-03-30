@@ -1,6 +1,6 @@
 <template>
   <div class="row all_dy user_message">
-    <div class="row margin_top"><img src="../../assets/usericon.png" alt="" class="img-circle usericon"></div>
+    <div class="row margin_top"><img :src="GLOBAL.IMG+userInfo['icon']" alt="" class="img-circle usericon"></div>
     <div class="row margin_top"><span class="user_nickname">{{userInfo['name']}}</span></div>
     <div class="row user_fans margin_top">
       <ul class="nav">

@@ -14,7 +14,7 @@
         <div class="row dy_c_content dy_comment">
           <!--评论区-->
           <div class="com_one" v-for="(c,idx) in res" :key="idx">
-            <div class="col-lg-1 dy_c_icon" style="margin-top: 5px"><img src="../../assets/usericon.png" alt="" class="img-circle"></div>
+            <div class="col-lg-1 dy_c_icon" style="margin-top: 5px"><img :src="GLOBAL.IMG+c.userInfo.icon" alt="" class="img-circle"></div>
             <div class="col-lg-11 dy_c_content">
               <div class="row" style="margin-left: 10px">
                 <span><strong>{{c.userInfo.name}}</strong></span>
@@ -26,7 +26,7 @@
               <br>
               <div class="row" style="margin-left: 10px;color: darkgrey">
                 <span>{{'#'+(idx+1)}}</span>
-                <span style="color: darkgrey;font-size: 0.8em;margin-left: 15px">{{c.date}}</span>
+                <span style="color: darkgrey;font-size: 0.8em;margin-left: 15px">{{GLOBAL.TIME(now-c.date)}}</span>
               </div>
               <div class="row dy_c_content line"></div>
             </div>
@@ -49,6 +49,7 @@
         name: "CommentArea",
       data:function () {
         return{
+          now:(new Date()).getTime(),
           res:null
           // i:[{'userInfo':{'name':''},'date':'','tags':'','title':'','content':'','subtitle':[{'title':'','content':''},{'title':'','content':''}],'cols':'','com':'','fbs':'','type':''}],
         }

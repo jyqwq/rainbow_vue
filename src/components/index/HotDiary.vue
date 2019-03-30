@@ -31,7 +31,7 @@
       </div>
       <div class="row hot_thing row_most_margin">
         <div class="to_one_two">
-          <img :src="GLOBAL.IMG+hotimg" class="img-responsive img-rounded" alt="Responsive image" :data-other="dairy_hot['userInfo']['user']" :data-type="'dairy'" :data-id="dairy_hot['id']" @click="tohot">
+          <img :src="GLOBAL.IMG+hotimg" class="img-responsive img-rounded" alt="Responsive image" :data-other="dairy_hot['user_id']" :data-type="'dairy'" :data-id="dairy_hot['id']" @click="tohot">
         </div>
       </div>
     </div>
