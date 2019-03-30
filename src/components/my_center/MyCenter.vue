@@ -5,7 +5,7 @@
     <div class="row qz_row">
       <!--左边个人信息框-->
       <div class="col-xs-12 col-sm-11 col-md-7 col-lg-7 animal_sil qz_infor">
-        <person-information :disflag="1"></person-information>
+        <person-information :skin_text="'肤质测试'" :my_skin="'我的肤质'"></person-information>
       </div>
       <!--右边浏览历史-->
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
@@ -62,12 +62,12 @@
         <div class="row">
           <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"  v-for="(dy, index) in dynamic">
             <div class="qz_cen">
-              <img @mouseover="flag=index" :class="flag===index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" src="../../assets/my_center/background_dynamic.jpg" alt="Responsive image">
+              <img @mouseover="flag=index" :class="flag===index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" :src="GLOBAL.IMG+dy_bg[index]" alt="Responsive image">
               <div :class="flag===index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
                 <span v-if="seen===-2" class="font_main"><br><br>{{dy.content}}</span>
-                <span v-if="seen===-1" class="font_main"><br><br>{{dy.content}}</span>
-                <span v-else-if="seen===0" class="font_main"><br><br>{{dy.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.click}}</span>
-                <span v-else-if="seen===1" class="font_main"><br><br>{{dy.colInfo.content}}<br><br>发布时间：{{dy.date}}<br>点击量:{{dy.colInfo.click}}</span>
+                <span v-else-if="seen===-1" class="font_main"><br><br>{{dy.content}}</span>
+                <span v-else-if="seen===0" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.click}}</span>
+                <span v-else-if="seen===1" class="font_main"><br><br>{{dy_tits[index+di_len]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.colInfo.click}}</span>
                 <span v-else-if="seen===2" class="font_main"><br><br>{{dy.content}}<br><br>剩余时间：{{dy.date}}<br></span>
               </div>
             </div>
@@ -89,6 +89,7 @@
 
 <script>
   import axios from 'axios'
+  import Vue from 'vue'
   import PersonInformation from './PersonInformation'
   import BrowseHistory from './BrowseHistory'
   import GoTo from './GoTo'
@@ -102,9 +103,13 @@
       props:{},
       data: function () {
         return {
+          now:(new Date()).getTime(),
           flag:-1,
           seen:-1,
           dynamic:[{"content":"彩虹日记"}],
+          dy_tits:[],
+          dy_bg:[''],
+          di_len:''
           // 切换方法1，2 currenView:'DynamicDiary',
         }
       },
@@ -127,7 +132,23 @@
               }else{
                 that.seen=0;
                 that.dynamic=response.data.slice(0,3);
-                console.log(dynamic);
+                for (let i=0;i<that.dynamic.length;i++){
+                  // 图片
+                  if (that.dynamic[i].imgs.length) {
+                    Vue.set(that.dy_bg,i,that.dynamic[i].imgs[0].url);
+                  }else{
+                    Vue.set(that.dy_bg,i,'background_dynamic.jpg');
+                  }
+                  // 内容
+                  if (that.dynamic[i].type==='dynamic') {
+                    that.dy_tits.push(that.dynamic[i].content.length>11?that.dynamic[i].content.slice(0,11):that.dynamic[i].content);
+                  }else if (that.dynamic[i].type==='dairy') {
+                    that.dy_tits.push(that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
+                  }else if (that.dynamic[i].type==='test'){
+                    that.dy_tits.push(that.dynamic[i].title.length>11?that.dynamic[i].title.slice(0,11):that.dynamic[i].title);
+                  }
+                }
+                that.di_len=that.dynamic.length;
               }
             })
             .catch(function (error) {
@@ -161,6 +182,20 @@
                 dyna.sort((x,y)=>(y.date - x.date));
                 that.dynamic=dyna.slice(0,3);
                 that.seen=1;
+                for (let i=0;i<that.dynamic.length;i++){
+                  // 图片
+
+
+                  // 内容
+                  let type=that.dynamic[i].colInfo.type;
+                  if (type==='dynamic') {
+                    that.dy_tits.push(that.dynamic[i].colInfo.content.length>11?that.dynamic[i].colInfo.content.slice(0, 11):that.dynamic[i].colInfo.content);
+                  }else if (type==='dairy') {
+                    that.dy_tits.push(that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
+                  }else if (type==='test'){
+                    that.dy_tits.push(that.dynamic[i].colInfo.title.length>11?that.dynamic[i].colInfo.title.slice(0, 11):that.dynamic[i].colInfo.title);
+                  }
+                }
               }
             })
             .catch(function (error) {

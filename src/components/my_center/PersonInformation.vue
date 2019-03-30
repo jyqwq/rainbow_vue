@@ -14,12 +14,12 @@
         </div>
         <input id='rad3' name='rad' type='radio'>
         <div for='rad3'>
-          <h1>关注：{{person.follow}}<br>粉丝：{{person.fans}}<br>收藏：{{person.cols}}</h1>
+          <h1 >关注：{{person.follow}}<br>粉丝：{{person.fans}}<br>收藏：{{person.cols}}</h1>
           <div class='btn'></div>
         </div>
-        <input v-if="disflag===1" type='checkbox'>
-        <a v-if="disflag===1"><span class="skin">肤质测试</span></a>
-        <p v-if="disflag===1">我的肤质：{{person.skin}}</p>
+        <input type='checkbox' @click="tof">
+        <a><span class="skin">{{skin_text}}</span></a><br><br>
+        <p>{{my_skin}}</p>
         <div class='shapes'></div>
         <div class='photo'>
           <div></div>
@@ -37,16 +37,28 @@
   import axios from 'axios'
   export default {
     name: "PersonInformation",
-    props: ['disflag'],
+    props: ['skin_text','my_skin'],
     data: function () {
       return {
-        person:''
+        person:'',
+        flag:true,
       }
     },
     mounted: function () {
       let userInfo=sessionStorage.getItem('userInfo');
       this.person=JSON.parse(userInfo);
     },
+    methods:{
+      tof:function () {
+        if (this.flag){
+          this.flag=false;
+          this.$emit('follow')
+        } else {
+          this.flag=true;
+          console.log('返回');
+        }
+      }
+    }
   }
 </script>
 
@@ -203,7 +215,7 @@
     font-family: "Raleway";
   }
   body .card a:before {
-    content: 'BACK';
+    content: '返回';
     position: absolute;
     left: 50%;
     top: 50%;
