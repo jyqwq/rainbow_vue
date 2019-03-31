@@ -71,7 +71,7 @@
       }
     },
     created:function(){
-      that.$emit('flash');
+      this.$emit('flash');
     },
     mounted:function(){
       let userInfo=sessionStorage.getItem('userInfo');

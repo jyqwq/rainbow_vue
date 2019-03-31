@@ -3,19 +3,19 @@
     <!--头像个签-->
     <div class="row qz_head">
       <div class="col-xs-7 col-sm-3 col-md-3 col-lg-2">
-        <div class="portrait"><img src="" class="img-responsive qz_portrait" alt="Responsive image"></div>
+        <div class="portrait"><img :src="icon" class="img-responsive qz_portrait" alt="Responsive image"></div>
       </div>
       <div class="col-xs-7 col-sm-3 col-md-3 col-lg-2">
         <div class="pet_name">
-          <div><a class="qz_an" href="#">{{name}}</a></div>
-          <div><a class="qz_ag" href="#">{{autograph}}</a></div>
+          <div><a class="qz_an">{{name}}</a></div>
+          <div><a class="qz_ag">{{autograph}}</a></div>
         </div>
       </div>
       <div class="col-xs-1 col-sm-6 col-md-6 col-lg-7"></div>
       <div class="col-xs-4 col-sm-2 col-md-2 col-lg-1">
         <div class="num_f">
-          <a href="#" class="follow">关注数：{{follow}}</a><br>
-          <a href="#" class="fanc">粉丝数：{{fans}}</a>
+          <a class="follow">关注数：{{follow}}</a><br>
+          <a class="fanc">粉丝数：{{fans}}</a>
         </div>
       </div>
       <div class="hidden-xs col-sm-1 col-md-1 col-lg-1"></div>
@@ -58,6 +58,7 @@
       name: "MyDynamic",
       data:function(){
         return{
+          icon:this.GLOBAL.IMG+JSON.parse(sessionStorage.getItem('userInfo'))['icon'],
           name:'',
           autograph:'',
           follow:'',

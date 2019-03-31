@@ -5,7 +5,7 @@
     <div class="row qz_row">
       <!--左边个人信息框-->
       <div class="col-xs-12 col-sm-11 col-md-7 col-lg-7 animal_sil qz_infor">
-        <person-information v-if="" :skin_text="isfollow? '已关注':'关注'" :my_skin="isfollow? '关注成功！':'取消成功！'" v-on:follow="fllow_other"></person-information>
+        <person-information :skin_text="isfollow? '已关注':'关注'" :my_skin="isfollow? '关注成功！':'取消成功！'" :type="'other'" :id="user_id" v-on:follow="fllow_other"></person-information>
       </div>
       <!--右边浏览历史-->
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">

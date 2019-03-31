@@ -99,6 +99,8 @@
                         }
                       });
                     }
+                  }else {
+                    alert(res.data['status_text'])
                   }
                 }).catch(function (err) {
                   console.log(err);

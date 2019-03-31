@@ -4,7 +4,7 @@
     <!--头像昵称-->
     <div class="row row_margin">
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-1" style="height: 58px">
-        <img @click="ftwoChange" src="" class="img-responsive head_img" alt="Responsive image">
+        <img @click="ftwoChange" :src="icon" class="img-responsive head_img" alt="Responsive image">
       </div>
       <div class="col-xs-8 col-sm-8 col-md-8 col-lg-7 qz_nick">
         <span class="font_nick">{{nick}}</span>
@@ -114,6 +114,7 @@
       props:['seflag'],
       data:function(){
         return{
+          icon:this.GLOBAL.IMG+JSON.parse(sessionStorage.getItem('userInfo'))['icon'],
           nick:'昵称'
         }
       },
@@ -123,13 +124,13 @@
       },
       methods:{
         ftwoChange:function () {
-          this.$emit('childByflag',2)//子传父（子组件里面写）
+          this.$emit('childByflag',2); //子传父（子组件里面写）
           this.$emit('tabChange', 'ModifyHead')//子传父（子组件里面写）
         },
         foneChange:function () {
           this.headpage=2;
           this.infopage=1;
-          this.$emit('childByflag',1)//子传父（子组件里面写）
+          this.$emit('childByflag',1); //子传父（子组件里面写）
           this.$emit('tabChange', 'ModifyInformation')//子传父（子组件里面写）
         }
       },
@@ -173,8 +174,8 @@
   /*首页部分—开始*/
   /*头像昵称—开始*/
   .head_img{
+    width: 100%;
     border-radius: 50%;
-    height: 100%;
   }
   /*头像昵称—结束*/
   /*彩虹认证—开始*/

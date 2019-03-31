@@ -17,6 +17,7 @@
     "bootstrap": "^3.4.1",
     "qiniu-js": "^2.5.4",
     "vue": "^2.5.2",
+    "vue-cropper": "^0.4.9",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

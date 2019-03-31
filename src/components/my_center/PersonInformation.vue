@@ -9,7 +9,7 @@
         </div>
         <input id='rad2' name='rad' type='radio'>
         <div for='rad2'>
-          <h1>性别：{{person.sex}}<br>生日：{{person.birth}}</h1>
+          <h1>性别：{{person.sex===1? '保密':person.sex===2? '男':'女'}}<br>生日：{{person.birth}}</h1>
           <div class='btn'></div>
         </div>
         <input id='rad3' name='rad' type='radio'>
@@ -22,9 +22,9 @@
         <p>{{my_skin}}</p>
         <div class='shapes'></div>
         <div class='photo'>
-          <div></div>
-          <div></div>
-          <div></div>
+          <div><img :src="icon" alt="" style="position: relative;top: 50px;left: 45px;width: 60%" class="img-circle"></div>
+          <div><img :src="icon" alt="" style="position: relative;top: 50px;left: 45px;width: 60%" class="img-circle"></div>
+          <div><img :src="icon" alt="" style="position: relative;top: 50px;left: 45px;width: 60%" class="img-circle"></div>
         </div>
         <div class='blob'>
           <div class='glob'></div>
@@ -37,16 +37,31 @@
   import axios from 'axios'
   export default {
     name: "PersonInformation",
-    props: ['skin_text','my_skin'],
+    props: ['skin_text','my_skin','type','id'],
     data: function () {
       return {
+        icon:'',
         person:'',
         flag:true,
       }
     },
     mounted: function () {
-      let userInfo=sessionStorage.getItem('userInfo');
-      this.person=JSON.parse(userInfo);
+      let that = this;
+      if (this.type === 'my'){
+        let userInfo=sessionStorage.getItem('userInfo');
+        this.person=JSON.parse(userInfo);
+      } else if (this.type === 'other'){
+        console.log(this.id);
+        axios.post(this.GLOBAL.HOST+'user/personInfo/',{
+          "user_id":this.id,
+          "method":"check"
+        }).then(function (res) {
+          console.log(res);
+          that.person=res.data;
+        }).catch(function (err) {
+          console.log(err);
+        })
+      }
     },
     methods:{
       tof:function () {
@@ -378,7 +393,7 @@
     box-shadow: inset 0 0 0 5px #fff, 0 0 0 5px #fba0cc, 0 0 0 10px #fff;
   }
   body .card .photo div:before {
-    content: url("../../assets/usericon.png");
+    /*content: " (" attr(data-icon) ")";*/
     /*font-size: 75px;*/
     position: absolute;
     left: 20%;
@@ -394,14 +409,14 @@
     box-shadow: inset 0 0 0 5px #fff, 0 0 0 5px #F45746, 0 0 0 10px #fff;
   }
   body .card .photo div:nth-of-type(2):before {
-    content: url("../../assets/usericon.png");
+    /*content: attr(data-icon);*/
   }
   body .card .photo div:nth-of-type(3) {
     background: #B9ACCA;
     box-shadow: inset 0 0 0 5px #fff, 0 0 0 5px #B9ACCA, 0 0 0 10px #fff;
   }
   body .card .photo div:nth-of-type(3):before {
-    content: url("../../assets/usericon.png");
+    /*content: attr(data-icon);*/
   }
   body .card .shapes {
     position: absolute;

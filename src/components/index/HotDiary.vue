@@ -22,7 +22,7 @@
         <br>
         <span class="most_title"><strong>&nbsp;&nbsp;{{dairy_hot['title']}}</strong></span>
         <br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<router-link to=""><span class="most_author">{{dairy_hot['userInfo']['name']}}</span></router-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<router-link to=""><span class="most_author" style="cursor: pointer" @click="toother" :data-id="dairy_hot.user_id">{{dairy_hot['userInfo']['name']}}</span></router-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="glyphicon glyphicon-eye-open" aria-hidden="true">&nbsp;{{dairy_hot['click']}}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <span class="glyphicon glyphicon-edit" aria-hidden="true">&nbsp;{{dairy_hot['com']}}</span>
@@ -73,6 +73,10 @@
           let id = e.target.dataset.id;
           let other = e.target.dataset.other;
           this.$router.push({path:'/dynamic_detail/'+other+'/dairy/'+id})
+        },
+        toother:function (e) {
+          let eve = e.target;
+          this.$router.push({path:'/other_center/'+eve.dataset.id})
         }
       }
     }

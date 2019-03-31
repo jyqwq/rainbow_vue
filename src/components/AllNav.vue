@@ -13,7 +13,7 @@
         <li class="item"><router-link to="/register">注册</router-link></li>
       </ul>
       <ul v-bind:style="{'display':islogin ? 'inline':'none'}" style="padding: 0;float: right">
-        <li class="item user-info"><router-link to="/my_center"><img :src="GLOBAL.IMG+icon" alt=""></router-link></li>
+        <li class="item user-info"><router-link to="/my_center"><img :src="GLOBAL.IMG+icon" style="width: 32px;height: 32px" class="img-circle" alt=""></router-link></li>
         <li class="item"><router-link to="/dynamic">动态</router-link></li>
         <li class="item to-write"><router-link to="/sharing_index">写日记</router-link></li>
       </ul>

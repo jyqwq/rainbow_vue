@@ -6,9 +6,9 @@
         <!--子传父1.'v-on'监听事件，随子组件数据改变-->
         <!--<nav-main v-on:childByTab="childByTab"></nav-main>-->
         <ul class="nav nav-tabs nav-stacked shu_nav row_margin margin_end">
-          <li @click="seflag=0" :class="seflag==0?['shu_active']:''" role="presentation" class="nav_page"><div @click="tabChange('homePage')"><img src="../../assets/setting/nav_setting.png" alt="">&nbsp;&nbsp;首页</div></li>
-          <li @click="seflag=1" :class="seflag==1?['shu_active']:''" role="presentation" class="nav_info"><div @click="tabChange('modifyInformation')"><img src="../../assets/setting/nav_message.png" alt="">&nbsp;&nbsp;我的信息</div></li>
-          <li @click="seflag=2" :class="seflag==2?['shu_active']:''" role="presentation" class="nav_head"><div @click="tabChange('modifyHead')"><img src="../../assets/setting/nav_head.png" alt="">&nbsp;&nbsp;我的头像</div></li>
+          <li style="cursor: pointer" @click="seflag=0" :class="seflag==0?['shu_active']:''" role="presentation" class="nav_page"><div @click="tabChange('homePage')"><img src="../../assets/setting/nav_setting.png" alt="">&nbsp;&nbsp;首页</div></li>
+          <li style="cursor: pointer" @click="seflag=1" :class="seflag==1?['shu_active']:''" role="presentation" class="nav_info"><div @click="tabChange('modifyInformation')"><img src="../../assets/setting/nav_message.png" alt="">&nbsp;&nbsp;我的信息</div></li>
+          <li style="cursor: pointer" @click="seflag=2" :class="seflag==2?['shu_active']:''" role="presentation" class="nav_head"><div @click="tabChange('modifyHead')"><img src="../../assets/setting/nav_head.png" alt="">&nbsp;&nbsp;我的头像</div></li>
         </ul>
       </div>
       <!--右边内容-->

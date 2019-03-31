@@ -14,7 +14,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;
         <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">&nbsp;{{t.fbs}}</span>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<a href="#">{{t.userInfo.name}}</a></span> <br>
+        <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<a style="cursor: pointer" @click="toother" :data-id="t.user_id">{{t.userInfo.name}}</a></span> <br>
       </div>
       <br>
       <div class="row">
@@ -49,6 +49,7 @@
          getdata:function () {
            let that = this;
            axios.get(this.GLOBAL.HOST+'search/hotTest?page=1').then(function (response) {
+             console.log(response.data);
              that.res = response.data
 
            }).catch(function (err) {
@@ -60,6 +61,10 @@
           let type = e.target.dataset.type;
           let other = e.target.dataset.other;
           this.$router.push({path:'/dynamic_detail/'+other+'/'+type+'/'+id})
+        },
+        toother:function (e) {
+          let eve = e.target;
+          this.$router.push({path:'/other_center/'+eve.dataset.id})
         }
       }
     }

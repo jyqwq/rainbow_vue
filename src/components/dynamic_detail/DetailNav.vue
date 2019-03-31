@@ -1,7 +1,7 @@
 <template>
   <div class="row all_dy dy_margin dy_nav" style="margin-top: 90px">
     <div class="col-lg-4 xs_padding">
-      <div role="presentation" class="tag-item"><a class="dy_m_nav one_tag theindex">他的主页</a></div>
+      <div role="presentation" class="tag-item"><a class="dy_m_nav one_tag theindex" @click="toother" :data-id="user_id">他的主页</a></div>
     </div>
     <div class="col-lg-4 xs_padding">
       <div role="presentation" class="tag-item" v-if="parseInt(user_id)!==myid"><a class="dy_m_nav one_tag follow" @click="tofollow">{{isfollow? '已关注':'关注'}}</a></div>
@@ -95,6 +95,10 @@
         },
         back:function () {
           this.$router.go(-1)
+        },
+        toother:function (e) {
+          let eve = e.target;
+          this.$router.push({path:'/other_center/'+eve.dataset.id})
         }
       }
     }

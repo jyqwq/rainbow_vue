@@ -5,7 +5,7 @@
     <div class="row qz_row">
       <!--左边个人信息框-->
       <div class="col-xs-12 col-sm-11 col-md-7 col-lg-7 animal_sil qz_infor">
-        <person-information :skin_text="'肤质测试'" :my_skin="'我的肤质'"></person-information>
+        <person-information :skin_text="'肤质测试'" :my_skin="'我的肤质'" :type="'my'"></person-information>
       </div>
       <!--右边浏览历史-->
       <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
