@@ -30,12 +30,12 @@
           ward:function (index) {
             this.page=index
             console.log(this.page);
-            this.$emit('page',this.page)
+            this.$emit('setpage',this.page)
           },
           upward:function () {
             if (this.page>1) {
               this.page-=1
-              this.$emit('page',this.page)
+              this.$emit('setpage',this.page)
             }
             if (this.show.indexOf(this.page+1)==0) {
                 this.show=this.show.map(function (i) {
@@ -47,7 +47,7 @@
           downward:function () {
             if (this.page<this.count) {
               this.page+=1
-              this.$emit('page',this.page)
+              this.$emit('setpage',this.page)
               if (this.show.indexOf(this.page-1)==this.show.length-1) {
                     this.show=this.show.map(function (i) {
                         return i+1
@@ -59,12 +59,12 @@
           headward:function () {
             this.page=1
             this.show=[1,2,3]
-            this.$emit('page',this.page)
+            this.$emit('setpage',this.page)
           },
           footward:function () {
             this.page=this.count
             this.show=[this.count-2,this.count-1,this.count]
-            this.$emit('page',this.page)
+            this.$emit('setpage',this.page)
           }
         },
         mounted:function () {

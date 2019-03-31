@@ -6,6 +6,8 @@ import router from './router'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/animate.css'
 import '../node_modules/particles.min'
+import '../node_modules/style.css'
+import '../node_modules/wickedpicker.css'
 //导航组件
 import AllNav from './components/AllNav'
 import AllFooter from './components/AllFooter'

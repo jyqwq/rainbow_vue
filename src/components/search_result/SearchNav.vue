@@ -1,8 +1,8 @@
 <template>
   <div class="row top">
     <div class="col-md-3 col-md-offset-1 top-left">
-      <img src="../../assets/search_img/icy_logo-2.png" class="">
-      <img src="../../assets/search_img/icy_logo.png" alt="">
+      <img src="../../assets/search_img/logo3.png" class="">
+      <img src="../../assets/search_img/logo4.png" alt="">
     </div>
     <div class="col-md-4 top-mid">
       <div class="row mid-1">
@@ -45,13 +45,12 @@
         props:['router','kinds'],
         methods:{
           searchnav:function (li,router) {
-            window.sessionStorage.setItem('keywords',this.keywords)
             this.$emit('search', li,router)
           },
           searchbasic:function (li) {
             var routered
             if (this.kinds=='产品') {
-              routered=this.router.searchAll
+              routered=this.router.searchProduct
             }else if (this.kinds=='心情'){
               routered=this.router.searchDynamic
             } else if (this.kinds=='日记') {
@@ -71,6 +70,7 @@
           }
             if (window.sessionStorage.getItem('skey')) {
               this.keywords=window.sessionStorage.getItem('skey')
+              this.$emit('message',this.keywords)
             }
         }
     }

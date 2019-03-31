@@ -1,21 +1,21 @@
 <template>
   <div class="row r-7">
     <div class="row row_margin rank_one" v-for="(i,index) in goodinfo.length-1">
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 rank_num"><strong>22</strong><span>33</span></div>
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 rank_num"><strong>{{index}}</strong><span>{{i.id}}</span></div>
       <div class="col-xs-10 col-sm-8 col-md-8 col-lg-8">
         <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3 rank_img">
           <img src="../../assets/search_img/good-1.jpg" class="img-responsive img-rounded" alt="Responsive image">
         </div>
         <div class="col-xs-7 col-sm-9 col-md-9 col-lg-9 rank_content">
           <div class="row first_row">
-            <a  class="content_name"><h5><strong>TT</strong></h5></a>
+            <a  class="content_name"><h5><strong>{{i.words}}</strong></h5></a>
           </div>
           <div class="row second_row">
-            <span class="glyphicon glyphicon-eye-open" aria-hidden="true">123</span>
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true">{{i.click}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="glyphicon glyphicon-edit" aria-hidden="true">456</span>
+            <span class="glyphicon glyphicon-edit" aria-hidden="true">{{i.cols}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">789</span>
+            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">{{i.fbs}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<a href="#">ICYTAIL</a></span>
           </div>

@@ -4,16 +4,16 @@
       <button type="button" :key="0" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 0 ? 'active':''" @click="filter(0)">综合</button>
     </div>
     <div class="col-md-2 ">
-      <button type="button" :key="1" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 1 ? 'active':''" @click="filter(1)">面膜</button>
+      <button type="button" :key="1" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 1 ? 'active':''" @click="filter(1)">润肤露</button>
     </div>
     <div class="col-md-2  ">
       <button type="button" :key="2" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 2 ? 'active':''" @click="filter(2)">口红</button>
     </div>
     <div class="col-md-2  ">
-      <button type="button" :key="3" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 3 ? 'active':''" @click="filter(3)">彩妆</button>
+      <button type="button" :key="3" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 3 ? 'active':''" @click="filter(3)">洗发液</button>
     </div>
     <div class="col-md-2  ">
-      <button type="button" :key="4" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 4 ? 'active':''" @click="filter(4)">护手霜</button>
+      <button type="button" :key="4" class="btn btn-default col-sm-12 col-xs-12" :class="activeClass == 4 ? 'active':''" @click="filter(4)">洗面乳</button>
     </div>
   </div>
 </template>
@@ -24,7 +24,7 @@
         name: "FilterButton",
         data:function () {
           return{
-            activeClass:-1
+            activeClass:0
           }
         },
         methods:{

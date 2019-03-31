@@ -29,20 +29,19 @@
             }else{
               goods.sort(this.sort4)
             }
-            goods=JSON.stringify(goods)
-            window.sessionStorage.setItem('goods',goods)
+           this.$emit('getsort',goods)
           },
           sort1:function (b,a) {
-            return (a.fbs+a.cots+a.click)-(b.fbs+b.cots+b.click)
+            return (a.fbs+a.cols+a.click)-(b.fbs+b.cols+b.click)
           },
           sort2:function (b,a) {
-            return a.commodity_price-b.commodity_price
+            return a.price-b.price
           },
           sort3:function (b,a) {
-            return a.cots-b.cots
+            return a.cols-b.cols
           },
           sort4:function (b,a) {
-            return a.commodity_date-b.commodity_date
+            return a.date-b.date
           },
         }
     }

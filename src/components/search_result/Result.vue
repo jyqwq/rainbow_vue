@@ -8,13 +8,13 @@
         <div class="row main_content">
           <div class="col-md-12">
             <classes @getkind="getKind" @search="search" :router="routers" :keyword="keywords" ></classes>
-            <selection @search="search" :router="routers" v-if="kind=='产品'" :keyword="keywords"></selection>
-            <sort-goods :goodinfo="goodsinfo" v-if="kind=='产品'"></sort-goods>
+            <selection @search="search" :router="routers" v-if="kind=='产品'" :keyword="keywords" :goodinfo="goodsinfo" @getset="getinfo"></selection>
+            <sort-goods :goodinfo="goodsinfo" v-if="kind=='产品'" @getsort="sortinfo"></sort-goods>
             <goods :goodinfo="goodsinfo" v-if="kind =='产品' && goodsinfo.length>1"></goods>
             <sort-dynamic v-if="kind!='产品'"></sort-dynamic>
             <dynamic  v-if="kind!='产品'" :goodinfo="goodsinfo"></dynamic>
             <no-data v-if="goodsinfo.length<=1"></no-data>
-            <paging></paging>
+            <paging @setpage="getpage"></paging>
           </div>
         </div>
       </div>
@@ -124,29 +124,33 @@
           },
           getmessage:function (msg) {
             this.keywords=msg
+          },
+          getinfo:function (msg) {
+            this.goodsinfo=msg
+            console.log(this.goodsinfo);
+          },
+          sortinfo:function (msg) {
+            this.goodsinfo=msg
+          },
+          getpage:function (msg) {
+            this.page=msg
           }
         },
         mounted:function () {
-        if (window.sessionStorage.getItem('info')){
-          this.goodsinfo=JSON.parse(window.sessionStorage.getItem('info'))
-        }
-        if (this.$route.params.info) {
-          this.goodsinfo = JSON.parse(this.$route.params.info)
-          console.log(this.goodsinfo+'hello');
-        }
+          if (window.sessionStorage.getItem('info')) {
+            this.goodsinfo = JSON.parse(window.sessionStorage.getItem('info'))
+          }
+          if (this.$route.params.info) {
+            this.goodsinfo = JSON.parse(this.$route.params.info)
+          }
+
 
         }
     }
 </script>
 
 <style scoped>
-
-  body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0}
-  body{
-    background-color:#f2f2f2;
+  .con{
+    background-image: url("../../assets/dy-background.png");
   }
-
-
-
-
 </style>

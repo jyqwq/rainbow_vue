@@ -27,6 +27,7 @@ import AdmissionList from '@/components/my_dynamic/AdmissionList'
 import Success from '@/components/sharing_index/Success'
 import Defeat from '@/components/sharing_index/Defeat'
 import OtherCenter from '@/components/other_center/OtherCenter'
+import Uploading from '@/components/upload_product/Uploading'
 
 import Global from '../components/Global'
 
@@ -185,6 +186,13 @@ const router = new Router({
       name:'OtherCenter',
       component:OtherCenter,
     },
+    {
+      path:'/upload',
+      name:'Uploading',
+      components: {
+        login:Uploading
+      },
+    }
   ]
 });
 

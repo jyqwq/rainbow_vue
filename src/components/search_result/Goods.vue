@@ -5,10 +5,10 @@
         <router-link :to="{name:'Detail'}">
           <div class="goods  col-md-3"  v-for="(i,index) in goodinfo.length-1" :class="sequence[index%4-1]" >
           <div class="goods-content" @click="infodetail(goodinfo[index].id)">
-            <a ><img src="../../assets/search_img/good-1.jpg" class="img-responsive"></a>
+            <a ><img :src="GLOBAL.IMG+(goodinfo[index].imgs.length>0? goodinfo[index].imgs[0]['url']:'ad.jpg')" class="img-responsive"></a>
             <div class="goods-d-1">
               <p class="goods-p-1"> <strong>{{goodinfo[index].price}}</strong> <span class="rect">市场价</span></p>
-              <p class="goods-p-2"><a>{{goodinfo[index].name}}</a></p><p class="goods-p-3"><a ><span class="glyphicon glyphicon-menu-hamburger"></span><span>{{goodinfo[index].brand}}</span><span>产品编号:</span><span>{{goodinfo[index].id}}</span></a></p>
+              <p class="goods-p-2"><a>{{goodinfo[index].name.slice(0,10)}}</a></p><p class="goods-p-3"><a ><span class="glyphicon glyphicon-menu-hamburger"></span><span>{{goodinfo[index].brand}}</span><span>产品编号:</span><span>{{goodinfo[index].id}}</span></a></p>
             </div>
           </div>
         </div>
