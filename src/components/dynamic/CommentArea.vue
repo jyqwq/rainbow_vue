@@ -1,7 +1,7 @@
 <template>
   <div class="comment-area all_dy">
     <div class="row">
-      <div class="col-lg-2 dy_c_icon" style="margin-top: 15px"><img src="../../assets/usericon.png" alt="" class="img-circle my_icon"></div>
+      <div class="col-lg-2 dy_c_icon" style="margin-top: 15px"><img :src="GLOBAL.IMG+icon" style="width: 32px;height: 32px" alt="" class="img-circle my_icon"></div>
       <div class="col-lg-8 dy_c_content">
         <div class="row dy_c_content my_com">
           <textarea class="form-control dy_text" placeholder="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" rows="3" maxlength="140"   ref="dy_text" @keyup="num"></textarea>
@@ -14,7 +14,7 @@
         <div class="row dy_c_content dy_comment">
           <!--评论区-->
           <div class="com_one" v-for="(c,idx) in res" :key="idx">
-            <div class="col-lg-1 dy_c_icon" style="margin-top: 5px"><img :src="GLOBAL.IMG+c.userInfo.icon" alt="" class="img-circle"></div>
+            <div class="col-lg-1 dy_c_icon" style="margin-top: 5px"><img :src="GLOBAL.IMG+c.userInfo.icon" alt="" style="width: 32px;height: 32px" class="img-circle"></div>
             <div class="col-lg-11 dy_c_content">
               <div class="row" style="margin-left: 10px">
                 <span><strong>{{c.userInfo.name}}</strong></span>
@@ -49,6 +49,7 @@
         name: "CommentArea",
       data:function () {
         return{
+          icon:JSON.parse(sessionStorage.getItem('userInfo'))['icon'],
           now:(new Date()).getTime(),
           res:null
           // i:[{'userInfo':{'name':''},'date':'','tags':'','title':'','content':'','subtitle':[{'title':'','content':''},{'title':'','content':''}],'cols':'','com':'','fbs':'','type':''}],

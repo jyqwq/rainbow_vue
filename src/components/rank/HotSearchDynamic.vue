@@ -19,7 +19,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;
             <span class="glyphicon glyphicon-thumbs-up f_rank" aria-hidden="true">&nbsp;{{i.fbs}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<a class="u_rank to_two_person">{{i.userInfo.name}}</a></span>
+            <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<a class="u_rank to_two_person" style="cursor: pointer" @click="toother" :data-id="i.user_id">{{i.userInfo.name}}</a></span>
           </div>
         </div>
       </div>
@@ -67,6 +67,10 @@
           let type = e.target.dataset.type;
           let other = e.target.dataset.other;
           this.$router.push({path:'/dynamic_detail/'+other+'/'+type+'/'+id})
+        },
+        toother:function (e) {
+          let eve = e.target;
+          this.$router.push({path:'/other_center/'+eve.dataset.id})
         }
       }
     }

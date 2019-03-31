@@ -3,7 +3,7 @@
     <!--关注动态ajax-->
     <div class="row all_dy dy_margin" v-for="(i,index) in res" :key="index" :data-type="i.type">
       <div class="row">
-        <div class="col-lg-2 dy_c_content dy_c_icon"><img :src="GLOBAL.IMG+i.userInfo.icon" alt="" class="img-circle"></div>
+        <div class="col-lg-2 dy_c_content dy_c_icon"><img :src="GLOBAL.IMG+i.userInfo.icon" alt="" style="width: 32px;height: 32px" class="img-circle"></div>
         <div class="col-lg-8 dy_c_content"  style="overflow: hidden">
           <div class="row">
             <span><strong style="font-size: 1.1em">{{i.userInfo.name}}</strong></span>

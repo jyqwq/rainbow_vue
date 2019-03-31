@@ -11,6 +11,9 @@ import '../node_modules/wickedpicker.css'
 //导航组件
 import AllNav from './components/AllNav'
 import AllFooter from './components/AllFooter'
+import VueCropper from 'vue-cropper'
+
+Vue.use(VueCropper)
 //引用全局模块
 import global_ from './components/Global'//引用文件
 
