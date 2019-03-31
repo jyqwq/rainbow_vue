@@ -51,10 +51,10 @@
             <div class="qz_cen">
               <img @mouseover="flag=index" :class="flag===index?['qz_cimg','cimg_active']:''" class="img-responsive qz_cimg" :src="GLOBAL.IMG+dy_bg[index]" alt="Responsive image">
               <div :class="flag===index?['qz_coimg']:''" @mouseout="flag=-1" class="to_one">
-                <span v-if="seen===-2" class="font_main"><br><br>{{dy_tits[index]}}</span>
-                <span v-else-if="seen===-1" class="font_main"><br><br>{{dy_tits[index]}}</span>
-                <span v-else-if="seen===0" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.click}}</span>
-                <span v-else-if="seen===1" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.colInfo.click}}</span>
+                <span v-if="seen===-2" @click="toone" class="font_main"><br><br>{{dy_tits[index]}}</span>
+                <span v-else-if="seen===-1" @click="toone" class="font_main"><br><br>{{dy_tits[index]}}</span>
+                <span v-else-if="seen===0" @click="toone" :data-autho="dy.user_id" :data-type="dy.type" :data-id="dy.id" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.click}}</span>
+                <span v-else-if="seen===1" @click="toone" :data-autho="dy.user_id" :data-type="dy.colInfo.type" :data-id="dy.colInfo.id" class="font_main"><br><br>{{dy_tits[index]}}<br><br>发布时间：{{GLOBAL.TIME(now-dy.date)}}<br>点击量:{{dy.colInfo.click}}</span>
               </div>
             </div>
           </div>
@@ -106,6 +106,7 @@
         this.getfollow();
       },
       methods: {
+        // 是否关注
         getfollow:function (){
           let that = this;
           axios.post(this.GLOBAL.HOST+'user/viewConcern/',{
@@ -130,7 +131,7 @@
             console.log(err);
           })
         },
-        // 关注他人
+        // 点击关注他人
         fllow_other:function(){
           let that = this;
           let myDate=new Date();
@@ -238,8 +239,11 @@
                 that.seen=1;
                 for (let i=0;i<that.dynamic.length;i++){
                   // 图片
-
-
+                  if (that.dynamic[i].imgs.length) {
+                    Vue.set(that.dy_bg,i,that.dynamic[i].imgs[0].url);
+                  }else{
+                    Vue.set(that.dy_bg,i,'background_dynamic.jpg');
+                  }
                   // 内容
                   let type=that.dynamic[i].colInfo.type;
                   if (type==='dynamic') {
@@ -256,6 +260,23 @@
               console.log(error);
             })
         },
+        // 跳转单个动态
+        toone:function (event) {
+          let node=event.target;
+          console.log(node);
+          let autho = node.dataset.autho;
+          let type = node.dataset.type;
+          let id = node.dataset.id;
+          if (this.seen===-2){
+            this.$router.push({path:'/rank/'})
+          } else if (this.seen===-1){
+            this.$router.push({path:'/sharing_index/'})
+          } else if (this.seen===0){
+            this.$router.push({path:'/dynamic_detail/'+autho+'/'+type+'/'+id})
+          } else if (this.seen===1) {
+            this.$router.push({path:'/dynamic_detail/'+autho+'/'+type+'/'+id})
+          }
+        }
       }
     }
 </script>
