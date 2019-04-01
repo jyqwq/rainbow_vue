@@ -1,7 +1,7 @@
 <template>
   <!--左边个人信息框-->
     <div class="qz_per" style="zoom:1;overflow: hidden;">
-      <div class='card' style="margin-top: 50px">
+      <div class='card' style="margin-top: 60px">
         <input checked='checked' id='rad1' name='rad' type='radio'>
         <div for='rad1'>
           <h1>昵称：{{person.name}}<br>个签：{{person.autograph}}</h1>
