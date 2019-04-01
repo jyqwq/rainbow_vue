@@ -1,5 +1,5 @@
 <template>
-  <div  style="margin-top: 65px;min-height: 2000px">
+  <div  style="margin-top: 65px;min-height: 900px">
 
     <!--第一部分-->
     <div class="row qz_row">
@@ -12,9 +12,6 @@
         <browse-history></browse-history>
       </div>
     </div>
-
-    <!--箭头指向第二页-->
-    <go-to></go-to>
 
     <!--大导航栏-->
     <div class="row qz_row" id="qz_nav">
@@ -62,14 +59,6 @@
       </div>
     </div>
 
-    <!--更多按钮-->
-    <div class="row">
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-5"></div>
-      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2">
-        <router-link to="/my_dynamic" class="button_primary button_qz" href="../setting/Setting.vue">更多 ></router-link>
-      </div>
-    </div>
-
   </div>
 
 </template>
@@ -79,12 +68,10 @@
   import Vue from 'vue'
   import PersonInformation from '../my_center/PersonInformation'
   import BrowseHistory from '../my_center/BrowseHistory'
-  import GoTo from '../my_center/GoTo'
     export default {
       components:{
         'person-information':PersonInformation,
         'browse-history':BrowseHistory,
-        'go-to':GoTo
       },
       name: "OtherCenter",
       data:function () {
@@ -366,35 +353,4 @@
     cursor: pointer;
   }
   /*单个动态结束*/
-  /*结尾更多按钮—开始*/
-  .button_qz{
-    position: relative;
-    padding-right: 2em;
-    border-radius: .6em;
-    padding: .2em 1em .3em;
-    line-height: 1.618;
-    display: inline-block;
-    text-align: center;
-    text-align-last: center;
-    vertical-align: middle;
-    user-select: none;
-    touch-action: manipulation;
-    cursor: pointer;
-    transition: all .2s ease-out;
-    text-decoration: none;
-
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-  }
-  .button_primary {
-    background: rgba(220, 20, 60, 0.71);
-    color: #fff;
-    border: solid 2px rgba(220, 20, 60, 0.71);
-  }
-  .button_primary:hover{
-    background: whitesmoke;
-    text-decoration: none;
-    color: rgba(220, 20, 60, 0.71);
-  }
-  /*结尾更多按钮—结束*/
 </style>

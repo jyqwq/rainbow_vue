@@ -2,7 +2,7 @@
   <div style="zoom:1;overflow: hidden;">
     <!--右边浏览历史-->
     <!--浏览历史标题-->
-    <div class="bro_his">
+    <div class="bro_his" style="margin-top: 60px">
       <span class="font_bro">浏览历史</span>
     </div>
     <!--浏览历史——主体-->
