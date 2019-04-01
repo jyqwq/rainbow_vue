@@ -4,7 +4,7 @@
     <label for="upload_file"><img src="../../assets/upimg.png" alt="" style="cursor: pointer"></label>
     <input type="file" class="upload" name="dynamic" id="upload_file"  accept="image/png,image/jpeg,image/gif,image/jpg" style="display: none" @change="addImg" ref="inputer" multiple>
   </form>
-  <div ref="preview">
+  <div ref="preview" class="mydiv">
     <div v-for="(value, key) in imgs" style="display: inline;position: relative">
       <div class="img" style="display: inline"><img  class="img-thumbnail img-responsive seeimg" :src="getObjectURL(value)"><a class="close" @click="delImg(key)">×</a></div>
     </div>
@@ -71,6 +71,12 @@
 </script>
 
 <style scoped>
+  .mydiv{
+    padding-left: 30px;
+  }
+  form{
+    padding-left: 30px;
+  }
   .seeimg{
     display: inline;
     height: 100px;

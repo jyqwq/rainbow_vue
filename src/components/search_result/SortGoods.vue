@@ -25,11 +25,12 @@
             }else if (sort=='最多点赞') {
               goods.sort(this.sort2)
             }else if (sort=='最新发布') {
-              goods.sort(this.sort3)
-            }else{
               goods.sort(this.sort4)
+            }else{
+              goods.sort(this.sort3)
             }
-           this.$emit('getsort',goods)
+            console.log(goods);
+            this.$emit('getsort',goods)
           },
           sort1:function (b,a) {
             return (a.fbs+a.cols+a.click)-(b.fbs+b.cols+b.click)

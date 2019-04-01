@@ -21,21 +21,24 @@
             //当前页码
             page:1,
             //总共页数
-            count:1,
+            // count:1,
             //显示页码
             show:[1,2,3]
           }
         },
+      props:['keyword','router','count'],
         methods:{
           ward:function (index) {
             this.page=index
             console.log(this.page);
             this.$emit('setpage',this.page)
+            this.$emit('search',this.keyword,this.router.searchProduct)
           },
           upward:function () {
             if (this.page>1) {
               this.page-=1
               this.$emit('setpage',this.page)
+              this.$emit('search',this.keyword,this.router.searchProduct)
             }
             if (this.show.indexOf(this.page+1)==0) {
                 this.show=this.show.map(function (i) {
@@ -48,30 +51,32 @@
             if (this.page<this.count) {
               this.page+=1
               this.$emit('setpage',this.page)
+              this.$emit('search',this.keyword,this.router.searchProduct)
               if (this.show.indexOf(this.page-1)==this.show.length-1) {
                     this.show=this.show.map(function (i) {
                         return i+1
                     })
               }
             }
-            console.log(this.page);
           },
           headward:function () {
             this.page=1
             this.show=[1,2,3]
             this.$emit('setpage',this.page)
+            this.$emit('search',this.keyword,this.router.searchProduct)
           },
           footward:function () {
             this.page=this.count
             this.show=[this.count-2,this.count-1,this.count]
             this.$emit('setpage',this.page)
+            this.$emit('search',this.keyword,this.router.searchProduct)
           }
         },
         mounted:function () {
-          if (window.sessionStorage.getItem('counts')){
-            this.count=Math.ceil(window.sessionStorage.getItem('counts')/16)
-            this.count=5
-          }
+          // console.log( this.count);
+          //   if (window.sessionStorage.getItem('counts')){
+        //     this.count=Math.ceil(window.sessionStorage.getItem('counts')/16)
+        //   }
         }
 
     }

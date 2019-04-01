@@ -41,7 +41,7 @@
             a:false
           }
         },
-        props:['router','keyword','goodinfo'],
+        props:['router','keyword','goodinfo','count'],
         methods:{
           searchSelection1:function (li) {
             this.isshow=-1
@@ -56,6 +56,8 @@
             }
             let c={'count':a.length}
             a.push(c)
+            this.count=Math.ceil(a.length/16)
+            this.$emit('selcount',this.count)
             this.a=a
             this.$emit('getset',a)
           },
@@ -84,6 +86,8 @@
                 }
                 let count={'count':d.length}
                 d.push(count)
+                this.count=Math.ceil(d.length/16)
+                this.$emit('selcount',this.count)
                 this.$emit('getset',d)
               }else {
                 var e=[]
@@ -95,6 +99,8 @@
                 }
                 let count={'count':e.length}
                 e.push(count)
+                this.count=Math.ceil(e.length/16)
+                this.$emit('selcount',this.count)
                 console.log(e);
                 this.$emit('getset',e)
               }

@@ -39,6 +39,7 @@
 </script>
 
 <style scoped>
+
   .r-4{
     padding-left: 0;
     height: 500px;
@@ -58,7 +59,7 @@
     box-shadow: 0 0 5px #888888;
   }
   .goods img{
-
+    margin: auto;
     border-bottom: 1px dashed rgba(128, 128, 128, 0.26);
   }
   #r-4-1 img{

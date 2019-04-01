@@ -8,13 +8,13 @@
         <div class="row main_content">
           <div class="col-md-12">
             <classes @getkind="getKind" @search="search" :router="routers" :keyword="keywords" ></classes>
-            <selection @search="search" :router="routers" v-if="kind=='产品'" :keyword="keywords" :goodinfo="goodsinfo" @getset="getinfo"></selection>
+            <selection @search="search" :router="routers" v-if="kind=='产品'" :keyword="keywords" :goodinfo="goodsinfo" @getset="getinfo" :count="counts" @selcount="getcount"></selection>
             <sort-goods :goodinfo="goodsinfo" v-if="kind=='产品'" @getsort="sortinfo"></sort-goods>
             <goods :goodinfo="goodsinfo" v-if="kind =='产品' && goodsinfo.length>1"></goods>
             <sort-dynamic v-if="kind!='产品'"></sort-dynamic>
             <dynamic  v-if="kind!='产品'" :goodinfo="goodsinfo"></dynamic>
             <no-data v-if="goodsinfo.length<=1"></no-data>
-            <paging @setpage="getpage"></paging>
+            <paging @search="search" @setpage="getpage" :keyword="keywords" :router="routers" :count="counts"></paging>
           </div>
         </div>
       </div>
@@ -52,7 +52,7 @@
               searchComponent:'search/searchComponent/',
               searchEffect:'search/searchEffect/',
               searchVarieties:'search/searchVarieties/',
-              searchDynamic:'search/searchDynamic/',
+              searchDynamic:'search/searchDynamic',
               searchJournal:'search/searchJournal/',
               searchTest:'search/searchTest/',
               hotSearch:'search/hotSearch/',
@@ -60,7 +60,8 @@
               hotCosmetics:'search/hotCosmetics/',
               hotKey:'search/hotKey/',
               oneProduct:'search/oneProduct/',
-            }
+            },
+            counts:1
           }
         },
         components:{
@@ -80,10 +81,11 @@
             console.log(this.GLOBAL.HOST + router + '?key=' + li + '&page=' + this.page);
             axios.get(this.GLOBAL.HOST+router+'?key='+li+'&page='+this.page)
               .then((response) => {
-                if (response.data.length>1) {
+                if (response.data.length>1 ) {
                   this.goodsinfo=response.data
                   let goods=JSON.stringify(this.goodsinfo)
-                  window.sessionStorage.setItem('counts',this.goodsinfo[this.goodsinfo.length-1].count)
+                  this.counts=Math.ceil(this.goodsinfo[this.goodsinfo.length-1].count/16)
+                  // window.sessionStorage.setItem('counts',this.goodsinfo[this.goodsinfo.length-1].count)
                   console.log(this.goodsinfo);
                 }else {
                   this.goodsinfo=[1]
@@ -134,14 +136,18 @@
           },
           getpage:function (msg) {
             this.page=msg
+          },
+          getcount:function (msg) {
+            this.counts=msg
           }
         },
         mounted:function () {
           if (window.sessionStorage.getItem('info')) {
             this.goodsinfo = JSON.parse(window.sessionStorage.getItem('info'))
           }
-          if (this.$route.params.info) {
+          if (this.$route.params) {
             this.goodsinfo = JSON.parse(this.$route.params.info)
+            this.counts = JSON.parse(this.$route.params.count)
           }
 
 

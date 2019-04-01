@@ -79,7 +79,8 @@
                   console.log(goods);
                   // let goods=a.length>1?JSON.stringify(a):JSON.stringify(this.goodsinfo)
                   window.sessionStorage.setItem('info',goods)
-                  window.sessionStorage.setItem('counts',this.goodsinfo[this.goodsinfo.length-1].count)
+                  var counts=Math.ceil(this.goodsinfo[this.goodsinfo.length-1].count/16)
+                  // window.sessionStorage.setItem('counts',this.goodsinfo[this.goodsinfo.length-1].count)
                   console.log(this.goodsinfo);
                 }else {
                   this.goodsinfo=[1]
@@ -87,7 +88,7 @@
                 }
                 this.memory()
                 this.record()
-                this.$router.push({ name: 'Result', params: { info: goods}})
+                this.$router.push({ name: 'Result', params: { info: goods,count:counts}})
               }).catch(function (error) {
               console.log(error);
             })

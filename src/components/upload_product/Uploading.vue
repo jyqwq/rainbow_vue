@@ -45,7 +45,7 @@
           </div>
         </form>
       </div>
-      <upload-image ref="getimg"></upload-image>
+      <upload-image ref="getimg" ></upload-image>
       <div class="btn" id="mysub" @click="product">Information upload</div>
     </div>
   </div>
@@ -161,6 +161,7 @@
 </script>
 
 <style scoped>
+
   .con{
     margin-top: 80px;
     padding-bottom: 39px;
@@ -169,7 +170,7 @@
     background-image: url("../../assets/dy-background.png");
   }
   #mysub{
-    margin-left: 68px;
+    margin-left: 95px;
     width: 41%;
     color: #fff;
     background:rgba(74, 104, 122, 0.71);
