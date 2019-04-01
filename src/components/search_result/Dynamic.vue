@@ -1,21 +1,21 @@
 <template>
   <div class="row r-7">
-    <div class="row row_margin rank_one" v-for="(i,index) in goodinfo.length-1">
-      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 rank_num"><strong>{{index}}</strong><span>{{i.id}}</span></div>
+    <div class="row row_margin rank_one" v-for="(i,index) in goodinfo.length-1" @click="dynamic">
+      <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 rank_num"><strong>{{index+1}}</strong><span>{{goodinfo[index].id}}</span></div>
       <div class="col-xs-10 col-sm-8 col-md-8 col-lg-8">
         <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3 rank_img">
           <img src="../../assets/search_img/good-1.jpg" class="img-responsive img-rounded" alt="Responsive image">
         </div>
         <div class="col-xs-7 col-sm-9 col-md-9 col-lg-9 rank_content">
           <div class="row first_row">
-            <a  class="content_name"><h5><strong>{{i.words}}</strong></h5></a>
+            <a  class="content_name"><h5><strong>{{goodinfo[index].content}}</strong></h5></a>
           </div>
           <div class="row second_row">
-            <span class="glyphicon glyphicon-eye-open" aria-hidden="true">{{i.click}}</span>
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true">{{goodinfo[index].click}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="glyphicon glyphicon-edit" aria-hidden="true">{{i.cols}}</span>
+            <span class="glyphicon glyphicon-edit" aria-hidden="true">{{goodinfo[index].cols}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">{{i.fbs}}</span>
+            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">{{goodinfo[index].fbs}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;
             <span class="glyphicon glyphicon-user" aria-hidden="true">&nbsp;<a href="#">ICYTAIL</a></span>
           </div>
@@ -24,11 +24,11 @@
       <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 rank_detail">
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
           <span style="color: darkgrey"><strong>热度</strong></span><br>
-          <span style="color: #ffadbc; font-size: 1.2em"><strong>1234</strong></span>
+          <span style="color: #ffadbc; font-size: 1.2em"><strong>{{goodinfo[index].click*goodinfo[index].fbs*goodinfo[index].cols}}</strong></span>
         </div>
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
           <span style="color: darkgrey"><strong>分类</strong></span> <br>
-          <span style="color: #ffadbc; font-size: 1.2em"><strong>日记</strong></span>
+          <span style="color: #ffadbc; font-size: 1.2em"><strong>{{goodinfo[index].type}}</strong></span>
         </div>
       </div>
     </div>
@@ -44,7 +44,11 @@
           }
         },
         props:['goodinfo'],
-
+        methods:{
+          dynamic:function () {
+            this.$router.push({ name: 'Result', params: { info: goods,count:counts}})
+          }
+        },
         mounted:function () {
 
         }

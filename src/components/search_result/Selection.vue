@@ -63,8 +63,6 @@
           },
 
           searchSelection2:function(li,index){
-
-
             if (index==this.isshow){
                 this.isshow=-1
                 if (this.a){
@@ -101,7 +99,6 @@
                 e.push(count)
                 this.count=Math.ceil(e.length/16)
                 this.$emit('selcount',this.count)
-                console.log(e);
                 this.$emit('getset',e)
               }
             }
