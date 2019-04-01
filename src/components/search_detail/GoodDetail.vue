@@ -6,7 +6,7 @@
         <span class="r-2-1-span">好评</span>
       </div>
       <div class="row r-2-2">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 col-md-offset-3 bigimg" >
           <img :src="nowimg" class="r-2-img" alt="">
         </div>
       </div>
@@ -16,7 +16,7 @@
       </div>
       <div class="row r-2-4">
         <div :class="{check:index==isshow}" class="div-img" v-for="(img,index) in imgs.length<4?imgs:4" @click="checked(index)">
-        <img :src="imgs[index]" alt="">
+        <img :src="GLOBAL.IMG+imgs[index]['url']" alt="">
       </div>
       </div>
     </div>
@@ -87,10 +87,7 @@
         name: "GoodDetail",
         data:function () {
           return{
-            imgs:[ 'static/search_img/good-1.jpg',
-                  'static/search_img/good-2.jpg',
-                  'static/search_img/good-1.jpg',
-                  'static/search_img/good-2.jpg'],
+            imgs:'',
             isshow:0,
             nowimg:'',
             info:'',
@@ -103,7 +100,7 @@
         methods:{
           checked:function (index) {
             this.isshow=index
-            this.nowimg=this.imgs[index]
+            this.nowimg=this.GLOBAL.IMG+this.imgs[index]['url']
           },
           collect:function () {
               if (sessionStorage.getItem('userInfo')) {
@@ -144,11 +141,14 @@
           }
         },
         mounted:function () {
+          var vm=this;
+          // console.log(vm.gooddetail);
+          vm.imgs=JSON.parse(vm.gooddetail).imgs
+          console.log(vm.imgs);
           //自定义用户id用于测试
           let userInfo={user:1}
           window.sessionStorage.setItem('userInfo',JSON.stringify(userInfo))
-          this.nowimg=this.imgs[0];
-
+          this.nowimg=vm.GLOBAL.IMG+vm.imgs[0]['url']
           axios.post(this.GLOBAL.HOST+'user/viewCollections/',
             {"method":"check","target":[{"type":"commodity","id":JSON.parse(this.gooddetail).id,"user_id":1}]}
           ).then((res)=>{
@@ -163,17 +163,24 @@
           }).catch((err)=>{
             console.log(err);
           });
-          let vm=this;
+
           Bus.$on('transfercollect', (data)=>{
             vm.iscollect = data
             console.log(vm.iscollect);
           })
+
         }
 
     }
 </script>
 
 <style scoped>
+  .bigimg img{
+    width: 400px;
+    height: 400px;
+    position: relative;
+    left: -50px;
+  }
   .check{
     outline: 3px solid rgba(153, 43, 245, 0.65);
   }

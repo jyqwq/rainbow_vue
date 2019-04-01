@@ -13,7 +13,7 @@
           <span v-for="brand in brands" @click="searchSelection1(brand)">{{brand}}</span>
         </td>
       </tr>
-      <tr>
+      <tr v-if="already">
         <td class="col-md-1">功能:</td>
         <td class="col-md-6 r-2-td-3">
           <span v-for="(effect,index) in effects" @click="searchSelection2(effect,index)"
@@ -38,12 +38,14 @@
               '希思黎','伊丽莎白 · 雅顿','悦诗风吟','海蓝之谜','菲诗小铺'],
             effects:['提亮肤色','均匀肤色','保湿','遮瑕','痘痘護理','去红血丝','收缩毛孔',
             '舒缓/抗敏感','盈润','好喝'],
-            a:false
+            a:false,
+            already:false
           }
         },
         props:['router','keyword','goodinfo','count'],
         methods:{
           searchSelection1:function (li) {
+            this.already=true
             this.isshow=-1
             this.checked=true
             this.condition=li
@@ -128,6 +130,7 @@
           //   this.$emit('search', li,router)
           // },
           change:function () {
+            this.already=false
             this.checked=false;
             this.$emit('search', this.keyword,this.router.searchProduct)
           }

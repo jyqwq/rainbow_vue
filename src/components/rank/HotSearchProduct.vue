@@ -4,7 +4,7 @@
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 rank_num"><strong class="cosmetics_num_rank">{{index+1}}</strong></div>
       <div class="col-xs-10 col-sm-8 col-md-8 col-lg-8">
         <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3 rank_img">
-          <img src="../../assets/rank_img.jpg" class="img-responsive img-rounded cosmetics_img_rank" alt="Responsive image">
+          <img src="../../assets/rank_img.jpg" class="img-responsive img-rounded cosmetics_img_rank" alt="Responsive image"   @click="godetail(i.id)">
         </div>
         <div class="col-xs-7 col-sm-9 col-md-9 col-lg-9 rank_content">
           <div class="row first_row">
@@ -55,6 +55,9 @@
               console.log(err);
             }
           )
+        },
+        godetail:function (id) {
+          this.$router.push({name:'Detail',params:{com_id:id}})
         }
       }
     }

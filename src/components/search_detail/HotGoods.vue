@@ -5,7 +5,7 @@
     </div>
     <div class="row r-3-2 h-1" v-for="(hot,index) in hotinfo"  @click='detailhot(hot.id)'>
       <div class="col-md-4 r-3-2-1">
-        <img src="../../../static/search_img/good-1.jpg" alt="">
+        <img :src="GLOBAL.IMG+(hotinfo[index].imgs.length>0? hotinfo[index].imgs[0]['url']:'ad.jpg')" alt="">
         <span>{{hot.id}}</span>
       </div>
       <div class="col-md-8 r-3-2-2">
@@ -45,12 +45,10 @@
                       if (res){
                         if (res.data[0].status_code==10017) {
                           let iscollect=false
-                          console.log('ok>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
                           Bus.$emit('transfercollect',iscollect)
                           this.recact()
                         }else {
                           let iscollect=true
-                          console.log('no>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
                           Bus.$emit('transfercollect',iscollect)
                         }
 
@@ -62,6 +60,8 @@
                 }).catch((err)=>{
                 console.log(err);
               })
+              this.$emit('flash')
+
             },
             recact:function () {
 
@@ -70,7 +70,7 @@
         mounted:function () {
             axios.get(this.GLOBAL.HOST+'search/hotCosmetics/'+'?page=1').then((response)=>{
               this.hotinfo=response.data;
-              console.log(this.hotinfo[0].name);
+              console.log(this.hotinfo);
             }).catch(function (err) {
               console.log(err);
             })

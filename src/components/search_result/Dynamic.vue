@@ -1,14 +1,14 @@
 <template>
   <div class="row r-7">
-    <div class="row row_margin rank_one" v-for="(i,index) in goodinfo.length-1" @click="dynamic">
+    <div class="row row_margin rank_one" v-for="(i,index) in goodinfo.length-1">
       <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 rank_num"><strong>{{index+1}}</strong><span>{{goodinfo[index].id}}</span></div>
       <div class="col-xs-10 col-sm-8 col-md-8 col-lg-8">
         <div class="col-xs-5 col-sm-3 col-md-3 col-lg-3 rank_img">
-          <img src="../../assets/search_img/good-1.jpg" class="img-responsive img-rounded" alt="Responsive image">
+          <img :src="GLOBAL.IMG+(goodinfo[index].imgs.length>0? goodinfo[index].imgs[0]['url']:'ad.jpg')" class="img-responsive img-rounded" alt="Responsive image">
         </div>
         <div class="col-xs-7 col-sm-9 col-md-9 col-lg-9 rank_content">
           <div class="row first_row">
-            <a  class="content_name"><h5><strong>{{goodinfo[index].content}}</strong></h5></a>
+            <a  class="content_name"><h5><strong :data-type="goodinfo[index].type" :data-id="goodinfo[index].id" :data-other="goodinfo[index].userInfo.user" @click="toone">{{goodinfo[index].content.slice(0,10)}}...</strong></h5></a>
           </div>
           <div class="row second_row">
             <span class="glyphicon glyphicon-eye-open" aria-hidden="true">{{goodinfo[index].click}}</span>
@@ -45,8 +45,11 @@
         },
         props:['goodinfo'],
         methods:{
-          dynamic:function () {
-            this.$router.push({ name: 'Result', params: { info: goods,count:counts}})
+          toone:function (e) {
+            let id = e.target.dataset.id;
+            let type = e.target.dataset.type;
+            let other = e.target.dataset.other;
+            this.$router.push({path:'/dynamic_detail/'+other+'/'+type+'/'+id})
           }
         },
         mounted:function () {

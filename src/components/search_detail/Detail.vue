@@ -13,9 +13,9 @@
         <div class="row r-1">
 
         </div>
-        <good-detail :gooddetail="goodsinfo" v-if="goodsinfo"></good-detail>
+        <good-detail :gooddetail="goodsinfo" v-if="goodsinfo" ></good-detail>
         <div class="row r-3">
-          <hot-goods @transferProduct="productinfo"></hot-goods>
+          <hot-goods @transferProduct="productinfo" @flash="flash"></hot-goods>
           <parameter :gooddetail="goodsinfo" v-if="goodsinfo"></parameter>
         </div>
       </div>
@@ -34,6 +34,7 @@
         name: "Detail",
         data:function () {
           return{
+            flag:true,
             keywords:'',
             kind:'产品',
             list:[],
@@ -80,7 +81,10 @@
         methods:{
           productinfo:function (msg) {
             this.goodsinfo=msg
-            console.log(this.goodsinfo+'productinfo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+          },
+          flash:function () {
+            this.flag=false;
+            this.flag=true;
           }
         }
     }

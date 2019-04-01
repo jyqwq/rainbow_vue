@@ -1,7 +1,6 @@
 <template>
   <div class="row sch">
     <div class="col-md-12">
-      {{condition}}
       <div class="input-group icy_sch">
         <input type="text" class="form-control" placeholder="搜索你想要的内容..." v-model="keywords" >
         <span class="input-group-btn">

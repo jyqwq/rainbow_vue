@@ -51,7 +51,9 @@
 <style scoped>
 
   .con{
-    margin-top: 100px;
+    padding-top: 100px;
+    background-image: url("../../assets/dy-background.png");
+    padding-bottom: 40px;
   }
   button{
     border: rgba(255, 20, 147, 0.54);

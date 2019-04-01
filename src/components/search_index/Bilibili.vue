@@ -12,6 +12,6 @@
     img{
         position: relative;
         top:20px;
-        left: -15px;
+        /*left: 30px;*/
     }
 </style>

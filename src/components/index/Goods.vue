@@ -2,7 +2,7 @@
   <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
     <div class="row recommend_one">
       <a class="to_one_one">
-        <img :src="GLOBAL.IMG+i.imgs[0]['url']" class="img-responsive img-rounded" alt="Responsive image">
+        <img :src="GLOBAL.IMG+i.imgs[0]['url']" class="img-responsive img-rounded" alt="Responsive image" @click="godetail(i.id)">
         <div class="row pro_detail">
           <br>
           <span style="font-size: 1.2em;"><strong>{{i.name}}</strong></span> <br>
@@ -31,6 +31,11 @@
         return{
 
         }
+      },
+      methods:{
+          godetail:function (id) {
+            this.$router.push({name:'Detail',params:{com_id:id}})
+          }
       }
     }
 </script>
