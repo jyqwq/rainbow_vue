@@ -2,11 +2,11 @@
   <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
     <div class="row recommend_one">
       <a class="to_one_one">
-        <img src="../../assets/search_img/ziran.jpg" class="img-responsive img-rounded" alt="Responsive image">
+        <img :src="GLOBAL.IMG+i.imgs[0]['url']" class="img-responsive img-rounded" alt="Responsive image">
         <div class="row pro_detail">
           <br>
-          <span style="font-size: 1.2em;"><strong>喜马拉雅龙血能量润肤露</strong></span> <br>
-          <span>70ml</span>
+          <span style="font-size: 1.2em;"><strong>{{i.name}}</strong></span> <br>
+          <span>{{i.capacity}}</span>
         </div>
         <div class="row">
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
@@ -14,14 +14,11 @@
           <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
         </div>
         <div class="row pro_detail" style="margin-bottom: 10px">
-          <span>安全指数:5</span><br><br class="hidden-sm">
-          <span>一抹化水<br>补水、舒缓、醒肤、抗油光一步完成<br>爽肤水、精华、乳液三步合一<br>
-            一瓶搞定!</span><br><br class="hidden-sm">
-          <span>参考价:¥ 109.00 </span>
+          <span>安全指数:{{i.security}}</span><br><br class="hidden-sm">
+          <span>{{i.Effect}}</span><br><br class="hidden-sm">
+          <span>参考价:¥ {{i.price}} </span>
         </div>
       </a>
-      <div class="dy_type" style="display: none">commodity</div>
-      <div class="dy_id" style="display: none">{{i}}</div>
     </div>
   </div>
 </template>
