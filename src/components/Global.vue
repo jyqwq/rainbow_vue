@@ -7,7 +7,7 @@
       //七牛云图片服务
       IMG: "http://por6yfn25.bkt.clouddn.com/",
       //后端服务地址
-      HOST:"http://192.168.159.1:8000/",
+      HOST:"http://192.168.2.66:8000/",
       //登录状态
       ISLOGIN:Boolean(localStorage.getItem('islogin')) || false,
       //时间转换

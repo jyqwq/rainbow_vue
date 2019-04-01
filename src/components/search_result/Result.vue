@@ -61,7 +61,7 @@
               hotKey:'search/hotKey/',
               oneProduct:'search/oneProduct/',
             },
-            counts:1
+            counts:''
           }
         },
         components:{
