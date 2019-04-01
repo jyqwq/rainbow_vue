@@ -50,6 +50,7 @@
       if (this.type === 'my'){
         let userInfo=sessionStorage.getItem('userInfo');
         this.person=JSON.parse(userInfo);
+        this.icon=this.GLOBAL.IMG+JSON.parse(userInfo)['icon'];
       } else if (this.type === 'other'){
         console.log(this.id);
         axios.post(this.GLOBAL.HOST+'user/personInfo/',{
@@ -58,6 +59,7 @@
         }).then(function (res) {
           console.log(res);
           that.person=res.data;
+          that.icon=that.GLOBAL.IMG+res.data.icon
         }).catch(function (err) {
           console.log(err);
         })
